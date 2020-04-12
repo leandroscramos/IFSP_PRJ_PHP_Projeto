@@ -18,7 +18,7 @@ class DocTypeDAO
             //Verifico se houve algum retorno, senão retorno null
             if(count($records)==0)
                 return null;
-            //Var que irá armazenar um array de obj do tipo funcionário
+            //Var que irá armazenar um array de obj de tipos de documentos
             $doctypes;
             //Util::debug($linhas);
             foreach ($records as $value) {
@@ -98,10 +98,10 @@ class DocTypeDAO
             $statement->execute();
 
             $records = $statement->fetchAll();
-            //Verifico se houve algum retorno, senão retorno null
+            
             if(count($records)==0)
                 return null;
-            //Var que irá armazenar um array de obj do tipo funcionário
+
             $doctypes;
             //Util::debug($linhas);
             foreach ($records as $value) {
