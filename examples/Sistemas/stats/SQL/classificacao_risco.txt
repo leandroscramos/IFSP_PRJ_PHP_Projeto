@@ -1,0 +1,42 @@
+SELECT	TO_CHAR(ts_appointment, 'YYYY-MM-DD HH24:MI:SS') ts_appointment, 
+	TO_CHAR(ts_pre_class, 'YYYY-MM-DD HH24:MI:SS') ts_pre_class, 
+	TO_CHAR(ts_class,'YYYY-MM-DD HH24:MI:SS') ts_class , 
+	TO_CHAR(ts_attend, 'YYYY-MM-DD HH24:MI:SS') ts_attend ,
+	CASE 	WHEN nr_risk = 1 THEN 'Vermelho'
+		WHEN nr_risk = 2 THEN 'Laranja'
+		WHEN nr_risk = 3 THEN 'Amarelo'
+		WHEN nr_risk = 4 THEN 'Verde'
+		WHEN nr_risk = 5 THEN 'Azul'
+		ELSE 'Não classificado'
+	END AS risk,
+	CASE 	when dt_birth >= current_date - interval '12 years' then 'Infantil'
+		else 'Adulto' 
+	END AS idade_paciente,
+	CASE	WHEN id_aghu_grd_seq IN (2,6) THEN 'URGÊNCIA'
+		WHEN id_aghu_grd_seq NOT IN (2,6) THEN 'AMBULATÓRIO'
+		ELSE 'NÃO IDENTIFICADO'
+	END AS tipo_grade,
+	temp.sexo, temp.cidade, temp.bairro
+  FROM 	hu.man_patients pt 
+  JOIN	dblink('dbname=dbaghu port=6544 host=10.90.12.40 user=ugen_integra password=jxNR#38',
+            'select 	pac.prontuario, 
+			pac.sexo,
+			case	when end_pac.bcl_clo_cep is not null then cid_pac.nome 
+				else 
+					case 	when end_pac.cdd_codigo is not null then end_cid_pac.nome
+						else end_pac.cidade
+					end
+			end as cidade,
+			case 	when end_pac.bcl_clo_cep is not null then bai_pac.descricao 
+				else end_pac.bairro
+			end as bairro
+		from	agh.aip_pacientes pac
+			left join agh.aip_enderecos_pacientes end_pac on pac.codigo = end_pac.pac_codigo
+			left join agh.aip_cidades end_cid_pac on end_pac.cdd_codigo = end_cid_pac.codigo
+			left join agh.aip_bairros bai_pac on end_pac.bcl_bai_codigo = bai_pac.codigo
+			left join agh.aip_logradouros logr_pac on end_pac.bcl_clo_lgr_codigo = logr_pac.codigo
+			left join agh.aip_cidades cid_pac on logr_pac.cdd_codigo = cid_pac.codigo') AS temp(prontuario integer, sexo character varying(1), cidade character varying(50), bairro character varying(100)) 
+	ON temp.prontuario = pt.id_medical_record
+ WHERE 	cd_status IN ('C','M','O','N')
+   AND	ts_appointment >= '#data_ini' AND ts_appointment < '#data_fim'::DATE + INTERVAL '1 DAY'
+ ORDER 	BY ts_appointment

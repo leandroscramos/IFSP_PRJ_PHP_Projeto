@@ -1,0 +1,16 @@
+SELECT	prod.mat_codigo, prod.descricao,
+		count(distinct atd.pac_codigo) nr_pacientes_tratados_atb,
+		SUM(count(DISTINCT pm.seq)) OVER () nr_total_atb_prescritos,
+		COUNT(DISTINCT pm.seq) nr_prescricoes_item,  -- considera como nro de prescrições de um item apenas um ocorrência dele por prescrição e não com a expressão (COUNT(item.*) nr_prescricoes_item)
+		TRIM(TO_CHAR( (COUNT(item.*) / (SUM(count(*)) OVER ())::DECIMAL) * 100 ,'9990D99')) nr_perc_prescr_item
+  FROM agh.mpm_prescricao_medicas pm    -- PK = atd_seq, seq
+ INNER JOIN agh.agh_atendimentos atd ON atd.seq = pm.atd_seq
+ INNER JOIN agh.mpm_prescricao_mdtos md ON md.atd_seq = pm.atd_seq AND md.pme_seq = pm.seq  -- PK = atd_seq, seq
+ INNER JOIN agh.mpm_item_prescricao_mdtos item ON item.pmd_atd_seq = pm.atd_seq AND item.pmd_seq = md.seq  -- PK = pmd_atd_seq, pmd_seq, med_mat_codigo, seqp
+ INNER JOIN agh.afa_medicamentos prod ON prod.mat_codigo = item.med_mat_codigo
+ WHERE pm.ind_situacao IN ('L','U')
+   AND pm.dthr_inicio >= '#data_ini'
+   AND pm.dthr_inicio <= '#data_fim'
+   AND prod.ind_interesse_ccih = 'S'
+ GROUP BY prod.mat_codigo, prod.descricao
+ ORDER by (COUNT(item.*) / (SUM(count(*)) OVER ())::DECIMAL)

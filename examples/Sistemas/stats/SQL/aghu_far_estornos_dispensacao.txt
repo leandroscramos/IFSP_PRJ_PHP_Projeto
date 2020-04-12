@@ -1,0 +1,13 @@
+SELECT 	EXTRACT(year FROM disp.dthr_estorno) ano, 
+		UPPER(LEFT(TO_CHAR(TO_TIMESTAMP(EXTRACT(MONTH FROM disp.dthr_estorno)::TEXT,'MM'), 'TMMonth'),3)) mes,  -- mês por extenso
+		unid.descricao nm_unidade_funcional, ocor.descricao tx_motivo_estorno, SUM(qtde_estornada) nr_qtde_estornada
+  FROM 	agh.afa_dispensacao_mdtos disp
+  LEFT 	JOIN agh.afa_tipo_ocor_dispensacoes ocor ON ocor.seq = disp.tod_seq_estornado
+  LEFT 	JOIN agh.agh_unidades_funcionais unid ON unid.seq = disp.unf_seq_solicitante
+ WHERE 	disp.dthr_estorno::DATE >= '#data_ini'
+   AND 	disp.dthr_estorno::DATE <  '#data_fim'
+   AND 	COALESCE(disp.qtde_estornada,0) > 0
+   AND 	disp.tod_seq_estornado <> 18 -- desconsidera "ERRO DE TRIAGEM"
+   AND 	disp.tod_seq_estornado <> 26 -- desconsidera "ERRO DE DISPENSAÇÃO"
+ GROUP 	BY EXTRACT(year FROM disp.dthr_estorno), EXTRACT(MONTH FROM disp.dthr_estorno), unid.descricao, ocor.descricao
+ ORDER 	BY EXTRACT(year FROM disp.dthr_estorno), EXTRACT(MONTH FROM disp.dthr_estorno), unid.descricao, SUM(qtde_estornada) DESC

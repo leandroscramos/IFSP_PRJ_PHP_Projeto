@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="58311390-c9c7-4034-8bbb-2452939ae7bb" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="ProjectId" id="1ZAqzzigKzQe1UoAna24ZB8w4Up" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\projeto\examples" />
+    </key>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="58311390-c9c7-4034-8bbb-2452939ae7bb" name="Default Changelist" comment="" />
+      <created>1584292519249</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1584292519249</updated>
+      <workItem from="1584292536580" duration="547000" />
+      <workItem from="1584302523545" duration="2641000" />
+      <workItem from="1584488506399" duration="602000" />
+      <workItem from="1584557860557" duration="598000" />
+      <workItem from="1584822554999" duration="254000" />
+      <workItem from="1584828389725" duration="386000" />
+      <workItem from="1584920919745" duration="7694000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="753" y="237" key="#com.intellij.ide.util.MemberChooser" timestamp="1584927335383">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="753" y="237" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1584927335383" />
+    <state x="779" y="335" key="NewPhpClassDialog" timestamp="1584927432713">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="779" y="335" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1584927432713" />
+  </component>
+</project>

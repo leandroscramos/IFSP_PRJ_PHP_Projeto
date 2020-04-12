@@ -1,0 +1,49 @@
+SELECT 	EXTRACT(year FROM pm.dthr_inicio) ano, 
+	UPPER(LEFT(TO_CHAR(TO_TIMESTAMP(EXTRACT(MONTH FROM pm.dthr_inicio)::TEXT,'MM'), 'TMMonth'),3)) mes,  -- mês por extenso
+	unf.descricao unid_funcional, 
+	COUNT(item.*) nr_itens, 
+	COUNT(DISTINCT pm.seq) nr_prescricoes,
+	TRIM(TO_CHAR( COUNT(item.*)::DECIMAL / COUNT(DISTINCT pm.seq)::DECIMAL ,'9990D99')) nr_media_itens, 
+	COUNT(*) FILTER (WHERE prod.ind_diluente = 'S') nr_diluentes, 
+
+	COUNT(item.*)::DECIMAL - COUNT(*) FILTER (WHERE prod.ind_diluente = 'S') nr_medicamentos,
+	TRIM(TO_CHAR( (COUNT(item.*)::DECIMAL - COUNT(*) FILTER (WHERE prod.ind_diluente = 'S'))::DECIMAL / COUNT(DISTINCT pm.seq)::DECIMAL ,'9990D99')) nr_media_medicamentos, 
+
+	COUNT(DISTINCT pm.seq + prod.mat_codigo) FILTER (WHERE prod.ind_interesse_ccih = 'S') nr_itens_atb,
+	COUNT(DISTINCT pm.seq) FILTER (WHERE prod.ind_interesse_ccih = 'S') nr_prescricoes_atb,
+        CASE WHEN COUNT(DISTINCT pm.seq) FILTER (WHERE prod.ind_interesse_ccih = 'S') > 0 THEN
+		TRIM(TO_CHAR( (COUNT(DISTINCT pm.seq + prod.mat_codigo) FILTER (WHERE prod.ind_interesse_ccih = 'S'))::DECIMAL / (COUNT(DISTINCT pm.seq) FILTER (WHERE prod.ind_interesse_ccih = 'S'))::DECIMAL ,'9990D99'))
+	ELSE '0,00' END as nr_media_atb,
+	TRIM(TO_CHAR( (COUNT(DISTINCT pm.seq) FILTER (WHERE prod.ind_interesse_ccih = 'S')::DECIMAL / COUNT(DISTINCT pm.seq)::DECIMAL) * 100 ,'9990D99')) nr_media_atb_geral,
+
+	COUNT(*) FILTER (WHERE prod.ind_controlado = 'S') nr_itens_contr,
+	COUNT(DISTINCT pm.seq) FILTER (WHERE prod.ind_controlado = 'S') nr_prescricoes_contr,
+        CASE WHEN COUNT(DISTINCT pm.seq) FILTER (WHERE prod.ind_controlado = 'S') > 0 THEN
+		TRIM(TO_CHAR( (COUNT(*) FILTER (WHERE prod.ind_controlado = 'S'))::DECIMAL / (COUNT(DISTINCT pm.seq) FILTER (WHERE prod.ind_controlado = 'S'))::DECIMAL ,'9990D99'))
+	ELSE '0,00' END as  nr_media_contr,
+	TRIM(TO_CHAR( (COUNT(*) FILTER (WHERE prod.ind_controlado = 'S'))::DECIMAL /  COUNT(DISTINCT pm.seq)::DECIMAL ,'9990D99')) nr_media_contr_geral,
+
+	COUNT(*) FILTER (WHERE md.vad_sigla IN ('EV','IM','SC')) nr_itens_injetaveis,
+	COUNT(DISTINCT pm.seq) FILTER (WHERE md.vad_sigla IN ('EV','IM','SC')) nr_prescricoes_injetaveis,
+        CASE WHEN COUNT(DISTINCT pm.seq) FILTER (WHERE md.vad_sigla IN ('EV','IM','SC')) > 0 THEN
+		TRIM(TO_CHAR( (COUNT(*) FILTER (WHERE md.vad_sigla IN ('EV','IM','SC')))::DECIMAL / (COUNT(DISTINCT pm.seq) FILTER (WHERE md.vad_sigla IN ('EV','IM','SC')))::DECIMAL ,'9990D99'))
+	ELSE '0,00' END as nr_media_injetaveis,
+	TRIM(TO_CHAR( (COUNT(*) FILTER (WHERE md.vad_sigla IN ('EV','IM','SC')))::DECIMAL / COUNT(DISTINCT pm.seq)::DECIMAL ,'9990D99')) nr_media_injetaveis_geral,
+	TO_CHAR(AVG(AGE(atd.dthr_inicio, pac.dt_nascimento)), 'YYY') AS nr_media_idade_anos,  -- idade na época (anos)
+	TO_CHAR(AVG(AGE(atd.dthr_inicio, pac.dt_nascimento)), 'MM')  AS nr_media_idade_meses,  -- idade na época (meses)
+	COUNT(DISTINCT pac.prontuario) FILTER (WHERE pac.sexo = 'M') nr_pac_sexo_mas,
+	COUNT(DISTINCT pac.prontuario) FILTER (WHERE pac.sexo = 'F') nr_pac_sexo_fem,
+	COUNT(DISTINCT pac.prontuario) FILTER (WHERE pac.sexo = 'I') nr_pac_sexo_ign
+
+  FROM agh.mpm_prescricao_medicas pm    -- PK = atd_seq, seq
+ INNER JOIN agh.agh_atendimentos atd ON atd.seq = pm.atd_seq
+ INNER JOIN agh.mpm_prescricao_mdtos md ON md.atd_seq = pm.atd_seq AND md.pme_seq = pm.seq  -- PK = atd_seq, seq
+ INNER JOIN agh.mpm_item_prescricao_mdtos item ON item.pmd_atd_seq = pm.atd_seq AND item.pmd_seq = md.seq  -- PK = pmd_atd_seq, pmd_seq, med_mat_codigo, seqp
+ INNER JOIN agh.afa_medicamentos prod ON prod.mat_codigo = item.med_mat_codigo
+ INNER JOIN agh.agh_unidades_funcionais unf ON unf.seq = atd.unf_seq
+ INNER JOIN agh.aip_pacientes pac ON pac.prontuario = atd.prontuario
+ WHERE pm.ind_situacao IN ('U','L')
+   AND pm.dthr_inicio::DATE >= '#data_ini'
+   AND pm.dthr_inicio::DATE <= '#data_fim'
+ GROUP by EXTRACT(year FROM pm.dthr_inicio), EXTRACT(MONTH FROM pm.dthr_inicio), unf.descricao
+ ORDER by EXTRACT(year FROM pm.dthr_inicio), EXTRACT(MONTH FROM pm.dthr_inicio), unf.descricao

@@ -1,0 +1,45 @@
+SELECT 	COALESCE(inter.lto_lto_id,'OBS') as leito, 
+	pac.prontuario, 
+	pac.nome, 
+	pac.sexo,
+	CASE 	WHEN esp.clc_codigo = 3 THEN 'Adulto'
+		WHEN esp.clc_codigo = 7 THEN 'Infantil'
+		ELSE 'X' END AS clinica, 
+	TO_CHAR(AGE(inter.dthr_internacao, pac.dt_nascimento), 'YYY MM DD') AS idade_na_epoca,
+	cid.codigo cd_cid_primario_internacao,
+	cid.descricao nm_cid_primario_internacao,
+	prc.cod_tabela AS cd_procedimento, 
+	prc.descricao AS tx_procedimento, 
+	TO_CHAR(inter.dthr_internacao, 'YYYY-MM-DD HH24:MI') data_internacao, 
+	TO_CHAR(inter.dthr_alta_medica, 'YYYY-MM-DD HH24:MI') data_alta_medica, 
+	TO_CHAR(inter.dt_saida_paciente, 'YYYY-MM-DD HH24:MI') data_saida_paciente, 
+	prc.quant_dias_faturamento permanencia_padrao_sus,
+	inter.dthr_alta_medica::date - inter.dthr_internacao::date permanencia_ate_alta_medica_dias,
+	TO_CHAR(AGE(inter.dthr_alta_medica,inter.dthr_internacao), 'HH24:MI') AS permanencia_ate_alta_medica_horas,
+	TO_CHAR(AGE(inter.dt_saida_paciente,inter.dthr_alta_medica), 'HH24:MI') AS permanencia_apos_alta_medica_horas,
+	CASE	WHEN end_pac.bcl_clo_cep IS NOT NULL THEN cid_pac.nome 
+			ELSE 
+			CASE 	WHEN end_pac.cdd_codigo IS NOT NULL THEN end_cid_pac.nome
+					ELSE end_pac.cidade
+			END
+	END AS cidade,
+	CASE 	WHEN end_pac.bcl_clo_cep IS NOT NULL THEN bai_pac.descricao 
+			ELSE end_pac.bairro
+	END AS bairro
+
+FROM agh.ain_internacoes inter
+	INNER JOIN agh.aip_pacientes pac ON inter.pac_codigo = pac.codigo
+	LEFT  JOIN agh.ain_cids_internacao cint ON cint.int_seq = inter.seq AND cint.ind_prioridade_cid = 'P'
+	INNER JOIN agh.fat_itens_proced_hospitalar prc ON prc.seq = inter.iph_seq
+	LEFT  JOIN agh.agh_cids cid ON cid.seq = cint.cid_seq
+	INNER JOIN agh.agh_especialidades esp ON esp.seq = inter.esp_seq
+	LEFT  JOIN (SELECT ep.pac_codigo, max(ep.seqp) maxseq FROM agh.aip_enderecos_pacientes ep GROUP BY ep.pac_codigo) recent_addr ON recent_addr.pac_codigo = pac.codigo 
+	LEFT  JOIN agh.aip_enderecos_pacientes end_pac ON pac.codigo = end_pac.pac_codigo AND recent_addr.maxseq = end_pac.seqp
+	LEFT  JOIN agh.aip_cidades end_cid_pac on end_pac.cdd_codigo = end_cid_pac.codigo
+	LEFT  JOIN agh.aip_bairros bai_pac on end_pac.bcl_bai_codigo = bai_pac.codigo
+	LEFT  JOIN agh.aip_logradouros logr_pac on end_pac.bcl_clo_lgr_codigo = logr_pac.codigo
+	LEFT  JOIN agh.aip_cidades cid_pac on logr_pac.cdd_codigo = cid_pac.codigo
+	INNER JOIN agh.agh_atendimentos atd ON inter.seq = atd.int_seq
+WHERE inter.dthr_internacao >= '#data_ini' AND inter.dthr_internacao < '#data_fim'::DATE + INTERVAL '1 DAY'
+  AND inter.dthr_alta_medica IS NOT NULL
+ORDER BY inter.dthr_internacao

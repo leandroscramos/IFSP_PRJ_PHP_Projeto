@@ -1,0 +1,12 @@
+select 	extract(year from con.dt_consulta) ano, extract(month from con.dt_consulta) mes, esp.nome_especialidade, 
+	COUNT(*) FILTER (WHERE con.stc_situacao IN ('M')) agendadas, 
+	COUNT(con.dthr_fim) realizadas
+from 	agh.aac_consultas con
+inner 	join 	agh.aac_grade_agendamen_consultas grade on ( con.grd_seq = grade.seq )
+inner 	join 	agh.agh_especialidades esp on ( grade.esp_seq = esp.seq )
+where con.dt_consulta >= '#data_ini'
+  and con.dt_consulta < '#data_fim'::DATE + INTERVAL '1 DAY'
+  and grade.eqp_seq = 5
+  and pac_codigo is not null
+group by extract(year from con.dt_consulta), extract(month from con.dt_consulta), esp.nome_especialidade
+ORDER by extract(year from con.dt_consulta), extract(month from con.dt_consulta), esp.nome_especialidade

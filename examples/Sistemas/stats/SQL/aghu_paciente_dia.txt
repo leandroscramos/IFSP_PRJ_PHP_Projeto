@@ -1,0 +1,35 @@
+SELECT dates.gendate dia, count(*) pacientes_dia,
+       COUNT(*) FILTER (WHERE esp.clc_codigo = 3 AND ind_local_paciente = 'L') internados_adulto_leito, 
+       COUNT(*) FILTER (WHERE esp.clc_codigo = 3 AND ind_local_paciente = 'U') internados_adulto_extra, 
+       COUNT(*) FILTER (WHERE esp.clc_codigo = 7 AND ind_local_paciente = 'L') internados_infantil_leito,
+       COUNT(*) FILTER (WHERE esp.clc_codigo = 7 AND ind_local_paciente = 'U') internados_infantil_extra,
+       COUNT(*) FILTER (WHERE COALESCE(leito_na_data.unf_seq,inter.unf_seq) = 24) as ucm,
+       COUNT(*) FILTER (WHERE COALESCE(leito_na_data.unf_seq,inter.unf_seq) =  3) as uca,
+       COUNT(*) FILTER (WHERE COALESCE(leito_na_data.unf_seq,inter.unf_seq) = 51) as usm,
+--       COUNT(*) FILTER (WHERE COALESCE(leito_na_data.unf_seq,inter.unf_seq) = 43) as uis,
+       COUNT(*) FILTER (WHERE COALESCE(leito_na_data.unf_seq,inter.unf_seq) = 43 AND esp.clc_codigo = 3) as uis_adulto,
+       COUNT(*) FILTER (WHERE COALESCE(leito_na_data.unf_seq,inter.unf_seq) = 43 AND esp.clc_codigo = 7) as uis_infantil,
+--       COUNT(*) FILTER (WHERE COALESCE(leito_na_data.unf_seq,inter.unf_seq) IS NULL OR COALESCE(leito_na_data.unf_seq,inter.unf_seq) NOT IN (24,3,43,51)) as outras_unidades,
+       COUNT(*) FILTER (WHERE (COALESCE(leito_na_data.unf_seq,inter.unf_seq) IS NULL OR COALESCE(leito_na_data.unf_seq,inter.unf_seq) NOT IN (24,3,43,51)) AND esp.clc_codigo = 3) as outras_unidades_adulto,
+       COUNT(*) FILTER (WHERE (COALESCE(leito_na_data.unf_seq,inter.unf_seq) IS NULL OR COALESCE(leito_na_data.unf_seq,inter.unf_seq) NOT IN (24,3,43,51)) AND esp.clc_codigo = 7) as outras_unidades_infantil,
+       COUNT(*) FILTER (WHERE dt_saida_paciente is not null AND dt_saida_paciente::DATE = dates.gendate ) AS total_saidas,
+       COUNT(*) FILTER (WHERE dt_saida_paciente is not null AND dt_saida_paciente::DATE = dates.gendate AND COALESCE(leito_na_data.unf_seq,inter.unf_seq) = 24) AS saidas_ucm,
+       COUNT(*) FILTER (WHERE dt_saida_paciente is not null AND dt_saida_paciente::DATE = dates.gendate AND COALESCE(leito_na_data.unf_seq,inter.unf_seq) =  3) AS saidas_uca,
+       COUNT(*) FILTER (WHERE dt_saida_paciente is not null AND dt_saida_paciente::DATE = dates.gendate AND COALESCE(leito_na_data.unf_seq,inter.unf_seq) = 43) AS saidas_uis,
+       COUNT(*) FILTER (WHERE dt_saida_paciente is not null AND dt_saida_paciente::DATE = dates.gendate AND COALESCE(leito_na_data.unf_seq,inter.unf_seq) = 51) AS saidas_usm,
+       COUNT(*) FILTER (WHERE dt_saida_paciente is not null AND dt_saida_paciente::DATE = dates.gendate AND COALESCE(leito_na_data.unf_seq,inter.unf_seq) NOT IN (24,3,43,51)) AS saidas_outras_unidades
+--select dates.gendate, leito_na_data.lto_id, leito_na_data.unf_seq, *
+  FROM agh.ain_internacoes inter 
+ INNER JOIN agh.agh_especialidades esp ON esp.seq = inter.esp_seq
+ INNER JOIN (SELECT serie::DATE gendate FROM generate_series('#data_ini','#data_fim', INTERVAL '1 day' ) serie) AS dates ON inter.dthr_internacao::DATE <= dates.gendate AND (inter.dt_saida_paciente >= dates.gendate OR inter.dt_saida_paciente IS NULL)
+-- INNER JOIN (SELECT serie::DATE gendate FROM generate_series('#data_ini','#data_fim', INTERVAL '1 day' ) serie) AS dates ON inter.dthr_internacao::DATE < dates.gendate + INTERVAL '1 DAY' AND (inter.dt_saida_paciente >= dates.gendate + INTERVAL '1 DAY' OR inter.dt_saida_paciente IS NULL)
+ LEFT JOIN (SELECT ex.criado_em AS data_movimento, ex.int_seq, lei.unf_seq, lei.lto_id
+               FROM agh.ain_extrato_leitos ex 
+              INNER JOIN agh.ain_leitos lei on lei.lto_id = ex.lto_lto_id
+              WHERE ex.tml_codigo = 16) leito_na_data ON leito_na_data.int_seq = inter.seq AND leito_na_data.data_movimento = (SELECT MAX(criado_em) FROM agh.ain_extrato_leitos t WHERE t.int_seq = leito_na_data.int_seq AND t.tml_codigo = 16 AND t.criado_em <= gendate + INTERVAL '1 DAY')
+--where gendate = '20171201' 
+--and inter.seq = 6198 
+--and leito_na_data.unf_seq = 43
+--order by inter.seq
+GROUP BY dates.gendate
+ORDER BY dates.gendate

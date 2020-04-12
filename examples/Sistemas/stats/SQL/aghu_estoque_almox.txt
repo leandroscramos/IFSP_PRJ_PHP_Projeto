@@ -1,0 +1,11 @@
+SELECT 	mat.codigo, 
+	mat.nome,
+	estalm.qtde_disponivel AS estoque_almoxarifados
+   FROM agh.sco_materiais mat
+  INNER JOIN agh.sco_grupos_materiais grp ON grp.codigo = mat.gmt_codigo
+  INNER JOIN agh.sce_estq_gerais estger ON estger.mat_codigo = mat.codigo AND frn_numero = 1
+   LEFT JOIN (SELECT mat_codigo, SUM(qtde_disponivel) qtde_disponivel FROM agh.sce_estq_almoxs GROUP BY mat_codigo) AS estalm ON estalm.mat_codigo = mat.codigo
+  where mat.ind_situacao = 'A'
+    AND estger.dt_competencia = '#data_ini'
+    and grp.codigo = 2
+  ORDER BY grp.descricao, mat.nome

@@ -1,0 +1,41 @@
+SELECT 	pac.prontuario, pac.nome, pac.sexo, to_char(AGE(pac.dt_nascimento) , 'YYYa MMm' ) idade_atual,  
+	substr(substr(last_ev_dados.descricao,NULLIF(POSITION('#NAN' in last_ev_dados.descricao),0) ),1,POSITION('o' IN substr(last_ev_dados.descricao,POSITION('#NAN' in last_ev_dados.descricao)) )) as nivel_assistencial,
+	substr(substr(last_ev_dados.descricao,NULLIF(POSITION('#AP'  in last_ev_dados.descricao),0) ),1,POSITION('.' IN substr(last_ev_dados.descricao,POSITION('#AP'  in last_ev_dados.descricao)) )) as nivel_ap,
+	substr(substr(last_ev_dados.descricao,NULLIF(POSITION('#PLANO' in UPPER(last_ev_dados.descricao)),0) ),1,POSITION('.' IN substr(last_ev_dados.descricao,POSITION('#PLANO' in UPPER(last_ev_dados.descricao))) )) as plano_terap_nutr,
+	unid_leito.sigla unidade_funcional,
+	lei.lto_id cd_leito,
+	string_agg(DISTINCT(cid.descricao), ', ') AS cid_internacao_des,
+	string_agg(DISTINCT(tp.descricao), '; ') dietas
+
+  FROM agh.mpm_anamneses an
+ INNER JOIN agh.mpm_evolucoes ev ON ev.ana_seq = an.seq
+ INNER JOIN agh.agh_atendimentos atd ON atd.seq = an.atd_seq 
+ INNER JOIN agh.aip_pacientes pac ON pac.codigo = atd.pac_codigo
+ INNER JOIN agh.ain_internacoes inter ON inter.seq = atd.int_seq
+ INNER JOIN agh.ain_leitos lei ON lei.lto_id = inter.lto_lto_id
+ INNER JOIN agh.agh_unidades_funcionais unid_leito ON unid_leito.seq = lei.unf_seq
+
+ INNER JOIN agh.mpm_prescricao_dietas die ON die.atd_seq = atd.seq
+ INNER JOIN agh.mpm_item_prescricao_dietas item ON item.pdt_atd_seq = die.atd_seq AND item.pdt_seq = die.seq
+ INNER JOIN agh.anu_tipo_item_dietas tp on tp.seq = item.tid_seq
+ INNER JOIN agh.mam_tipo_item_evolucoes tie ON tie.seq = ev.tie_seq
+  LEFT JOIN (	SELECT a.atd_seq, MAX(e.seq) id_last_ev
+		  FROM agh.mpm_anamneses a
+ 		 INNER JOIN agh.mpm_evolucoes e ON e.ana_seq = a.seq
+		 WHERE a.tql_codigo = 8
+		 GROUP BY a.atd_seq) last_ev ON last_ev.atd_seq = an.atd_seq
+  LEFT JOIN (	SELECT a.atd_seq, e.seq, e.descricao, e.ser_matricula, e.ser_vin_codigo
+ 		  FROM agh.mpm_anamneses a
+ 		 INNER JOIN agh.mpm_evolucoes e ON e.ana_seq = a.seq) last_ev_dados ON last_ev_dados.atd_seq = an.atd_seq AND last_ev_dados.seq = last_ev.id_last_ev
+  LEFT JOIN agh.rap_servidores raps ON raps.matricula = last_ev_dados.ser_matricula AND raps.vin_codigo = last_ev_dados.ser_vin_codigo
+  LEFT JOIN agh.rap_pessoas_fisicas rapf ON rapf.codigo = raps.pes_codigo
+  LEFT JOIN agh.ain_cids_internacao cint ON cint.int_seq = inter.seq
+ INNER JOIN agh.fat_itens_proced_hospitalar prc ON prc.seq = inter.iph_seq
+  LEFT JOIN agh.agh_cids cid ON cid.seq = cint.cid_seq
+
+ WHERE ev.dthr_criacao::DATE >= '#data_ini'
+   AND ev.dthr_criacao::DATE <= '#data_fim'
+   AND an.tql_codigo = 8
+   AND ind_saida_pac = 'N'
+ GROUP BY pac.prontuario, pac.nome, pac.sexo, pac.dt_nascimento, dthr_internacao, inter.dthr_alta_medica, last_ev_dados.descricao, unid_leito.sigla, lei.lto_id, rapf.nome
+ ORDER BY pac.nome, dthr_internacao

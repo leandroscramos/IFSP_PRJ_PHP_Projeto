@@ -1,0 +1,36 @@
+SELECT 	ex.nm_exam,
+	temp.nm_und_funcional,
+	COUNT(*) FILTER (WHERE cd_req_type = 'I') AS nr_exames_internos,
+	COUNT(*) FILTER (WHERE cd_req_type = 'E') AS nr_exames_externos,
+	'SCR' AS nm_sistema
+  FROM 	hu.rex_requisitions rq
+ INNER 	JOIN hu.rex_req_exam rx ON rx.id_requisition = rq.id_requisition
+ INNER 	JOIN hu.rex_exams ex ON ex.id_exam = rx.id_exam
+  LEFT	JOIN (SELECT * FROM dblink('dbname=dbaghu port=6544 host=10.90.12.40 user=ugen_integra password=jxNR#38',
+	'SELECT und.seq,
+		und.descricao
+	  FROM	agh.agh_unidades_funcionais und
+	') AS aghu(id_und_funcional INTEGER, nm_und_funcional CHARACTER VARYING(60))) temp ON temp.id_und_funcional = rq.id_aghu_functional_unit
+ WHERE 	rq.ts_requisition >= '#data_ini' and rq.ts_requisition::DATE <= '#data_fim'
+   AND 	ex.id_categ = 2
+ GROUP 	BY ex.nm_exam, id_aghu_functional_unit, temp.nm_und_funcional
+UNION ALL
+SELECT 	*
+  FROM 	dblink('dbname=dbaghu port=6544 host=10.90.12.40 user=ugen_integra password=jxNR#38',
+	'SELECT descricao_usual nm_exam, 
+		und. descricao,
+		COUNT(*) as nr_exames_internos,
+		0 as nr_exames_externos, 
+		''AGHU''::TEXT AS sistema
+	  FROM	agh.ael_item_solicitacao_exames ise
+	  JOIN	agh.ael_solicitacao_exames ase ON ise.soe_seq = ase.seq
+	  JOIN	agh.agh_atendimentos atd ON ase.atd_seq = atd.seq
+	  JOIN	agh.ael_exames ael ON ise.ufe_ema_exa_sigla::text = ael.sigla::text
+	  JOIN	agh.agh_unidades_funcionais und ON atd.unf_seq = und.seq --ise.ufe_unf_seq = und.seq
+	  LEFT	JOIN agh.ael_doc_resultado_exames aedoc ON ise.seqp = aedoc.ise_seqp AND ise.soe_seq = aedoc.ise_soe_seq
+	 WHERE	ise.sit_codigo::text = ''LI''::text AND (aedoc.ind_anulacao_doc IS NULL OR aedoc.ind_anulacao_doc::text = ''N''::text)
+	   AND	ase.criado_em >= ''#data_ini'' AND ase.criado_em <= ''#data_fim''
+	 GROUP	BY descricao_usual, und.seq, und.descricao
+	') AS aghu(nm_exam CHARACTER VARYING(200), nm_und_funcional CHARACTER VARYING(60), nr_exames_internos INTEGER, nr_exames_externos INTEGER, sistema CHARACTER VARYING(10))
+ORDER BY nm_exam, nm_und_funcional
+
