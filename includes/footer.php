@@ -1,6 +1,6 @@
-<?php Util::debug($_SESSION); ?>
+<?php //Util::debug($_SESSION); ?>
 
-<footer class="main-footer"> 
+<footer class="main-footer" style="border-top: 0"> 
 	<div class="row">				
 		<div align="center">
 			<strong>Hospital Universitário da Universidade Federal de São Carlos - EBSERH</strong><br>					

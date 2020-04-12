@@ -14,7 +14,6 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestão de Documentos <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-
                     <?php
                         if ($_SESSION["login"]["permissao"] == "Usuário") {
                             echo "<li><a href='docList'>Lista de Documentos</a></li>";
