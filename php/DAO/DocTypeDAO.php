@@ -103,7 +103,7 @@ class DocTypeDAO
                 return null;
 
             $doctypes;
-            //Util::debug($linhas);
+            
             foreach ($records as $value) {
                 $doctype = new ModelDocType();
                 $doctype->setDocTypeFromDatabase($value);
