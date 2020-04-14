@@ -62,7 +62,7 @@ class ControllerDocType {
 			$_SESSION["flash"]["sucesso"]=true;			
 		} else {
 			$_SESSION["flash"]["msg"]="Falha ao excluir tipo de documento!";
-			$_SESSION["flash"]["sucesso"]=false;           	
+			$_SESSION["flash"]["sucesso"]=false;			
 		}
     }
     

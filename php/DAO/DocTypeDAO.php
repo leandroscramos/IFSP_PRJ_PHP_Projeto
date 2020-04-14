@@ -112,7 +112,7 @@ class DocTypeDAO
             return $doctypes;
 
         } catch (PDOException $e) {
-            echo "Erro ao ler registros na base de dados.".$e->getMessage();
+            return $e->getMessage();
         }
     }    
 }
