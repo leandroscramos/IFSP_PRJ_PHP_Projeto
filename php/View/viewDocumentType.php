@@ -126,6 +126,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									</div>
 									<form action="docType" method="POST">
 									<input type="hidden" name="action" id="action" value="update">
+									<input type="hidden" name="docTypeIdModalUpdate" id="docTypeIdModalUpdate">
+									<input type="hidden" name="docTypeTitleUpdateTmp" id="docTypeTitleUpdateTmp">
+									<input type="hidden" name="docTypeLevelUpdateTmp" id="docTypeLevelUpdateTmp">
 										<div class="modal-body">
 											<div class="row">
 												<div class="col-sm-8">
@@ -135,10 +138,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<div class="col-sm-4">
 													<label for="docTypeLevel">Nível</label>
 													<input type="number" class="form-control" id="docTypeLevelUpdate" name="docTypeLevelUpdate" min="1" max="3" placeholder="">
-												</div>
-												<div class="col-sm-4">
-													<input type="hidden" name="docTypeIdModalUpdate" id="docTypeIdModalUpdate">
-												</div>
+												</div>												
 											</div>											
 										</div>
 										<div class="modal-footer">
@@ -197,6 +197,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 			document.getElementById('docTypeIdModalUpdate').value = id;
 			document.getElementById('docTypeTitleUpdate').value = name;			
 			document.getElementById('docTypeLevelUpdate').value = level;
+			
+			document.getElementById('docTypeTitleUpdateTmp').value = name;
+			document.getElementById('docTypeLevelUpdateTmp').value = level;
 		}
 	</script>
 </body>

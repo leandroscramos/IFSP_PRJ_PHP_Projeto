@@ -17,15 +17,15 @@ class ControllerDocType {
 		$doctype = new ModelDocType();
 		
 		if (($doctypeDAO->readDocTypeByName($_POST['docTypeTitle'])) == null) {
-			$doctype->setDocTypeFromPOST();        
+			$doctype->setDocTypeFromPOST();
 			$result = $doctypeDAO->createDocType($doctype);
 			
 			if ($result){
 				$_SESSION["flash"]["msg"]="Tipo de documento cadastrado com sucesso!";
-				$_SESSION["flash"]["sucesso"]=true;			
+				$_SESSION["flash"]["sucesso"]=true;
 			} else {
 				$_SESSION["flash"]["msg"]="Falha ao cadastrar tipo de documento!";
-				$_SESSION["flash"]["sucesso"]=false;           	
+				$_SESSION["flash"]["sucesso"]=false;
 			}; 
 		} else {
 			$_SESSION["flash"]["msg"]="Tipo de documento já cadastrado!";
@@ -38,14 +38,15 @@ class ControllerDocType {
 		$doctype = new ModelDocType();
 		
 		if (($doctypeDAO->readDocTypeByName($_POST['docTypeTitleUpdate'])) == null) {
-			$doctype->updateDocTypeFromPOST();		
-			$result = $doctypeDAO->updateDocType($doctype);        
+			$doctype->updateDocTypeFromPOST();
+			$result = $doctypeDAO->updateDocType($doctype);
+
 			if ($result){
 				$_SESSION["flash"]["msg"]="Tipo de documento atualizado com sucesso!";
-				$_SESSION["flash"]["sucesso"]=true;			
+				$_SESSION["flash"]["sucesso"]=true;
 			} else {
 				$_SESSION["flash"]["msg"]="Falha ao atualizar tipo de documento!";
-				$_SESSION["flash"]["sucesso"]=false;           	
+				$_SESSION["flash"]["sucesso"]=false;
 			};
 		} else {
 			$_SESSION["flash"]["msg"]="Tipo de documento já cadastrado!";
@@ -54,16 +55,15 @@ class ControllerDocType {
     }
     
     public function deleteDocType() {
-        $doctypeDAO = new DocTypeDAO();        
+        $doctypeDAO = new DocTypeDAO();
         $result = $doctypeDAO->deleteDocType($_POST['idModalDelete']);
         
 		if ($result){
 			$_SESSION["flash"]["msg"]="Tipo de documento excluído com sucesso!";
-			$_SESSION["flash"]["sucesso"]=true;			
+			$_SESSION["flash"]["sucesso"]=true;
 		} else {
 			$_SESSION["flash"]["msg"]="Falha ao excluir tipo de documento!";
-			$_SESSION["flash"]["sucesso"]=false;			
+			$_SESSION["flash"]["sucesso"]=false;
 		}
     }
-    
 }   
