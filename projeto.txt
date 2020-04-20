@@ -1,0 +1,8 @@
+[configurações]
+php.ini - habilitar pgsql
+criar htaccess
+
+Processos Gerenciais
+Processos Finalísticos
+Processos de Apoio
+
