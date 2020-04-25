@@ -7,7 +7,7 @@ include $_SESSION["root"].'includes/header.php';
 		<div class="login-box" >
 			<div id="principal" >
 				<div class="login-logo">
-				    <b>Documentos </b>|SGQ|
+				    <b>Documentos </b>|SGQ| aaa
 				</div>
 				<form action="postLogin" method="POST" class="center-block">
 					<div class="row">						
