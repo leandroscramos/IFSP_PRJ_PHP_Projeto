@@ -7,7 +7,7 @@ pgsql_host     	= "localhost"
 pgsql_port		= "5432"
 pgsql_dbname   	= "projeto_db" 
 pgsql_user 		= "postgres"
-pgsql_password 	= "r9v2@33t"
+pgsql_password 	= "123456"
 
 
 
