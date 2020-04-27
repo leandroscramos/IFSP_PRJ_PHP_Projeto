@@ -143,7 +143,6 @@ ALTER TABLE ONLY public.tb_sector ALTER COLUMN id SET DEFAULT nextval('public.tb
 
 ALTER TABLE ONLY public.tb_user ALTER COLUMN codigo SET DEFAULT nextval('public.usuario_codigo_seq'::regclass);
 
-
 --
 -- Data for Name: tb_doc_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
