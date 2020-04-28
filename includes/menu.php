@@ -35,7 +35,7 @@
                     <?php echo "<li><a href='docType'>Tipos de Documento</a></li>"; ?>
                     <?php echo "<li><a href='sector'>Setores</a></li>"; ?>
                     <?php echo "<li><a href='procType'>Tipos de Processos</a></li>"; ?>
-                    <?php echo "<li><a href=''>Macroprocessos</a></li>"; ?>
+                    <?php echo "<li><a href='macroProc'>Macroprocessos</a></li>"; ?>
                     <?php echo "<li><a href=''>Processos</a></li>"; ?>
                 </ul>
             </li>

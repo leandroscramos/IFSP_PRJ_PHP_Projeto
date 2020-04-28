@@ -13,6 +13,7 @@ include_once $_SESSION["root"].'php/Controller/ControllerLogin.php';
 include_once $_SESSION["root"].'php/Controller/ControllerDocType.php';
 include_once $_SESSION["root"].'php/Controller/ControllerSector.php';
 include_once $_SESSION["root"].'php/Controller/ControllerProcType.php';
+include_once $_SESSION["root"].'php/Controller/ControllerMacroProc.php';
 
 
 // Condicionais que verificam o roteamento das actions.
@@ -142,6 +143,39 @@ else if ($action == 'procType') {
             $cProcType = new ControllerProcType();
             $procTypes = $cProcType->readProcType();
             include_once $_SESSION["root"].'php/View/ViewProcType.php';
+        }
+    } else {
+        header("Location:logado");
+    }
+}
+
+/* Rota para Macroprocessos */
+else if ($action == 'macroProc') {
+    if (($_SESSION['login']['permissao']) == 'Administrador') {
+        if (isset($_POST['action'])) {
+            switch ($_POST['action']) {
+                case 'create':
+                    $cMacroProc = new ControllerMacroProc();
+                    $cMacroProc->createMacroProc();    
+                    header("Location:macroProc");
+                    break;        
+                case 'update':
+                    $cMacroProc = new ControllerMacroProc();
+                    $cMacroProc->updateMacroProc();    
+                    header("Location:macroProc");
+                    break;
+                case 'delete':
+                    $cMacroProc = new ControllerMacroProc();
+                    $cMacroProc->deleteMacroProc();    
+                    header("Location:macroProc");
+                    break;
+            }
+        } else {
+            $cMacroProc = new ControllerMacroProc();
+            $macroProcs = $cMacroProc->readMacroProc();
+            $cProcType = new ControllerProcType();
+            $procTypes = $cProcType->readProcType();
+            include_once $_SESSION["root"].'php/View/ViewMacroProcess.php';
         }
     } else {
         header("Location:logado");
