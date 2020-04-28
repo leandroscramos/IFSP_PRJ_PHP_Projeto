@@ -35,13 +35,14 @@ class DocTypeDAO
 
     public function createDocType($doctype){			
         
-		try { $sql = ('INSERT INTO public.tb_doc_type (name, level) VALUES (:name, :level)');
+		try { $sql = ('INSERT INTO public.tb_doc_type (name, initials, level) VALUES (:name, :initials, :level)');
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
             $statement = $conn->prepare($sql);
             
             $statement->bindValue(":name", $doctype->getName());
+            $statement->bindValue(":initials", $doctype->getInitials    ());
             $statement->bindValue(":level", $doctype->getLevel());
 
             return $statement->execute();
@@ -53,7 +54,7 @@ class DocTypeDAO
 
     public function updateDocType($doctype) {
         
-        try { $sql = ('UPDATE public.tb_doc_type SET name = :name, level = :level WHERE id = :id');
+        try { $sql = ('UPDATE public.tb_doc_type SET name = :name, initials = :initials, level = :level WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -61,6 +62,7 @@ class DocTypeDAO
 
             $statement->bindParam(':id', $doctype->getId()); 
             $statement->bindParam(':name', $doctype->getName()); 
+            $statement->bindParam(':initials', $doctype->getInitials()); 
             $statement->bindParam(':level', $doctype->getLevel()); 
             $statement->execute();
                

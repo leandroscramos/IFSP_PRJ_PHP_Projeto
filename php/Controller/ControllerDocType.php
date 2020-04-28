@@ -36,7 +36,20 @@ class ControllerDocType {
     public function updateDocType() {
         $doctypeDAO = new DocTypeDAO();
 		$doctype = new ModelDocType();
-		
+
+		$doctype->updateDocTypeFromPOST();
+		$result = $doctypeDAO->updateDocType($doctype);
+
+		if ($result){
+			$_SESSION["flash"]["msg"]="Tipo de documento atualizado com sucesso!";
+			$_SESSION["flash"]["sucesso"]=true;
+		} else {
+			$_SESSION["flash"]["msg"]="Falha ao atualizar tipo de documento!";
+			$_SESSION["flash"]["sucesso"]=false;
+		}
+
+		// O trecho abaixo verifica os nomes dos documentos já cadastrados *** PRECISA DE AJUSTES ***
+		/*
 		if (($doctypeDAO->readDocTypeByName($_POST['docTypeTitleUpdate'])) == null) {
 			$doctype->updateDocTypeFromPOST();
 			$result = $doctypeDAO->updateDocType($doctype);
@@ -52,6 +65,7 @@ class ControllerDocType {
 			$_SESSION["flash"]["msg"]="Tipo de documento já cadastrado!";
 			$_SESSION["flash"]["sucesso"]=false;
 		}
+		*/
     }
     
     public function deleteDocType() {

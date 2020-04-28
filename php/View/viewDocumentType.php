@@ -46,7 +46,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									<thead>
 										<tr>
 											<th width="5%">Id</th>											
-											<th width="	80%">Nome</th>
+											<th width="75%">Nome</th>
+											<th width="5%">Sigla</th>																						
 											<th width="5%">Nível</th>																						
 											<th width="3%"></th>																						
 											<th width="3%"></th>																						
@@ -58,11 +59,12 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												echo "<tr>";
 												echo "<td>".$doctype->getId()."</td>";
 												echo "<td>".$doctype->getName()."</td>";
+												echo "<td>".$doctype->getInitials()."</td>";
 												echo "<td>".$doctype->getLevel()."</td>";
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
-													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $doctype->getId();?>','<?php echo $doctype->getName(); ?>','<?php echo $doctype->getLevel(); ?>')">
+													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $doctype->getId();?>','<?php echo $doctype->getName(); ?>','<?php echo $doctype->getInitials(); ?>','<?php echo $doctype->getLevel(); ?>')">
 														<i class="far fa-edit"></i>
 													</button>	
 												</td>												
@@ -95,11 +97,15 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<div class="modal-body">																	            								            
 											<div class="row">
 												<div class="form-group">					                  
-													<div class="col-sm-8">
+													<div class="col-sm-6">
 														<label for="docTypeTitle"">Tipo do documento</label>
 														<input type="text" class="form-control" id="docTypeTitle" name="docTypeTitle" placeholder="">												
 													</div>
 													<div class="col-sm-4">
+														<label for="docTypeInitials"">Sigla do documento</label>
+														<input type="text" class="form-control" id="docTypeInitials" name="docTypeInitials" placeholder="">												
+													</div>
+													<div class="col-sm-2">
 														<label for="docTypeLevel">Nível</label>
 														<input type="number" class="form-control" id="docTypeLevel" name="docTypeLevel" min="1" max="3" placeholder="">
 													</div>
@@ -125,17 +131,23 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<h4 class="modal-title">Atualização | Tipo de Documento</h4>
 									</div>
 									<form action="docType" method="POST">
-									<input type="hidden" name="action" id="action" value="update">
-									<input type="hidden" name="docTypeIdModalUpdate" id="docTypeIdModalUpdate">
-									<input type="hidden" name="docTypeTitleUpdateTmp" id="docTypeTitleUpdateTmp">
-									<input type="hidden" name="docTypeLevelUpdateTmp" id="docTypeLevelUpdateTmp">
+										<input type="hidden" name="action" id="action" value="update">
+										<input type="hidden" name="docTypeIdModalUpdate" id="docTypeIdModalUpdate">
+										<!--<input type="hidden" name="docTypeTitleUpdate" id="docTypeTitleUpdate">
+										<input type="hidden" name="docTypeInitialsUpdate" id="docTypeInitialsUpdate">
+										<input type="hidden" name="docTypeLevelUpdate" id="docTypeLevelUpdate">-->
+									
 										<div class="modal-body">
 											<div class="row">
-												<div class="col-sm-8">
+												<div class="col-sm-6">
 													<label for="docTypeTitle"">Tipo do documento</label>
 													<input type="text" class="form-control" id="docTypeTitleUpdate" name="docTypeTitleUpdate" placeholder="">												
 												</div>
 												<div class="col-sm-4">
+														<label for="docTypeInitialsUpdate"">Sigla do documento</label>
+														<input type="text" class="form-control" id="docTypeInitialsUpdate" name="docTypeInitialsUpdate" placeholder="">												
+													</div>
+												<div class="col-sm-2">
 													<label for="docTypeLevel">Nível</label>
 													<input type="number" class="form-control" id="docTypeLevelUpdate" name="docTypeLevelUpdate" min="1" max="3" placeholder="">
 												</div>												
@@ -193,13 +205,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 			document.getElementById('idModalDelete').value = id;
 		}
 
-		function setIdModalUpdate(id, name, level) {			
+		function setIdModalUpdate(id, name, initials, level) {			
 			document.getElementById('docTypeIdModalUpdate').value = id;
 			document.getElementById('docTypeTitleUpdate').value = name;			
-			document.getElementById('docTypeLevelUpdate').value = level;
-			
-			document.getElementById('docTypeTitleUpdateTmp').value = name;
-			document.getElementById('docTypeLevelUpdateTmp').value = level;
+			document.getElementById('docTypeInitialsUpdate').value = initials;
+			document.getElementById('docTypeLevelUpdate').value = level;			
 		}
 	</script>
 </body>
