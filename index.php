@@ -2,7 +2,7 @@
 
 session_start();
 
-$_SESSION["root"] = "C:/xampp/htdocs/projeto/";
+$_SESSION["root"] = realpath('projeto');
 $_SESSION["title"] = "Documentos | SGQ";
 //$_SESSION["root_functions"] = "/var/www/html/intranet/";
 
