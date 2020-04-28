@@ -12,6 +12,7 @@ $action = $action[0];
 include_once $_SESSION["root"].'php/Controller/ControllerLogin.php';
 include_once $_SESSION["root"].'php/Controller/ControllerDocType.php';
 include_once $_SESSION["root"].'php/Controller/ControllerSector.php';
+include_once $_SESSION["root"].'php/Controller/ControllerProcType.php';
 
 
 // Condicionais que verificam o roteamento das actions.
@@ -110,6 +111,37 @@ else if ($action == 'sector') {
             $cSector = new ControllerSector();
             $sectors = $cSector->readSector();
             include_once $_SESSION["root"].'php/View/ViewSector.php';
+        }
+    } else {
+        header("Location:logado");
+    }
+}
+
+/* Rota para Tipos de Macroprocessos */
+else if ($action == 'procType') {
+    if (($_SESSION['login']['permissao']) == 'Administrador') {
+        if (isset($_POST['action'])) {
+            switch ($_POST['action']) {
+                case 'create':
+                    $cProcType = new ControllerProcType();
+                    $cProcType->createProcType();    
+                    header("Location:procType");
+                    break;        
+                case 'update':
+                    $cProcType = new ControllerProcType();
+                    $cProcType->updateProcType();    
+                    header("Location:procType");
+                    break;
+                case 'delete':
+                    $cProcType = new ControllerProcType();
+                    $cProcType->deleteProcType();    
+                    header("Location:procType");
+                    break;
+            }
+        } else {
+            $cProcType = new ControllerProcType();
+            $procTypes = $cProcType->readProcType();
+            include_once $_SESSION["root"].'php/View/ViewProcType.php';
         }
     } else {
         header("Location:logado");
