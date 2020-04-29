@@ -10,6 +10,9 @@ class ModelMacroProc
     private $macroProcType;
 
     public function setMacroProcFromDatabase($macroProc){
+        $macroProcTypeDAO = new ProcTypeDAO();
+        $macroProcType = $macroProcTypeDAO->readProcTypeById($macroProc["id"]);
+
         $this->setId($macroProc["id"])            
                 ->setName($macroProc["name"])
                 ->setnumber($macroProc["number"])
