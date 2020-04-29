@@ -117,14 +117,14 @@ class ProcTypeDAO
         }
     }
     
-    public function readProcTypeByInitials($initials){
+    public function readProcTypeById($id){
 
-        try { $sql = ('SELECT * FROM public.tb_process_type WHERE initials = :initials');
+        try { $sql = ('SELECT * FROM public.tb_process_type WHERE id = :id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
                         
-            $statement->bindParam(':initials', $initials); 
+            $statement->bindParam(':id', $id); 
             $statement->execute();
 
             $records = $statement->fetchAll();

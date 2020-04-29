@@ -1,5 +1,5 @@
 <?php
-
+include_once $_SESSION["root"].'php/DAO/ProcTypeDAO.php';
 
 class ModelMacroProc
 {
@@ -7,12 +7,14 @@ class ModelMacroProc
     private $name;
     private $number;
     private $id_proc_type;
+    private $macroProcType;
 
     public function setMacroProcFromDatabase($macroProc){
         $this->setId($macroProc["id"])            
                 ->setName($macroProc["name"])
                 ->setnumber($macroProc["number"])
-                ->setnumber($macroProc["id_proc_type"]);
+                ->seIdProcType($macroProc["id_proc_type"])
+                ->setMacroProcType($macroProcType);                
     }
 
     public function setMacroProcFromPOST(){
@@ -62,7 +64,7 @@ class ModelMacroProc
 
     public function getIdProcType()
     {
-        return $this->id_proc_type;
+        return $this->id_proc_type;        
     }
 
     public function seIdProcType($id_proc_type)
@@ -70,4 +72,17 @@ class ModelMacroProc
         $this->id_proc_type = $id_proc_type;
         return $this;
     }
+
+    public function getMacroProcType()
+    {
+        return $this->macroProcType;
+    }
+
+    public function setMacroProcType($macroProcType)
+    {
+        $this->macroProcType = $macroProcType;
+        return $this;
+    }
+
+    
 }

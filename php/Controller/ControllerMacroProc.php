@@ -7,8 +7,7 @@ class ControllerMacroProc {
 
     function readMacroProc() {
         $macroProcDAO = new MacroProcDAO();
-        $macroProcs = $macroProcDAO->readMacroProc();
-        //Util::debug($doctypes);
+        $macroProcs = $macroProcDAO->readMacroProc();        
         return $macroProcs;
     }
 

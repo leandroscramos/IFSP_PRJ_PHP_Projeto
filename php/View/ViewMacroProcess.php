@@ -44,7 +44,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									<thead>
 										<tr>											
 											<th width="3%">Id</th>
-											<th width="70%">Nome</th>
+											<th width="50%">Nome</th>
+											<th width="35%">Tipo de Macroprocesso</th>
 											<th width="5%">Número</th>																						
 											<th width="3%"></th>																						
 											<th width="3%"></th>																						
@@ -56,12 +57,14 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												echo "<tr>";												
 												echo "<td>".$macroProc->getId()."</td>";
 												echo "<td><strong>".$macroProc->getName()."</strong></td>";
+												Util::debug($macroProc);																							
+												echo "<td><strong>".$macroProc->getIdProcType()."</strong></td>";
 												echo "<td>".$macroProc->getNumber()."</td>";
 												
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
-													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $macroProc->getId();?>','<?php echo $macroProc->getName(); ?>','<?php echo $macroProc->getNumber(); ?>')">
+													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $macroProc->getId();?>','<?php echo $macroProc->getName(); ?>',,'<?php echo $macroProc->getIdProcType(); ?>''<?php echo $macroProc->getNumber(); ?>')">
 														<i class="far fa-edit"></i>
 													</button>	
 												</td>												
