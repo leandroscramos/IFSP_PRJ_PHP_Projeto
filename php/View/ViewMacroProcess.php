@@ -56,11 +56,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											foreach ($macroProcs as $macroProc) {
 												echo "<tr>";												
 												echo "<td>".$macroProc->getId()."</td>";
-												echo "<td>".$macroProc->getName()."</td>";
-												Util::debug($macroProc);												
-												echo "<td>".$macroProc->getMacroProcType()."</td>";
-												echo "<td>".$macroProc->getNumber()."</td>";
-												
+												echo "<td>".$macroProc->getName()."</td>";												
+												echo "<td>".$macroProc->getMacroProcType()[0]->getName()."</td>";
+												echo "<td>".$macroProc->getNumber()."</td>";												
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
