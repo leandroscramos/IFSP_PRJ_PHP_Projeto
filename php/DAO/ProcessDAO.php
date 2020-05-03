@@ -33,17 +33,18 @@ class ProcessDAO
         }
     }    
 
-    /*
-    public function createMacroProc($procType){			
+    
+    public function createProcess($process){			
         
-		try { $sql = "INSERT INTO public.tb_macroprocess (initials, name) VALUES (:initials, :name)";
+		try { $sql = "INSERT INTO public.tb_process (name, number, id_macroprocess) VALUES (:name, :number, :id_macroprocess)";
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
             $statement = $conn->prepare($sql);
             
-            $statement->bindValue(":initials", $macroProc->getInitials());
-            $statement->bindValue(":name", $macroProc->getName());
+            $statement->bindValue(":name", $process->getName());
+            $statement->bindValue(":number", $process->getNumber());
+            $statement->bindValue(":id_macroprocess", $process->getIdMacroProc());
 
             return $statement->execute();
 
@@ -51,6 +52,7 @@ class ProcessDAO
             echo "Erro ao inserir na base de dados.".$e->getMessage();            
         }		
     }
+    /*
 
     public function updateMacroProc($macroProc) {
         

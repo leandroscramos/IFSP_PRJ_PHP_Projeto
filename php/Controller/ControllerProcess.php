@@ -11,11 +11,11 @@ class ControllerProcess {
         return $processs;
     }
 
-	/*
-    function createMacroProc() {
-		$macroProcDAO = new MacroProcDAO();
-		$macroProc = new ModelMacroProc();
-		
+	
+    function createProcess() {
+		$processDAO = new ProcessDAO();
+		$process = new ModelProcess();
+		/*
 		if (($macroProcDAO->readMacroProcByInitials($_POST['procTypeInitials'])) != null) {
 			$_SESSION["flash"]["msg"] = "Sigla do Tipo de Macroprocesso já cadastrada!";
 			$_SESSION["flash"]["sucesso"] = false;
@@ -24,19 +24,29 @@ class ControllerProcess {
 			$_SESSION["flash"]["msg"]="Nome do Tipo de Macroprocesso já cadastrado!";
 			$_SESSION["flash"]["sucesso"] = false;
 		} else {
-			$macroProc->setMacroProcFromPOST();        
-			$result = $macroProcDAO->createMacroProc($macroProc);
+		*/
+			$process->setProcessFromPOST();        
+			$result = $processDAO->createProcess($process);
 			
 			if ($result){
-				$_SESSION["flash"]["msg"]="Tipo de Macroprocesso cadastrado com sucesso!";
-				$_SESSION["flash"]["sucesso"] = true;			
+				$_SESSION["flash"]["msg"]="Processo cadastrado com sucesso!";
+				$_SESSION["flash"]["sucesso"] = true;
+				$_SESSION["flash"]["processo"] = $process->getName();
+				$_SESSION["flash"]["numero"] = $process->getNumber();
+				$_SESSION["flash"]["macroprocesso"] = $process->getIdMacroProc();			
 			} else {
-				$_SESSION["flash"]["msg"]="Falha ao cadastrar Tipo de Macroprocesso!";
+				$_SESSION["flash"]["msg"]="Falha ao cadastrar Processo!";
 				$_SESSION["flash"]["sucesso"] = false;           	
+				$_SESSION["flash"]["processo"] = $process->getName();
+				$_SESSION["flash"]["numero"] = $process->getNumber();
+				$_SESSION["flash"]["macroprocesso"] = $process->getIdMacroProc();
 			}
+		/*
 		}
+		*/
     }
 
+	/*
     public function updateMacroProc() {
         $macroProcDAO = new MacroProcDAO();
 		$macroProc = new ModelMacroProc();

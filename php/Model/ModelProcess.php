@@ -20,10 +20,11 @@ class ModelProcess
                 ->setMacroProcess($macroProcess);                
     }
 
-    public function setMacroProcFromPOST(){
+    public function setProcessFromPOST(){
         $this->setId(null)               
-                ->setName($_POST["macroProcName"])
-                ->setnumber($_POST["macroProcNumber"]);
+                ->setName($_POST["processName"])
+                ->setnumber($_POST["processNumber"])
+                ->seIdMacroProc($_POST["id_macroprocess"]);
     }
 
     public function updateMacroProcFromPOST(){
