@@ -43,22 +43,23 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								<table id="tableProcTypes" class="table table-bordered table-striped">
 									<thead>
 										<tr>											
-											<th width="3%">Id</th>
+											<th width="10%">Sigla</th>
 											<th width="50%">Nome</th>
-											<th width="35%">Tipo de Macroprocesso</th>
+											<th width="29%">Tipo de Processo</th>
 											<th width="5%">Número</th>																						
 											<th width="3%"></th>																						
 											<th width="3%"></th>																						
 										</tr>
 									</thead>									
 									<tbody>										
-										<?php
+										<?php											
 											foreach ($macroProcs as $macroProc) {
-												echo "<tr>";												
-												echo "<td>".$macroProc->getId()."</td>";
+												echo "<tr>";
+												//Util::debug($macroProc);												
+												echo "<td><strong>".$macroProc->getMacroProcType()[0]->getInitials()."".str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";
 												echo "<td>".$macroProc->getName()."</td>";												
 												echo "<td>".$macroProc->getMacroProcType()[0]->getName()."</td>";
-												echo "<td>".$macroProc->getNumber()."</td>";												
+												echo "<td><strong>".str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";												
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
@@ -73,7 +74,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													</button>
 												</td>
 										<?php		
-												echo "</tr>";
+												echo "</tr>";											
 											}
 										?>
 									</tbody>
@@ -196,7 +197,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 	<script>
 	  	$(function () {  	
 			$('#tableProcTypes').DataTable({				
-				"lengthMenu": [[10, 20, -1], [10, 20, "Todos"]]
+				"lengthMenu": [[10, 20, -1], [10, 20, "Todos"]],
+				"order": [[ 2, 'desc' ], [ 3, 'asc' ]]
 			});
 		});
 

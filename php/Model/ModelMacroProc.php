@@ -1,4 +1,5 @@
 <?php
+include_once $_SESSION["root"].'php/Util/Util.php';
 include_once $_SESSION["root"].'php/DAO/ProcTypeDAO.php';
 
 class ModelMacroProc
@@ -9,10 +10,9 @@ class ModelMacroProc
     private $id_proc_type;
     private $macroProcType;
 
-    public function setMacroProcFromDatabase($macroProc){
+    public function setMacroProcFromDatabase($macroProc){        
         $macroProcTypeDAO = new ProcTypeDAO();
-        $macroProcType = $macroProcTypeDAO->readProcTypeById($macroProc["id"]);
-
+        $macroProcType = $macroProcTypeDAO->readProcTypeById($macroProc["id_proc_type"]);        
         $this->setId($macroProc["id"])            
                 ->setName($macroProc["name"])
                 ->setnumber($macroProc["number"])

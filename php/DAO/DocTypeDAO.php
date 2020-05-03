@@ -8,7 +8,7 @@ class DocTypeDAO
 {
     public function readDocType(){
 
-        try { $sql = ('SELECT * FROM public.tb_doc_type ORDER BY name');
+        try { $sql = ('SELECT * FROM public.tb_doc_type ORDER BY id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);

@@ -45,10 +45,10 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								<table id="tableDocTypes" class="table table-bordered table-striped">
 									<thead>
 										<tr>
-											<th width="5%">Id</th>											
-											<th width="75%">Nome</th>
-											<th width="5%">Sigla</th>																						
-											<th width="5%">Nível</th>																						
+											<!--<th width="3%">Id</th>-->
+											<th width="10%">Sigla</th>											
+											<th width="74%">Nome</th>																
+											<th width="10%">Nível</th>																						
 											<th width="3%"></th>																						
 											<th width="3%"></th>																						
 										</tr>
@@ -57,10 +57,10 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<?php
 											foreach ($doctypes as $doctype) {
 												echo "<tr>";
-												echo "<td>".$doctype->getId()."</td>";
+												//echo "<td>".$doctype->getId()."</td>";
+												echo "<td><strong>".$doctype->getInitials()."</strong></td>";
 												echo "<td>".$doctype->getName()."</td>";
-												echo "<td>".$doctype->getInitials()."</td>";
-												echo "<td>".$doctype->getLevel()."</td>";
+												echo "<td><strong>".$doctype->getLevel()."</strong></td>";
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
@@ -197,7 +197,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 	<script>
 		$(function () {  	
 			$('#tableDocTypes').DataTable({				
-				"lengthMenu": [[10, -1], [10, "Todos"]]
+				"lengthMenu": [[10, -1], [10, "Todos"]],
+				"order": [[ 1, 'asc' ]]
 			});
 		});
 		

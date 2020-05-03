@@ -43,9 +43,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								<table id="tableSectors" class="table table-bordered table-striped">
 									<thead>
 										<tr>											
-											<th width="3%">Id</th>
+											<!--<th width="3%">Id</th>-->
 											<th width="10%">Sigla</th>
-											<th width="80%">Nome</th>																						
+											<th width="84%">Nome</th>																						
 											<th width="3%"></th>																						
 											<th width="3%"></th>																						
 										</tr>
@@ -54,7 +54,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<?php
 											foreach ($sectors as $sector) {
 												echo "<tr>";												
-												echo "<td>".$sector->getId()."</td>";
+												//echo "<td>".$sector->getId()."</td>";
 												echo "<td><strong>".$sector->getInitials()."</strong></td>";
 												echo "<td>".$sector->getName()."</td>";
 												
@@ -184,7 +184,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 	<script>
 	  	$(function () {  	
 			$('#tableSectors').DataTable({				
-				"lengthMenu": [[10, 20, -1], [10, 20, "Todos"]]
+				"lengthMenu": [[10, 20, -1], [10, 20, "Todos"]],
+				"order": [[ 1, 'asc' ]]
 			});
 		});
 

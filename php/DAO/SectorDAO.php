@@ -8,7 +8,7 @@ class SectorDAO
 {
     public function readSector(){
 
-        try { $sql = ('SELECT * FROM public.tb_sector ORDER BY initials');
+        try { $sql = ('SELECT * FROM public.tb_sector ORDER BY id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);

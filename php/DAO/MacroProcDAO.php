@@ -8,7 +8,7 @@ class MacroProcDAO
 {
     public function readMacroProc(){
 
-        try { $sql = ('SELECT * FROM public.tb_macroprocess ORDER BY id');
+        try { $sql = ('SELECT * FROM public.tb_macroprocess');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -20,7 +20,7 @@ class MacroProcDAO
                 return null;
             //Var que irá armazenar um array de obj do tipo funcionário
             $macroProcs;
-            //Util::debug($linhas);
+            //Util::debug($records);
             foreach ($records as $value) {
                 $macroProc = new ModelMacroProc();
                 $macroProc->setMacroProcFromDatabase($value);

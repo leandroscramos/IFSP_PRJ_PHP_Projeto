@@ -18,7 +18,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 
 						<div class="box box-warning">
 							<div class="box-header with-border">
-								<h3 class="box-title">Tipos de Macroprocessos</h3>
+								<h3 class="box-title">Tipos de Processos</h3>
 							</div>
 							<div class="box-header">
 								<?php 
@@ -43,9 +43,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								<table id="tableProcTypes" class="table table-bordered table-striped">
 									<thead>
 										<tr>											
-											<th width="3%">Id</th>
+											<!--<th width="3%">Id</th>-->
 											<th width="10%">Sigla</th>
-											<th width="80%">Nome</th>																						
+											<th width="84%">Nome</th>																						
 											<th width="3%"></th>																						
 											<th width="3%"></th>																						
 										</tr>
@@ -54,7 +54,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<?php
 											foreach ($procTypes as $procType) {
 												echo "<tr>";												
-												echo "<td>".$procType->getId()."</td>";
+												//echo "<td>".$procType->getId()."</td>";
 												echo "<td><strong>".$procType->getInitials()."</strong></td>";
 												echo "<td>".$procType->getName()."</td>";
 												
@@ -88,7 +88,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Cadastro | Tipos de Macroprocessos</h4>
+										<h4 class="modal-title">Cadastro | Tipos de Processos</h4>
 									</div>
 									<form action="procType" method="POST">
 									<input type="hidden" name="action" id="action" value="create">
@@ -122,7 +122,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Atualização | Tipos de Macroprocessos</h4>
+										<h4 class="modal-title">Atualização | Tipos de Processos</h4>
 									</div>
 									<form action="procType" method="POST">
 									<input type="hidden" name="action" id="action" value="update">
@@ -157,7 +157,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Exclusão | Tipos de Macroprocessos</h4>
+										<h4 class="modal-title">Exclusão | Tipos de Processos</h4>
 									</div>
 									<form action="procType" method="POST">
 									<input type="hidden" name="action" id="action" value="delete">
