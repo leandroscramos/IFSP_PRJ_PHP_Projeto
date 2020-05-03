@@ -2,13 +2,13 @@
 
 include_once $_SESSION["root"].'php/Util/Util.php';
 include_once $_SESSION["root"].'php/DAO/DatabaseConnection.php';
-include_once $_SESSION["root"].'php/Model/ModelMacroProc.php';
+include_once $_SESSION["root"].'php/Model/ModelProcess.php';
 
-class MacroProcDAO
+class ProcessDAO
 {
-    public function readMacroProc(){
+    public function readProcess(){
 
-        try { $sql = ('SELECT * FROM public.tb_macroprocess');
+        try { $sql = ('SELECT * FROM public.tb_process');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -19,20 +19,21 @@ class MacroProcDAO
             if(count($records)==0)
                 return null;
             //Var que irá armazenar um array de obj do tipo funcionário
-            $macroProcs;
+            $processs;
             //Util::debug($records);
             foreach ($records as $value) {
-                $macroProc = new ModelMacroProc();
-                $macroProc->setMacroProcFromDatabase($value);
-                $macroProcs[]=$macroProc;
+                $process = new ModelProcess();
+                $process->setProcessFromDatabase($value);
+                $processs[]=$process;
             }
-            return $macroProcs;
+            return $processs;
 
         } catch (PDOException $e) {
             echo "Erro ao ler registros na base de dados.".$e->getMessage();
         }
     }    
 
+    /*
     public function createMacroProc($procType){			
         
 		try { $sql = "INSERT INTO public.tb_macroprocess (initials, name) VALUES (:initials, :name)";
@@ -145,33 +146,5 @@ class MacroProcDAO
             echo "Erro ao ler registros na base de dados.".$e->getMessage();
         }
     }
-
-    public function readMacroProcById($id){
-
-        try { $sql = ('SELECT * FROM public.tb_macroprocess WHERE id = :id');
-            $instance = DatabaseConnection::getInstance();
-            $conn = $instance->getConnection();
-            $statement = $conn->prepare($sql);
-                        
-            $statement->bindParam(':id', $id); 
-            $statement->execute();
-
-            $records = $statement->fetchAll();
-            //Verifico se houve algum retorno, senão retorno null
-            if(count($records)==0)
-                return null;
-            //Var que irá armazenar um array de obj do tipo funcionário
-            $macroProcs;
-            //Util::debug($linhas);
-            foreach ($records as $value) {
-                $macroProc = new ModelMacroProc();
-                $macroProc->setMacroProcFromDatabase($value);
-                $macroProcs[]=$macroProc;
-            }
-            return $macroProcs;
-
-        } catch (PDOException $e) {
-            echo "Erro ao ler registros na base de dados.".$e->getMessage();
-        }
-    }
+    */
 }
