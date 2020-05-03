@@ -2,13 +2,13 @@
 
 include_once $_SESSION["root"].'php/Util/Util.php';
 include_once $_SESSION["root"].'php/DAO/DatabaseConnection.php';
-include_once $_SESSION["root"].'php/Model/ModelSector.php';
+include_once $_SESSION["root"].'php/Model/ModelMacroProc.php';
 
-class SectorDAO
+class MacroProcDAO
 {
-    public function readSector(){
+    public function readMacroProc(){
 
-        try { $sql = ('SELECT * FROM public.tb_sector ORDER BY id');
+        try { $sql = ('SELECT * FROM public.tb_macroprocess');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -19,30 +19,30 @@ class SectorDAO
             if(count($records)==0)
                 return null;
             //Var que irá armazenar um array de obj do tipo funcionário
-            $sectors;
-            //Util::debug($linhas);
+            $macroProcs;
+            //Util::debug($records);
             foreach ($records as $value) {
-                $sector = new ModelSector();
-                $sector->setSectorFromDatabase($value);
-                $sectors[]=$sector;
+                $macroProc = new ModelMacroProc();
+                $macroProc->setMacroProcFromDatabase($value);
+                $macroProcs[]=$macroProc;
             }
-            return $sectors;
+            return $macroProcs;
 
         } catch (PDOException $e) {
             echo "Erro ao ler registros na base de dados.".$e->getMessage();
         }
     }    
 
-    public function createSector($sector){			
+    public function createMacroProc($procType){			
         
-		try { $sql = "INSERT INTO public.tb_sector (initials, name) VALUES (:initials, :name)";
+		try { $sql = "INSERT INTO public.tb_macroprocess (initials, name) VALUES (:initials, :name)";
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
             $statement = $conn->prepare($sql);
             
-            $statement->bindValue(":initials", $sector->getInitials());
-            $statement->bindValue(":name", $sector->getName());
+            $statement->bindValue(":initials", $macroProc->getInitials());
+            $statement->bindValue(":name", $macroProc->getName());
 
             return $statement->execute();
 
@@ -51,17 +51,17 @@ class SectorDAO
         }		
     }
 
-    public function updateSector($sector) {
+    public function updateMacroProc($macroProc) {
         
-        try { $sql = ('UPDATE public.tb_sector SET initials = :initials, name = :name WHERE id = :id');
+        try { $sql = ('UPDATE public.tb_macroprocess SET initials = :initials, name = :name WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
 
-            $statement->bindParam(':id', $sector->getId()); 
-            $statement->bindParam(':initials', $sector->getInitials()); 
-            $statement->bindParam(':name', $sector->getName()); 
+            $statement->bindParam(':id', $macroProc->getId()); 
+            $statement->bindParam(':initials', $macroProc->getInitials()); 
+            $statement->bindParam(':name', $macroProc->getName()); 
             $statement->execute();
                
             return $statement->execute(); 
@@ -70,9 +70,9 @@ class SectorDAO
         }
     }
     
-    public function deleteSector($id) {        
+    public function deleteMacroProc($id) {        
 
-        try { $sql = ('DELETE FROM public.tb_sector WHERE id = :id');
+        try { $sql = ('DELETE FROM public.tb_macroprocess WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -88,9 +88,9 @@ class SectorDAO
         
     }
 
-    public function readSectorByName($name){
+    public function readMacroProcByName($name){
 
-        try { $sql = ('SELECT * FROM public.tb_sector WHERE name = :name');
+        try { $sql = ('SELECT * FROM public.tb_macroprocess WHERE name = :name');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -103,23 +103,23 @@ class SectorDAO
             if(count($records)==0)
                 return null;
             //Var que irá armazenar um array de obj do tipo funcionário
-            $sectors;
+            $macroProcs;
             //Util::debug($linhas);
             foreach ($records as $value) {
-                $sector = new ModelSector();
-                $sector->setSectorFromDatabase($value);
-                $sectors[]=$sector;
+                $macroProc = new ModelMacroProc();
+                $macroProc->setMacroProcFromDatabase($value);
+                $macroProcs[]=$macroProc;
             }
-            return $sectors;
+            return $procTypes;
 
         } catch (PDOException $e) {
             echo "Erro ao ler registros na base de dados.".$e->getMessage();
         }
     }
     
-    public function readSectorByInitials($initials){
+    public function readMacroProcByInitials($initials){
 
-        try { $sql = ('SELECT * FROM public.tb_sector WHERE initials = :initials');
+        try { $sql = ('SELECT * FROM public.tb_macroprocess WHERE initials = :initials');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -132,14 +132,14 @@ class SectorDAO
             if(count($records)==0)
                 return null;
             //Var que irá armazenar um array de obj do tipo funcionário
-            $sectors;
+            $procTypes;
             //Util::debug($linhas);
             foreach ($records as $value) {
-                $sector = new ModelSector();
-                $sector->setSectorFromDatabase($value);
-                $sectors[]=$sector;
+                $procType = new ModelMacroProc();
+                $procType->setProcTypeFromDatabase($value);
+                $procTypes[]=$procType;
             }
-            return $sectors;
+            return $procTypes;
 
         } catch (PDOException $e) {
             echo "Erro ao ler registros na base de dados.".$e->getMessage();

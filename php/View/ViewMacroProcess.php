@@ -18,7 +18,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 
 						<div class="box box-warning">
 							<div class="box-header with-border">
-								<h3 class="box-title">Setores</h3>
+								<h3 class="box-title">Macroprocessos</h3>
 							</div>
 							<div class="box-header">
 								<?php 
@@ -40,39 +40,41 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 							</div>
 							<div class="box-body">
 								
-								<table id="tableSectors" class="table table-bordered table-striped">
+								<table id="tableProcTypes" class="table table-bordered table-striped">
 									<thead>
 										<tr>											
-											<!--<th width="3%">Id</th>-->
 											<th width="10%">Sigla</th>
-											<th width="84%">Nome</th>																						
+											<th width="50%">Nome</th>
+											<th width="29%">Tipo de Processo</th>
+											<th width="5%">Número</th>																						
 											<th width="3%"></th>																						
 											<th width="3%"></th>																						
 										</tr>
 									</thead>									
 									<tbody>										
-										<?php
-											foreach ($sectors as $sector) {
-												echo "<tr>";												
-												//echo "<td>".$sector->getId()."</td>";
-												echo "<td><strong>".$sector->getInitials()."</strong></td>";
-												echo "<td>".$sector->getName()."</td>";
-												
+										<?php											
+											foreach ($macroProcs as $macroProc) {
+												echo "<tr>";
+												//Util::debug($macroProc);												
+												echo "<td><strong>".$macroProc->getMacroProcType()[0]->getInitials()."".str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";
+												echo "<td>".$macroProc->getName()."</td>";												
+												echo "<td>".$macroProc->getMacroProcType()[0]->getName()."</td>";
+												echo "<td><strong>".str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";												
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
-													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $sector->getId();?>','<?php echo $sector->getInitials(); ?>','<?php echo $sector->getName(); ?>')">
+													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $macroProc->getId();?>','<?php echo $macroProc->getName(); ?>',,'<?php echo $macroProc->getIdProcType(); ?>''<?php echo $macroProc->getNumber(); ?>')">
 														<i class="far fa-edit"></i>
 													</button>	
 												</td>												
 												<td>
 													<button type="button" class="btn btn-sm btn-danger pull-left" data-toggle="modal" data-target="#modalDelete" 
-													style="width: 100%; white-space: normal" onclick="setIdModalDelete(<?php echo $sector->getId(); ?>)">
+													style="width: 100%; white-space: normal" onclick="setIdModalDelete(<?php echo $macroProc->getId(); ?>)">
 														<i class="far fa-trash-alt"></i>
 													</button>
 												</td>
 										<?php		
-												echo "</tr>";
+												echo "</tr>";											
 											}
 										?>
 									</tbody>
@@ -81,27 +83,38 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 							
 						</div>
 						
-						<!-- Modal - Cadastro de Setores -->
+						<!-- Modal - Cadastro de Tipos de Macroprocessos -->
 						<div id="modalCreate" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Cadastro | Setores</h4>
+										<h4 class="modal-title">Cadastro | Macroprocessos</h4>
 									</div>
-									<form action="sector" method="POST">
+									<form action="procType" method="POST">
 									<input type="hidden" name="action" id="action" value="create">
 										<div class="modal-body">																	            								            
 											<div class="row">
 												<div class="form-group">					                  
 													<div class="col-sm-4">
-														<label for="sectorInitials"">Sigla</label>
-														<input type="text" class="form-control" id="sectorInitials" name="sectorInitials" placeholder="">												
+														<label for="procTypeInitials"">Sigla</label>
+														<input type="text" class="form-control" id="procTypeInitials" name="procTypeInitials" placeholder="">												
 													</div>
 													<div class="col-sm-8">
-														<label for="sectorName">Nome</label>
-														<input type="text" class="form-control" id="sectorName" name="sectorName" placeholder="">
+														<label for="procTypeName">Nome</label>
+														<input type="text" class="form-control" id="procTypeName" name="procTypeName" placeholder="">
+													</div>
+													<div class="col-sm-12">
+														<label for="id_macro_proc">Tipo de Macroprocesso</label>					                    
+														<select class="form-control" id="id_macro_proc" name="id_macro_proc" >
+															<option selected disabled>Selecione</option>															
+															<?php
+															foreach ($procTypes as $procType) {
+																echo "<option>".$procType->getName()."</option>";
+															}
+															?>
+														</select>
 													</div>
 												</div>
 											</div>
@@ -115,29 +128,29 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								</div>								
 							</div>							
 						</div>
-						<!-- Modal - Atualização de Setores -->					
+						<!-- Modal - Atualização de Tipos de Macroprocessos -->					
 						<div id="modalUpdate" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Atualização | Setores</h4>
+										<h4 class="modal-title">Atualização | Macroprocessos</h4>
 									</div>
-									<form action="sector" method="POST">
+									<form action="procType" method="POST">
 									<input type="hidden" name="action" id="action" value="update">
 										<div class="modal-body">
 											<div class="row">
 												<div class="col-sm-4">
-													<label for="sectorInitialsUpdate"">Sigla</label>
-													<input type="text" class="form-control" id="sectorInitialsUpdate" name="sectorInitialsUpdate" placeholder="">												
+													<label for="procTypeInitialsUpdate"">Sigla</label>
+													<input type="text" class="form-control" id="procTypeInitialsUpdate" name="procTypeInitialsUpdate" placeholder="">												
 												</div>
 												<div class="col-sm-8">
-													<label for="sectorNameUpdate">Nome</label>
-													<input type="text" class="form-control" id="sectorNameUpdate" name="sectorNameUpdate" placeholder="">
+													<label for="procTypeNameUpdate">Nome</label>
+													<input type="text" class="form-control" id="procTypeNameUpdate" name="procTypeNameUpdate" placeholder="">
 												</div>
 												<div class="col-sm-4">
-													<input type="hidden" name="sectorIdModalUpdate" id="sectorIdModalUpdate">
+													<input type="hidden" name="procTypeIdModalUpdate" id="procTypeIdModalUpdate">
 												</div>
 											</div>											
 										</div>
@@ -150,19 +163,19 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								</div>								
 							</div>							
 						</div>
-						<!-- Modal - Exclusão de Setores -->
+						<!-- Modal - Exclusão de Tipos de Macroprocessos -->
 						<div id="modalDelete" class="modal fade" >
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Exclusão | Setores</h4>
+										<h4 class="modal-title">Exclusão | Macroprocessos</h4>
 									</div>
-									<form action="sector" method="POST">
+									<form action="procType" method="POST">
 									<input type="hidden" name="action" id="action" value="delete">
 										<div class="modal-body">
-					      					<p>Tem certeza que deseja excluir esse setor?</p>
+					      					<p>Tem certeza que deseja excluir esse Tipo de Macroprocessos?</p>
 											<input type="hidden" name="idModalDelete" id="idModalDelete">
 										</div>
 										<div class="modal-footer">											
@@ -183,9 +196,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 	<?php include $_SESSION["root"].'includes/footer.php'; ?>
 	<script>
 	  	$(function () {  	
-			$('#tableSectors').DataTable({				
+			$('#tableProcTypes').DataTable({				
 				"lengthMenu": [[10, 20, -1], [10, 20, "Todos"]],
-				"order": [[ 1, 'asc' ]]
+				"order": [[ 2, 'desc' ], [ 3, 'asc' ]]
 			});
 		});
 
@@ -194,9 +207,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 		}
 
 		function setIdModalUpdate(id, initials, name) {			
-			document.getElementById('sectorIdModalUpdate').value = id;
-			document.getElementById('sectorInitialsUpdate').value = initials;			
-			document.getElementById('sectorNameUpdate').value = name;
+			document.getElementById('procTypeIdModalUpdate').value = id;
+			document.getElementById('procTypeInitialsUpdate').value = initials;			
+			document.getElementById('procTypeNameUpdate').value = name;
 		}
 	</script>
 </body>
