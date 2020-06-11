@@ -8,7 +8,7 @@ class MacroProcDAO
 {
     public function readMacroProc(){
 
-        try { $sql = ('SELECT * FROM public.tb_macroprocess');
+        try { $sql = ('SELECT * FROM public.tb_macroprocess ORDER BY id_proc_type ASC, number ASC');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);

@@ -95,7 +95,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									<form action="process" method="POST">
 									<input type="hidden" name="action" id="action" value="create">
 										<div class="modal-body">																	            								            
-											<div class="row">
+											<div class="row">												
 												<div class="form-group">
 													<div class="col-sm-9">
 														<label for="processName">Nome</label>
@@ -105,6 +105,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 														<label for="processNumber">Número</label>
 														<input type="text" class="form-control" id="processNumber" name="processNumber" placeholder="">
 													</div>
+													&nbsp;
 													<div class="col-sm-12">
 														<label for="id_macroprocess">Macroprocesso</label>					                    
 														<select class="form-control" id="id_macroprocess" name="id_macroprocess" >

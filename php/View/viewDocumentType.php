@@ -47,8 +47,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<tr>
 											<!--<th width="3%">Id</th>-->
 											<th width="10%">Sigla</th>											
-											<th width="74%">Nome</th>																
+											<th width="60%">Nome</th>																
 											<th width="10%">Nível</th>																						
+											<th width="14%">Revisão (anos)</th>																						
 											<th width="3%"></th>																						
 											<th width="3%"></th>																						
 										</tr>
@@ -61,10 +62,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												echo "<td><strong>".$doctype->getInitials()."</strong></td>";
 												echo "<td>".$doctype->getName()."</td>";
 												echo "<td><strong>".$doctype->getLevel()."</strong></td>";
+												echo "<td>".$doctype->getMaxRevPeriod()."</td>";
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
-													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $doctype->getId();?>','<?php echo $doctype->getName(); ?>','<?php echo $doctype->getInitials(); ?>','<?php echo $doctype->getLevel(); ?>')">
+													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $doctype->getId();?>','<?php echo $doctype->getName(); ?>','<?php echo $doctype->getInitials(); ?>','<?php echo $doctype->getLevel(); ?>','<?php echo $doctype->getMaxRevPeriod(); ?>')">
 														<i class="far fa-edit"></i>
 													</button>	
 												</td>												
@@ -135,21 +137,28 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<input type="hidden" name="docTypeIdModalUpdate" id="docTypeIdModalUpdate">
 										<!--<input type="hidden" name="docTypeTitleUpdate" id="docTypeTitleUpdate">
 										<input type="hidden" name="docTypeInitialsUpdate" id="docTypeInitialsUpdate">
-										<input type="hidden" name="docTypeLevelUpdate" id="docTypeLevelUpdate">-->
+										<input type="hidden" name="docTypeLevelUpdate" id="docTypeLevelUpdate">
+										<input type="hidden" name="docTypeMaxRevPeriodUpdate" id="docTypeMaxRevPeriodUpdate">-->
 									
 										<div class="modal-body">
 											<div class="row">
-												<div class="col-sm-6">
-													<label for="docTypeTitle"">Tipo do documento</label>
+												<div class="col-sm-8">
+													<label for="docTypeTitleUpdate">Tipo do documento</label>
 													<input type="text" class="form-control" id="docTypeTitleUpdate" name="docTypeTitleUpdate" placeholder="">												
 												</div>
 												<div class="col-sm-4">
-														<label for="docTypeInitialsUpdate"">Sigla do documento</label>
-														<input type="text" class="form-control" id="docTypeInitialsUpdate" name="docTypeInitialsUpdate" placeholder="">												
-													</div>
-												<div class="col-sm-2">
-													<label for="docTypeLevel">Nível</label>
+													<label for="docTypeInitialsUpdate">Sigla do documento</label>
+													<input type="text" class="form-control" id="docTypeInitialsUpdate" name="docTypeInitialsUpdate" placeholder="">												
+												</div>
+											</div>&nbsp;
+											<div class="row">
+												<div class="col-sm-4">
+													<label for="docTypeLevelUpdate">Nível</label>
 													<input type="number" class="form-control" id="docTypeLevelUpdate" name="docTypeLevelUpdate" min="1" max="3" placeholder="">
+												</div>
+												<div class="col-sm-8">
+													<label for="docTypeMaxRevPeriodUpdate">Período máximo para revisão</label>
+													<input type="number" class="form-control" id="docTypeMaxRevPeriodUpdate" name="docTypeMaxRevPeriodUpdate" placeholder="">
 												</div>												
 											</div>											
 										</div>
@@ -206,11 +215,12 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 			document.getElementById('idModalDelete').value = id;
 		}
 
-		function setIdModalUpdate(id, name, initials, level) {			
+		function setIdModalUpdate(id, name, initials, level, maxRevPeriod) {			
 			document.getElementById('docTypeIdModalUpdate').value = id;
 			document.getElementById('docTypeTitleUpdate').value = name;			
 			document.getElementById('docTypeInitialsUpdate').value = initials;
 			document.getElementById('docTypeLevelUpdate').value = level;			
+			document.getElementById('docTypeMaxRevPeriodUpdate').value = maxRevPeriod;
 		}
 	</script>
 </body>

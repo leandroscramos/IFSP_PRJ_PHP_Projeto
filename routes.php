@@ -47,12 +47,36 @@ else if ($action == 'docList') {
     include_once $_SESSION["root"].'php/View/viewDocumentList.php';
 }
 
+
+
+/* Rota para Tipos de Documento */
 else if ($action == 'document') {
-    $cDocType = new ControllerDocType();
-    $doctypes = $cDocType->readDocType();
-    $cSector = new ControllerSector();
-    $sectors = $cSector->readSector();
-    include_once $_SESSION["root"].'php/View/viewDocument.php';
+    //if (($_SESSION['login']['permissao']) == 'Administrador') {
+        if (isset($_POST['action'])) {
+            switch ($_POST['action']) {
+                case 'create':
+                    ControllerDocType::createDocType();
+                    header("Location:docType");
+                    break;        
+                case 'update':
+                    ControllerDocType::updateDocType();    
+                    header("Location:docType");
+                    break;
+                case 'delete':
+                    ControllerDocType::deleteDocType();    
+                    header("Location:docType");
+                    break;
+            }
+        } else {            
+            $doctypes = ControllerDocType::readDocType();            
+            $sectors = ControllerSector::readSector();
+            $processs = ControllerProcess::readProcess();
+            include_once $_SESSION["root"].'php/View/viewDocument.php';
+        }
+    //} else {
+      //  header("Location:logado");
+    //}
+    
 }
 
 
@@ -62,24 +86,22 @@ else if ($action == 'docType') {
         if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'create':
-                    $cDocType = new ControllerDocType();
-                    $cDocType->createDocType();    
+                    ControllerDocType::createDocType();                    
                     header("Location:docType");
                     break;        
                 case 'update':
-                    $cDocType = new ControllerDocType();
-                    $cDocType->updateDocType();    
+                    ControllerDocType::updateDocType();                        
                     header("Location:docType");
                     break;
                 case 'delete':
-                    $cDocType = new ControllerDocType();
-                    $cDocType->deleteDocType();    
+                    ControllerDocType::deleteDocType();                    
                     header("Location:docType");
                     break;
             }
         } else {
-            $cDocType = new ControllerDocType();
-            $doctypes = $cDocType->readDocType();
+            $doctypes = ControllerDocType::readDocType();
+            //$cDocType = new ControllerDocType();
+            //$doctypes = $cDocType->readDocType();
             include_once $_SESSION["root"].'php/View/viewDocumentType.php';
         }
     } else {
@@ -94,24 +116,20 @@ else if ($action == 'sector') {
         if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'create':
-                    $cSector = new ControllerSector();
-                    $cSector->createSector();    
+                    ControllerSector::createSector();    
                     header("Location:sector");
                     break;        
                 case 'update':
-                    $cSector = new ControllerSector();
-                    $cSector->updateSector();    
+                    ControllerSector::updateSector();    
                     header("Location:sector");
                     break;
                 case 'delete':
-                    $cSector = new ControllerSector();
-                    $cSector->deleteSector();    
+                    ControllerSector::deleteSector();    
                     header("Location:sector");
                     break;
             }
         } else {
-            $cSector = new ControllerSector();
-            $sectors = $cSector->readSector();
+            $sectors = ControllerSector::readSector();            
             include_once $_SESSION["root"].'php/View/ViewSector.php';
         }
     } else {
@@ -125,24 +143,20 @@ else if ($action == 'procType') {
         if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'create':
-                    $cProcType = new ControllerProcType();
-                    $cProcType->createProcType();    
+                    ControllerProcType::createProcType();    
                     header("Location:procType");
                     break;        
                 case 'update':
-                    $cProcType = new ControllerProcType();
-                    $cProcType->updateProcType();    
+                    ControllerProcType::updateProcType();    
                     header("Location:procType");
                     break;
                 case 'delete':
-                    $cProcType = new ControllerProcType();
-                    $cProcType->deleteProcType();    
+                    ControllerProcType::deleteProcType();    
                     header("Location:procType");
                     break;
             }
-        } else {
-            $cProcType = new ControllerProcType();
-            $procTypes = $cProcType->readProcType();
+        } else {            
+            $procTypes = ControllerProcType::readProcType();
             include_once $_SESSION["root"].'php/View/ViewProcType.php';
         }
     } else {
@@ -156,26 +170,21 @@ else if ($action == 'macroProc') {
         if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'create':
-                    $cMacroProc = new ControllerMacroProc();
-                    $cMacroProc->createMacroProc();    
+                    ControllerMacroProc::createMacroProc();    
                     header("Location:macroProc");
                     break;        
                 case 'update':
-                    $cMacroProc = new ControllerMacroProc();
-                    $cMacroProc->updateMacroProc();    
+                    ControllerMacroProc::updateMacroProc();    
                     header("Location:macroProc");
                     break;
                 case 'delete':
-                    $cMacroProc = new ControllerMacroProc();
-                    $cMacroProc->deleteMacroProc();    
+                    ControllerMacroProc::deleteMacroProc();    
                     header("Location:macroProc");
                     break;
             }
-        } else {
-            $cMacroProc = new ControllerMacroProc();
-            $macroProcs = $cMacroProc->readMacroProc();
-            $cProcType = new ControllerProcType();
-            $procTypes = $cProcType->readProcType();
+        } else {            
+            $macroProcs = ControllerMacroProc::readMacroProc();            
+            $procTypes = ControllerProcType::readProcType();
             include_once $_SESSION["root"].'php/View/ViewMacroProcess.php';
         }
     } else {
@@ -189,26 +198,21 @@ else if ($action == 'process') {
         if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'create':
-                    $cProcess = new ControllerProcess();
-                    $cProcess->createProcess();    
+                    ControllerProcess::createProcess();    
                     header("Location:process");
                     break;        
                 case 'update':
-                    $cProcess = new ControllerProcess();
-                    $cProcess->updateProcess();    
+                    ControllerProcess::updateProcess();    
                     header("Location:process");
                     break;
                 case 'delete':
-                    $cProcess = new ControllerProcess();
-                    $cProcess->deleteProcess();    
+                    ControllerProcess::deleteProcess();    
                     header("Location:process");
                     break;
             }
-        } else {
-            $cProcess = new ControllerProcess();
-            $processs = $cProcess->readProcess();
-            $cMacroProc = new ControllerMacroProc();
-            $macroProcs = $cMacroProc->readMacroProc();
+        } else {            
+            $processs = ControllerProcess::readProcess();            
+            $macroProcs = ControllerMacroProc::readMacroProc();
             include_once $_SESSION["root"].'php/View/ViewProcess.php';
         }
     } else {
