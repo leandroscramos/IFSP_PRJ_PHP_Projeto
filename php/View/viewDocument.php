@@ -9,6 +9,13 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 		var nomeSetor = document.getElementById("doc_sigla_setor").value;		
 		document.getElementById("doc_nome_setor").value = nomeSetor;
 	}
+
+	function processos_tipo() {
+		var tipoProcesso = document.getElementById("doc_proc_name").value;		
+		document.getElementById("doc_proc_type").value = tipoProcesso;
+	}
+
+
 </script>
 
 <?php include "includes/menu.php";?>
@@ -33,15 +40,15 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 					            	<div class="box-tools pull-right">
 						          </div>
 
+								  <?php //Util::debug($processs); ?>
+
 								  <form action="" method="POST">						            								            
 									<div class="box-body">
 										<div class="form-group">					                  
 											<div class="col-sm-6">
 												<label for="doc_title"">Título</label>
 												<input type="text" class="form-control" id="doc_title" name="doc_title" placeholder="">
-											</div>
-										</div>
-										<div class="form-group">					                  					                  
+											</div>															                  					                  
 											<div class="col-sm-3">
 												<label for="doc_type">Tipo do Documento</label>					                    
 												<select class="form-control" id="doc_type" name="doc_type" >
@@ -70,11 +77,13 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 
 												</select>
 											</div>
-											<div class="col-sm-2">
+											<div class="col-sm-3">
 												<label for="doc_codigo">Código</label>
-												<input type="text" class="form-control" id="doc_codigo" name="doc_codigo" placeholder="" disabled>
+												<input type="text" class="form-control" id="doc_codigo" name="doc_codigo" placeholder="" readonly="true">
 											</div>
-											<div class="col-sm-1">
+										</div>
+										<div class="form-group">
+											<div class="col-sm-2">
 												<label for="doc_setor">Setor</label>												
 												<select class="form-control" id="doc_sigla_setor" name="doc_sigla_setor" onchange="setores();">
 													<option selected disabled>Selecione</option>                                                    
@@ -87,18 +96,25 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 											<div class="col-sm-4">
 												<label for="doc_setor">Nome do Setor</label>					                    
-												<input type="text" class="form-control" id="doc_nome_setor" name="doc_nome_setor" placeholder="" disabled>
-											</div>					                  
-											<div class="col-sm-2">
-												<label for="doc_proc_type">Processo/Tipo</label>
-												<input type="text" class="form-control" id="doc_proc_type" name="doc_proc_type" placeholder="" disabled>
-											</div>
+												<input type="text" class="form-control" id="doc_nome_setor" name="doc_nome_setor" placeholder="" readonly="true">
+											</div>											
 										</div>
-
+										<hr>
 										<div class="form-group">
 											<div class="col-sm-6">
-												<label for="doc_proc_name">Nome do Processo</label>
-												<input type="text" class="form-control" id="doc_proc_type" name="doc_proc_type" placeholder="" >
+												<label for="doc_proc_name">Processo</label>												
+												<select class="form-control" id="doc_proc_name" name="doc_proc_name" onchange="processos_tipo();">
+													<option selected disabled>Selecione</option>                                                    
+                                                    <?php
+                                                    foreach ($processs as $process) {
+                                                        echo "<option value='".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."'>".$process->getName()."</option>";
+                                                    }
+                                                    ?>													
+												</select>
+											</div>
+											<div class="col-sm-4">
+												<label for="doc_proc_type">Processo/Tipo</label>
+												<input type="text" class="form-control" id="doc_proc_type" name="doc_proc_type" placeholder="" readonly="true">
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_number">Numero</label>
@@ -109,7 +125,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="text" class="form-control" id="doc_version" name="doc_version" placeholder="">
 											</div>
 										</div>
-
+										<hr>
 										<div class="form-group">
 											<div class="col-sm-3">
 												<label for="doc_version">Elaborado por</label>

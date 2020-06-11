@@ -5,7 +5,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 ?>
 
 <?php include "includes/menu.php";?>
-
+	
 	<div class="wrapper">
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
@@ -18,9 +18,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 
 						<div class="box box-warning">
 							<div class="box-header with-border">
-								<h3 class="box-title">Tipos de Documentos</h3>
+								<h3 class="box-title">Processos</h3>
 							</div>
-							
 							<div class="box-header">
 								<?php 
 									if (isset($_SESSION["flash"]["msg"])) {
@@ -35,81 +34,88 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										}
 									}
 								?>
-								
 								<button type="button" class="btn btn-success pull-left" data-toggle="modal" data-target="#modalCreate" style="width: 12%; white-space: normal">
 									Novo
 								</button>
 							</div>
 							<div class="box-body">
 								
-								<table id="tableDocTypes" class="table table-bordered table-striped">
+								<table id="tableProcTypes" class="table table-bordered table-striped">
 									<thead>
-										<tr>
-											<!--<th width="3%">Id</th>-->
-											<th width="10%">Sigla</th>											
-											<th width="60%">Nome</th>																
-											<th width="10%">Nível</th>																						
-											<th width="14%">Revisão (anos)</th>																						
+										<tr>											
+											<th width="10%">Sigla</th>
+											<th width="50%">Nome</th>
+											<th width="29%">Macroprocesso</th>
+											<th width="5%">Número</th>																						
 											<th width="3%"></th>																						
 											<th width="3%"></th>																						
 										</tr>
 									</thead>									
 									<tbody>										
-										<?php
-											foreach ($doctypes as $doctype) {
+										<?php											
+											foreach ($processs as $process) {
 												echo "<tr>";
-												//echo "<td>".$doctype->getId()."</td>";
-												echo "<td><strong>".$doctype->getInitials()."</strong></td>";
-												echo "<td>".$doctype->getName()."</td>";
-												echo "<td><strong>".$doctype->getLevel()."</strong></td>";
-												echo "<td>".$doctype->getMaxRevPeriod()."</td>";
+												echo "<td><strong>".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";
+												echo "<td>".$process->getName()."</td>";												
+												echo "<td>".$process->getMacroProcess()[0]->getName()."</td>";												
+												echo "<td><strong>".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";												
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
-													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $doctype->getId();?>','<?php echo $doctype->getName(); ?>','<?php echo $doctype->getInitials(); ?>','<?php echo $doctype->getLevel(); ?>','<?php echo $doctype->getMaxRevPeriod(); ?>')">
+													style="width: 100%; white-space: normal" onclick="">
 														<i class="far fa-edit"></i>
 													</button>	
 												</td>												
 												<td>
 													<button type="button" class="btn btn-sm btn-danger pull-left" data-toggle="modal" data-target="#modalDelete" 
-													style="width: 100%; white-space: normal" onclick="setIdModalDelete(<?php echo $doctype->getId(); ?>)">
+													style="width: 100%; white-space: normal" onclick="">
 														<i class="far fa-trash-alt"></i>
 													</button>
 												</td>
 										<?php		
-												echo "</tr>";
+												echo "</tr>";											
 											}
 										?>
+										
 									</tbody>
 								</table>
-							</div>							
+							</div>
+							
 						</div>
 						
-						<!-- Modal - Cadastro de Tipos de Documento -->
+						<!-- Modal - Cadastro de Tipos de Processos -->
 						<div id="modalCreate" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Cadastro | Tipo de Documento</h4>
+										<h4 class="modal-title">Cadastro | Processos</h4>
 									</div>
-									<form action="docType" method="POST">
+									<form action="process" method="POST">
 									<input type="hidden" name="action" id="action" value="create">
 										<div class="modal-body">																	            								            
-											<div class="row">
-												<div class="form-group">					                  
-													<div class="col-sm-6">
-														<label for="docTypeTitle"">Tipo do documento</label>
-														<input type="text" class="form-control" id="docTypeTitle" name="docTypeTitle" placeholder="">												
+											<div class="row">												
+												<div class="form-group">
+													<div class="col-sm-9">
+														<label for="processName">Nome</label>
+														<input type="text" class="form-control" id="processName" name="processName" placeholder="">
 													</div>
-													<div class="col-sm-4">
-														<label for="docTypeInitials"">Sigla do documento</label>
-														<input type="text" class="form-control" id="docTypeInitials" name="docTypeInitials" placeholder="">												
+													<div class="col-sm-3">
+														<label for="processNumber">Número</label>
+														<input type="text" class="form-control" id="processNumber" name="processNumber" placeholder="">
 													</div>
-													<div class="col-sm-2">
-														<label for="docTypeLevel">Nível</label>
-														<input type="number" class="form-control" id="docTypeLevel" name="docTypeLevel" min="1" max="3" placeholder="">
+													&nbsp;
+													<div class="col-sm-12">
+														<label for="id_macroprocess">Macroprocesso</label>					                    
+														<select class="form-control" id="id_macroprocess" name="id_macroprocess" >
+															<option selected disabled>Selecione</option>															
+															<?php
+																foreach ($macroProcs as $macroProc) {																	
+																	echo "<option value=".$macroProc->getId().">[".$macroProc->getMacroProcType()[0]->getInitials()."".str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT)."] - ".$macroProc->getName()."</option>";
+																}
+															?>
+														</select>
 													</div>
 												</div>
 											</div>
@@ -123,43 +129,30 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								</div>								
 							</div>							
 						</div>
-						<!-- Modal - Atualização de Tipos de Documento -->					
+						<!-- Modal - Atualização de Tipos de Processos -->					
 						<div id="modalUpdate" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Atualização | Tipo de Documento</h4>
+										<h4 class="modal-title">Atualização | Processos</h4>
 									</div>
-									<form action="docType" method="POST">
-										<input type="hidden" name="action" id="action" value="update">
-										<input type="hidden" name="docTypeIdModalUpdate" id="docTypeIdModalUpdate">
-										<!--<input type="hidden" name="docTypeTitleUpdate" id="docTypeTitleUpdate">
-										<input type="hidden" name="docTypeInitialsUpdate" id="docTypeInitialsUpdate">
-										<input type="hidden" name="docTypeLevelUpdate" id="docTypeLevelUpdate">
-										<input type="hidden" name="docTypeMaxRevPeriodUpdate" id="docTypeMaxRevPeriodUpdate">-->
-									
+									<form action="procType" method="POST">
+									<input type="hidden" name="action" id="action" value="update">
 										<div class="modal-body">
 											<div class="row">
-												<div class="col-sm-8">
-													<label for="docTypeTitleUpdate">Tipo do documento</label>
-													<input type="text" class="form-control" id="docTypeTitleUpdate" name="docTypeTitleUpdate" placeholder="">												
-												</div>
 												<div class="col-sm-4">
-													<label for="docTypeInitialsUpdate">Sigla do documento</label>
-													<input type="text" class="form-control" id="docTypeInitialsUpdate" name="docTypeInitialsUpdate" placeholder="">												
-												</div>
-											</div>&nbsp;
-											<div class="row">
-												<div class="col-sm-4">
-													<label for="docTypeLevelUpdate">Nível</label>
-													<input type="number" class="form-control" id="docTypeLevelUpdate" name="docTypeLevelUpdate" min="1" max="3" placeholder="">
+													<label for="procTypeInitialsUpdate"">Sigla</label>
+													<input type="text" class="form-control" id="procTypeInitialsUpdate" name="procTypeInitialsUpdate" placeholder="">												
 												</div>
 												<div class="col-sm-8">
-													<label for="docTypeMaxRevPeriodUpdate">Período máximo para revisão</label>
-													<input type="number" class="form-control" id="docTypeMaxRevPeriodUpdate" name="docTypeMaxRevPeriodUpdate" placeholder="">
-												</div>												
+													<label for="procTypeNameUpdate">Nome</label>
+													<input type="text" class="form-control" id="procTypeNameUpdate" name="procTypeNameUpdate" placeholder="">
+												</div>
+												<div class="col-sm-4">
+													<input type="hidden" name="procTypeIdModalUpdate" id="procTypeIdModalUpdate">
+												</div>
 											</div>											
 										</div>
 										<div class="modal-footer">
@@ -171,19 +164,19 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								</div>								
 							</div>							
 						</div>
-						<!-- Modal - Exclusão de Tipos de Documento -->
+						<!-- Modal - Exclusão de Tipos de Processos -->
 						<div id="modalDelete" class="modal fade" >
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Exclusão | Tipo de Documento</h4>
+										<h4 class="modal-title">Exclusão | Processos</h4>
 									</div>
-									<form action="docType" method="POST">
+									<form action="procType" method="POST">
 									<input type="hidden" name="action" id="action" value="delete">
 										<div class="modal-body">
-					      					<p>Tem certeza que deseja excluir esse tipo de documento?</p>
+					      					<p>Tem certeza que deseja excluir esse Tipo de Processos?</p>
 											<input type="hidden" name="idModalDelete" id="idModalDelete">
 										</div>
 										<div class="modal-footer">											
@@ -196,31 +189,28 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 						</div>
 					</div>
 				</div>
+				
 			</section>
 		</div>		
 	</div>
 	<!-- /.content-wrapper -->
-
-	<?php include $_SESSION["root"].'includes/footer.php'; ?>	
-	
+	<?php include $_SESSION["root"].'includes/footer.php'; ?>
 	<script>
-		$(function () {  	
-			$('#tableDocTypes').DataTable({				
-				"lengthMenu": [[10, -1], [10, "Todos"]],
-				"order": [[ 1, 'asc' ]]
+	  	$(function () {  	
+			$('#tableProcTypes').DataTable({				
+				"lengthMenu": [[10, 20, -1], [10, 20, "Todos"]],
+				"order": [[ 2, 'desc' ], [ 3, 'asc' ]]
 			});
 		});
-		
+
 		function setIdModalDelete(id) {
 			document.getElementById('idModalDelete').value = id;
 		}
 
-		function setIdModalUpdate(id, name, initials, level, maxRevPeriod) {			
-			document.getElementById('docTypeIdModalUpdate').value = id;
-			document.getElementById('docTypeTitleUpdate').value = name;			
-			document.getElementById('docTypeInitialsUpdate').value = initials;
-			document.getElementById('docTypeLevelUpdate').value = level;			
-			document.getElementById('docTypeMaxRevPeriodUpdate').value = maxRevPeriod;
+		function setIdModalUpdate(id, initials, name) {			
+			document.getElementById('procTypeIdModalUpdate').value = id;
+			document.getElementById('procTypeInitialsUpdate').value = initials;			
+			document.getElementById('procTypeNameUpdate').value = name;
 		}
 	</script>
 </body>

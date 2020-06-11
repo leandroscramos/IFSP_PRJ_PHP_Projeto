@@ -82,7 +82,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 							</div>
 							
 						</div>
-						
+						<?php Util::debug($procTypes); ?>
 						<!-- Modal - Cadastro de Tipos de Macroprocessos -->
 						<div id="modalCreate" class="modal fade">
 							<div class="modal-dialog">
@@ -92,26 +92,27 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<span aria-hidden="true">&times;</span></button>
 										<h4 class="modal-title">Cadastro | Macroprocessos</h4>
 									</div>
-									<form action="procType" method="POST">
+									<form action="macroProc" method="POST">
 									<input type="hidden" name="action" id="action" value="create">
 										<div class="modal-body">																	            								            
 											<div class="row">
-												<div class="form-group">					                  
-													<div class="col-sm-4">
-														<label for="procTypeInitials"">Sigla</label>
-														<input type="text" class="form-control" id="procTypeInitials" name="procTypeInitials" placeholder="">												
-													</div>
+												<div class="form-group">													
 													<div class="col-sm-8">
 														<label for="procTypeName">Nome</label>
 														<input type="text" class="form-control" id="procTypeName" name="procTypeName" placeholder="">
 													</div>
+													<div class="col-sm-4">
+														<label for="procTypeNumber"">Número</label>
+														<input type="text" class="form-control" id="procTypeNumber" name="procTypeNumber" placeholder="">												
+													</div>
+													&nbsp;
 													<div class="col-sm-12">
-														<label for="id_macro_proc">Tipo de Macroprocesso</label>					                    
+														<label for="id_macro_proc">Tipo de Processo</label>					                    
 														<select class="form-control" id="id_macro_proc" name="id_macro_proc" >
 															<option selected disabled>Selecione</option>															
 															<?php
 															foreach ($procTypes as $procType) {
-																echo "<option>".$procType->getName()."</option>";
+																echo "<option value=".$procType->getId().">".$procType->getName()."</option>";
 															}
 															?>
 														</select>

@@ -15,14 +15,8 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestão de Documentos <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <?php
-                        if ($_SESSION["login"]["permissao"] == "Usuário") {
-                            echo "<li><a href='docList'>Lista de Documentos</a></li>";
-                            echo "<li><a href='document'>Novo Documento</a></li>";                        
-                        }
-                        if ($_SESSION["login"]["permissao"] == "Administrador") {
-                            echo "<li><a href='docList'>Lista de Documentos</a></li>";
-                            echo "<li><a href='document'>Novo Documento</a></li>";                            
-                        }
+                        echo "<li><a href='docList'>Lista de Documentos</a></li>";
+                        echo "<li><a href='document'>Novo Documento</a></li>";
                     ?>
                 </ul>            
             </li>
@@ -36,7 +30,7 @@
                     <?php echo "<li><a href='sector'>Setores</a></li>"; ?>
                     <?php echo "<li><a href='procType'>Tipos de Processos</a></li>"; ?>
                     <?php echo "<li><a href='macroProc'>Macroprocessos</a></li>"; ?>
-                    <?php echo "<li><a href=''>Processos</a></li>"; ?>
+                    <?php echo "<li><a href='process'>Processos</a></li>"; ?>
                 </ul>
             </li>
           </ul>
