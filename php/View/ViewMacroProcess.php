@@ -81,8 +81,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								</table>
 							</div>
 							
-						</div>
-						<?php Util::debug($procTypes); ?>
+						</div>						
 						<!-- Modal - Cadastro de Tipos de Macroprocessos -->
 						<div id="modalCreate" class="modal fade">
 							<div class="modal-dialog">
