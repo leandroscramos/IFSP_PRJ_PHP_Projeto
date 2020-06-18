@@ -49,7 +49,7 @@ else if ($action == 'docList') {
 
 
 
-/* Rota para Tipos de Documento */
+/* Rota para Tipos de Documento. */
 else if ($action == 'document') {
     //if (($_SESSION['login']['permissao']) == 'Administrador') {
         if (isset($_POST['action'])) {
