@@ -12,7 +12,7 @@ include $_SESSION["root"].'includes/header.php';
 			<!-- Main content -->
 			<section class="content">				
 				<div class="row">
-				<img src="<?php echo $_SESSION["root"].'includes/bg.png'; ?>" width="100%"></img>
+					<img src="<?php echo $_SESSION["root"].'includes/bg.png'; ?>" width="100%"></img>
 				</div> 
 			</section>
 		</div>		

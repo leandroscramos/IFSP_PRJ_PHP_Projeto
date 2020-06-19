@@ -62,11 +62,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												echo "<td><strong>".$doctype->getInitials()."</strong></td>";
 												echo "<td>".$doctype->getName()."</td>";
 												echo "<td><strong>".$doctype->getLevel()."</strong></td>";
-												echo "<td>".$doctype->getMaxRevPeriod()."</td>";
+												echo "<td>".$doctype->getRev()."</td>";
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
-													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $doctype->getId();?>','<?php echo $doctype->getName(); ?>','<?php echo $doctype->getInitials(); ?>','<?php echo $doctype->getLevel(); ?>','<?php echo $doctype->getMaxRevPeriod(); ?>')">
+													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $doctype->getId();?>','<?php echo $doctype->getName(); ?>','<?php echo $doctype->getInitials(); ?>','<?php echo $doctype->getLevel(); ?>','<?php echo $doctype->getRev(); ?>')">
 														<i class="far fa-edit"></i>
 													</button>	
 												</td>												
@@ -97,21 +97,26 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									<form action="docType" method="POST">
 									<input type="hidden" name="action" id="action" value="create">
 										<div class="modal-body">																	            								            
-											<div class="row">
-												<div class="form-group">					                  
-													<div class="col-sm-6">
-														<label for="docTypeTitle"">Tipo do documento</label>
-														<input type="text" class="form-control" id="docTypeTitle" name="docTypeTitle" placeholder="">												
-													</div>
-													<div class="col-sm-4">
-														<label for="docTypeInitials"">Sigla do documento</label>
-														<input type="text" class="form-control" id="docTypeInitials" name="docTypeInitials" placeholder="">												
-													</div>
-													<div class="col-sm-2">
-														<label for="docTypeLevel">Nível</label>
-														<input type="number" class="form-control" id="docTypeLevel" name="docTypeLevel" min="1" max="3" placeholder="">
-													</div>
+											<div class="row">												
+												<div class="col-sm-12">
+													<label for="docTypeTitle">Nome</label>
+													<input type="text" class="form-control" id="docTypeTitle" name="docTypeTitle" placeholder="">												
+												</div>												
+											</div>
+											&nbsp;
+											<div class="row">												
+												<div class="col-sm-6">
+													<label for="docTypeInitials"">Sigla</label>
+													<input type="text" class="form-control" id="docTypeInitials" name="docTypeInitials" placeholder="">												
 												</div>
+												<div class="col-sm-3">
+													<label for="docTypeLevel">Nível (1~3)</label>
+													<input type="number" class="form-control" id="docTypeLevel" name="docTypeLevel" min="1" max="3" placeholder="">
+												</div>
+												<div class="col-sm-3">
+													<label for="docTypeRev">Revisão (0~4)</label>
+													<input type="number" class="form-control" id="docTypeRev" name="docTypeRev" min="0" max="4" placeholder="">
+												</div>											
 											</div>
 										</div>
 										<div class="modal-footer">
@@ -135,30 +140,33 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									<form action="docType" method="POST">
 										<input type="hidden" name="action" id="action" value="update">
 										<input type="hidden" name="docTypeIdModalUpdate" id="docTypeIdModalUpdate">
-										<!--<input type="hidden" name="docTypeTitleUpdate" id="docTypeTitleUpdate">
-										<input type="hidden" name="docTypeInitialsUpdate" id="docTypeInitialsUpdate">
+										<!--
 										<input type="hidden" name="docTypeLevelUpdate" id="docTypeLevelUpdate">
-										<input type="hidden" name="docTypeMaxRevPeriodUpdate" id="docTypeMaxRevPeriodUpdate">-->
+										<input type="hidden" name="docTypeRevUpdate" id="docTypeRevUpdate">										
+										<input type="hidden" name="docTypeTitleUpdate" id="docTypeTitleUpdate">
+										<input type="hidden" name="docTypeInitialsUpdate" id="docTypeInitialsUpdate">
+										-->										
 									
 										<div class="modal-body">
-											<div class="row">
-												<div class="col-sm-8">
-													<label for="docTypeTitleUpdate">Tipo do documento</label>
-													<input type="text" class="form-control" id="docTypeTitleUpdate" name="docTypeTitleUpdate" placeholder="">												
+											<div class="row">											
+												<div class="col-sm-12">
+													<label for="docTypeTitleUpdate">Nome</label>
+													<input type="text" class="form-control" id="docTypeTitleUpdate" name="docTypeTitleUpdate" placeholder="" readonly="true">												
 												</div>
-												<div class="col-sm-4">
-													<label for="docTypeInitialsUpdate">Sigla do documento</label>
-													<input type="text" class="form-control" id="docTypeInitialsUpdate" name="docTypeInitialsUpdate" placeholder="">												
-												</div>
-											</div>&nbsp;
+											</div>
+											&nbsp;
 											<div class="row">
-												<div class="col-sm-4">
-													<label for="docTypeLevelUpdate">Nível</label>
+												<div class="col-sm-6">
+													<label for="docTypeInitialsUpdate">Sigla</label>
+													<input type="text" class="form-control" id="docTypeInitialsUpdate" name="docTypeInitialsUpdate" placeholder="" readonly="true">												
+												</div>											
+												<div class="col-sm-3">
+													<label for="docTypeLevelUpdate">Nível (1~3)</label>
 													<input type="number" class="form-control" id="docTypeLevelUpdate" name="docTypeLevelUpdate" min="1" max="3" placeholder="">
 												</div>
-												<div class="col-sm-8">
-													<label for="docTypeMaxRevPeriodUpdate">Período máximo para revisão</label>
-													<input type="number" class="form-control" id="docTypeMaxRevPeriodUpdate" name="docTypeMaxRevPeriodUpdate" placeholder="">
+												<div class="col-sm-3">
+													<label for="docTypeRevUpdate">Revisão (0~4)</label>
+													<input type="number" class="form-control" id="docTypeRevUpdate" name="docTypeRevUpdate" placeholder="">
 												</div>												
 											</div>											
 										</div>
@@ -220,7 +228,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 			document.getElementById('docTypeTitleUpdate').value = name;			
 			document.getElementById('docTypeInitialsUpdate').value = initials;
 			document.getElementById('docTypeLevelUpdate').value = level;			
-			document.getElementById('docTypeMaxRevPeriodUpdate').value = maxRevPeriod;
+			document.getElementById('docTypeRevUpdate').value = maxRevPeriod;
 		}
 	</script>
 </body>
