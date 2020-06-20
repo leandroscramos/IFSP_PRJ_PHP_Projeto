@@ -48,8 +48,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<!--<th width="3%">Id</th>-->
 											<th width="10%">Sigla</th>											
 											<th width="60%">Nome</th>																
-											<th width="10%">Nível</th>																						
-											<th width="14%">Revisão (anos)</th>																						
+											<th width="10%">Nível <i class="far fa-question-circle" title="Hierarquia dos documentos, de 1 a 3."></i></th>																						
+											<th width="14%">Revisão <i class="far fa-question-circle" title="Prazo máximo para revisão, em anos, de 0 a 4, sendo o 0 para quando houver necessidade."></i></th>																						
 											<th width="3%"></th>																						
 											<th width="3%"></th>																						
 										</tr>
@@ -107,14 +107,14 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="row">												
 												<div class="col-sm-6">
 													<label for="docTypeInitials"">Sigla</label>
-													<input type="text" class="form-control" id="docTypeInitials" name="docTypeInitials" placeholder="">												
+													<input type="text" class="form-control" id="docTypeInitials" name="docTypeInitials" placeholder="Ex: ABC" pattern="[A-Z]{3}" maxlength="3">												
 												</div>
 												<div class="col-sm-3">
-													<label for="docTypeLevel">Nível (1~3)</label>
+													<label for="docTypeLevel">Nível <i class="far fa-question-circle" title="Hierarquia dos documentos, de 1 a 3."></i></label>
 													<input type="number" class="form-control" id="docTypeLevel" name="docTypeLevel" min="1" max="3" placeholder="">
 												</div>
 												<div class="col-sm-3">
-													<label for="docTypeRev">Revisão (0~4)</label>
+													<label for="docTypeRev">Revisão <i class="far fa-question-circle" title="Prazo máximo para revisão, em anos, de 0 a 4, sendo o 0 para quando houver necessidade."></i></label>
 													<input type="number" class="form-control" id="docTypeRev" name="docTypeRev" min="0" max="4" placeholder="">
 												</div>											
 											</div>
@@ -161,11 +161,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<input type="text" class="form-control" id="docTypeInitialsUpdate" name="docTypeInitialsUpdate" placeholder="" readonly="true">												
 												</div>											
 												<div class="col-sm-3">
-													<label for="docTypeLevelUpdate">Nível (1~3)</label>
+													<label for="docTypeLevelUpdate">Nível <i class="far fa-question-circle" title="Hierarquia dos documentos, de 1 a 3."></i></label>
 													<input type="number" class="form-control" id="docTypeLevelUpdate" name="docTypeLevelUpdate" min="1" max="3" placeholder="">
 												</div>
 												<div class="col-sm-3">
-													<label for="docTypeRevUpdate">Revisão (0~4)</label>
+													<label for="docTypeRevUpdate">Revisão <i class="far fa-question-circle" title="Prazo máximo para revisão, em anos, de 0 a 4, sendo o 0 para quando houver necessidade."></i></label>
 													<input type="number" class="form-control" id="docTypeRevUpdate" name="docTypeRevUpdate" placeholder="">
 												</div>												
 											</div>											
