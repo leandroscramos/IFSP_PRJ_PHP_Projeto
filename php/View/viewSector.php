@@ -97,11 +97,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<div class="form-group">					                  
 													<div class="col-sm-4">
 														<label for="sectorInitials"">Sigla</label>
-														<input type="text" class="form-control" id="sectorInitials" name="sectorInitials" placeholder="">												
+														<input type="text" class="form-control" id="sectorInitials" name="sectorInitials" placeholder="" pattern="[A-Z]*" maxlength="10" required="required">												
 													</div>
 													<div class="col-sm-8">
 														<label for="sectorName">Nome</label>
-														<input type="text" class="form-control" id="sectorName" name="sectorName" placeholder="">
+														<input type="text" class="form-control" id="sectorName" name="sectorName" placeholder="" required="required">
 													</div>
 												</div>
 											</div>
@@ -130,11 +130,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="row">
 												<div class="col-sm-4">
 													<label for="sectorInitialsUpdate"">Sigla</label>
-													<input type="text" class="form-control" id="sectorInitialsUpdate" name="sectorInitialsUpdate" placeholder="">												
+													<input type="text" class="form-control" id="sectorInitialsUpdate" name="sectorInitialsUpdate" placeholder="" pattern="[A-Z]*" maxlength="10" readonly="true">												
 												</div>
 												<div class="col-sm-8">
 													<label for="sectorNameUpdate">Nome</label>
-													<input type="text" class="form-control" id="sectorNameUpdate" name="sectorNameUpdate" placeholder="">
+													<input type="text" class="form-control" id="sectorNameUpdate" name="sectorNameUpdate" placeholder="" required="required">
 												</div>
 												<div class="col-sm-4">
 													<input type="hidden" name="sectorIdModalUpdate" id="sectorIdModalUpdate">

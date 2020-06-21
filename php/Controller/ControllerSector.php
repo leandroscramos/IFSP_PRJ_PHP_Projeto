@@ -40,11 +40,12 @@ class ControllerSector {
     public function updateSector() {
         $sectorDAO = new SectorDAO();
 		$sector = new ModelSector();
-		
+		/*
 		if (($sectorDAO->readSectorByInitials($_POST['sectorInitialsUpdate'])) != null) {
 			$_SESSION["flash"]["msg"] = "Sigla do Setor já cadastrada!";
 			$_SESSION["flash"]["sucesso"] = false;
 		} else 
+		*/
 		if (($sectorDAO->readSectorByName($_POST['sectorNameUpdate'])) != null) {
 			$_SESSION["flash"]["msg"]="Nome do Setor já cadastrado!";
 			$_SESSION["flash"]["sucesso"] = false;

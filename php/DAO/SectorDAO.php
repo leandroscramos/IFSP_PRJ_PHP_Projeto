@@ -87,7 +87,7 @@ class SectorDAO
         }
         
     }
-
+    
     public function readSectorByName($name){
 
         try { $sql = ('SELECT * FROM public.tb_sector WHERE name = :name');
