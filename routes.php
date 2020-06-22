@@ -70,7 +70,7 @@ else if ($action == 'document') {
         } else {            
         */    
             $doctypes = ControllerDocType::readDocType();            
-            $Areas = ControllerArea::readArea();
+            $areas = ControllerArea::readArea();
             $processs = ControllerProcess::readProcess();
             include_once $_SESSION["root"].'php/View/viewDocument.php';
         //}
