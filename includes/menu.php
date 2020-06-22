@@ -27,7 +27,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">                   
                     <?php echo "<li><a href='docType'>Tipos de Documento</a></li>"; ?>
-                    <?php echo "<li><a href='sector'>Setores</a></li>"; ?>
+                    <?php echo "<li><a href='area'>Área</a></li>"; ?>
                     <?php echo "<li><a href='procType'>Tipos de Processos</a></li>"; ?>
                     <?php echo "<li><a href='macroProc'>Macroprocessos</a></li>"; ?>
                     <?php echo "<li><a href='process'>Processos</a></li>"; ?>

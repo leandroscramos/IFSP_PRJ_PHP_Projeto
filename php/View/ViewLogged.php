@@ -10,8 +10,10 @@ include $_SESSION["root"].'includes/header.php';
 		<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 			<!-- Main content -->
-			<section class="content">
-				<div class="row"></div>
+			<section class="content">				
+				<div class="row">
+					<img src="<?php echo $_SESSION["root"].'includes/bg.png'; ?>" width="100%"></img>
+				</div> 
 			</section>
 		</div>		
 	</div>

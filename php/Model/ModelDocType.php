@@ -7,14 +7,14 @@ class ModelDocType
     private $name;
     private $initials;
     private $level;
-    private $maxRevPeriod;
+    private $rev;
 
     public function setDocTypeFromDatabase($value){
         $this->setId($value["id"])
             ->setName($value["name"])
             ->setInitials($value["initials"])
             ->setLevel($value["level"])
-            ->setMaxRevPeriod($value["max_rev_period"]);
+            ->setRev($value["max_rev_period"]);
     }
 
     public function setDocTypeFromPOST(){
@@ -22,7 +22,7 @@ class ModelDocType
                ->setName($_POST["docTypeTitle"])
                ->setInitials($_POST["docTypeInitials"])
                ->setLevel($_POST["docTypeLevel"])
-               ->setMaxRevPeriod($_POST["maxRevPeriod"]);
+               ->setRev($_POST["docTypeRev"]);
     }
 
     public function updateDocTypeFromPOST(){
@@ -30,7 +30,7 @@ class ModelDocType
                ->setName($_POST["docTypeTitleUpdate"])
                ->setInitials($_POST["docTypeInitialsUpdate"])
                ->setLevel($_POST["docTypeLevelUpdate"])
-               ->setMaxRevPeriod($_POST["maxRevPeriodUpdate"]);
+               ->setRev($_POST["docTypeRevUpdate"]);
     }
 
     public function getId()
@@ -77,14 +77,14 @@ class ModelDocType
         return $this;
     }
 
-    public function getMaxRevPeriod()
+    public function getRev()
     {
-        return $this->maxRevPeriod;
+        return $this->rev;
     }
 
-    public function setMaxRevPeriod($maxRevPeriod)
+    public function setRev($rev)
     {
-        $this->maxRevPeriod = $maxRevPeriod;
+        $this->rev = $rev;
         return $this;
     }
 }

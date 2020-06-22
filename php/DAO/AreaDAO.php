@@ -2,13 +2,13 @@
 
 include_once $_SESSION["root"].'php/Util/Util.php';
 include_once $_SESSION["root"].'php/DAO/DatabaseConnection.php';
-include_once $_SESSION["root"].'php/Model/ModelSector.php';
+include_once $_SESSION["root"].'php/Model/ModelArea.php';
 
-class SectorDAO
+class AreaDAO
 {
-    public function readSector(){
+    public function readArea(){
 
-        try { $sql = ('SELECT * FROM public.tb_sector ORDER BY id');
+        try { $sql = ('SELECT * FROM public.tb_area ORDER BY id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -19,30 +19,30 @@ class SectorDAO
             if(count($records)==0)
                 return null;
             //Var que irá armazenar um array de obj do tipo funcionário
-            $sectors;
+            $areas;
             //Util::debug($linhas);
             foreach ($records as $value) {
-                $sector = new ModelSector();
-                $sector->setSectorFromDatabase($value);
-                $sectors[]=$sector;
+                $area = new ModelArea();
+                $area->setAreaFromDatabase($value);
+                $areas[]=$area;
             }
-            return $sectors;
+            return $areas;
 
         } catch (PDOException $e) {
             echo "Erro ao ler registros na base de dados.".$e->getMessage();
         }
     }    
 
-    public function createSector($sector){			
+    public function createArea($area){			
         
-		try { $sql = "INSERT INTO public.tb_sector (initials, name) VALUES (:initials, :name)";
+		try { $sql = "INSERT INTO public.tb_area (initials, name) VALUES (:initials, :name)";
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
             $statement = $conn->prepare($sql);
             
-            $statement->bindValue(":initials", $sector->getInitials());
-            $statement->bindValue(":name", $sector->getName());
+            $statement->bindValue(":initials", $area->getInitials());
+            $statement->bindValue(":name", $area->getName());
 
             return $statement->execute();
 
@@ -51,17 +51,17 @@ class SectorDAO
         }		
     }
 
-    public function updateSector($sector) {
+    public function updateArea($area) {
         
-        try { $sql = ('UPDATE public.tb_sector SET initials = :initials, name = :name WHERE id = :id');
+        try { $sql = ('UPDATE public.tb_area SET initials = :initials, name = :name WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
 
-            $statement->bindParam(':id', $sector->getId()); 
-            $statement->bindParam(':initials', $sector->getInitials()); 
-            $statement->bindParam(':name', $sector->getName()); 
+            $statement->bindParam(':id', $area->getId()); 
+            $statement->bindParam(':initials', $area->getInitials()); 
+            $statement->bindParam(':name', $area->getName()); 
             $statement->execute();
                
             return $statement->execute(); 
@@ -70,9 +70,9 @@ class SectorDAO
         }
     }
     
-    public function deleteSector($id) {        
+    public function deleteArea($id) {        
 
-        try { $sql = ('DELETE FROM public.tb_sector WHERE id = :id');
+        try { $sql = ('DELETE FROM public.tb_area WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -87,10 +87,10 @@ class SectorDAO
         }
         
     }
+    
+    public function readAreaByName($name){
 
-    public function readSectorByName($name){
-
-        try { $sql = ('SELECT * FROM public.tb_sector WHERE name = :name');
+        try { $sql = ('SELECT * FROM public.tb_area WHERE name = :name');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -103,23 +103,23 @@ class SectorDAO
             if(count($records)==0)
                 return null;
             //Var que irá armazenar um array de obj do tipo funcionário
-            $sectors;
+            $areas;
             //Util::debug($linhas);
             foreach ($records as $value) {
-                $sector = new ModelSector();
-                $sector->setSectorFromDatabase($value);
-                $sectors[]=$sector;
+                $area = new ModelArea();
+                $area->setAreaFromDatabase($value);
+                $areas[]=$area;
             }
-            return $sectors;
+            return $areas;
 
         } catch (PDOException $e) {
             echo "Erro ao ler registros na base de dados.".$e->getMessage();
         }
     }
     
-    public function readSectorByInitials($initials){
+    public function readAreaByInitials($initials){
 
-        try { $sql = ('SELECT * FROM public.tb_sector WHERE initials = :initials');
+        try { $sql = ('SELECT * FROM public.tb_area WHERE initials = :initials');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -132,14 +132,14 @@ class SectorDAO
             if(count($records)==0)
                 return null;
             //Var que irá armazenar um array de obj do tipo funcionário
-            $sectors;
+            $areas;
             //Util::debug($linhas);
             foreach ($records as $value) {
-                $sector = new ModelSector();
-                $sector->setSectorFromDatabase($value);
-                $sectors[]=$sector;
+                $area = new ModelArea();
+                $area->setAreaFromDatabase($value);
+                $areas[]=$area;
             }
-            return $sectors;
+            return $areas;
 
         } catch (PDOException $e) {
             echo "Erro ao ler registros na base de dados.".$e->getMessage();

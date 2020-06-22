@@ -1,28 +1,28 @@
 <?php
 
 
-class ModelSector
+class ModelArea
 {
     private $id;
     private $initials;
     private $name;
 
-    public function setSectorFromDatabase($sector){
-        $this->setId($sector["id"])
-            ->setInitials($sector["initials"])
-            ->setName($sector["name"]);
+    public function setAreaFromDatabase($area){
+        $this->setId($area["id"])
+            ->setInitials($area["initials"])
+            ->setName($area["name"]);
     }
 
-    public function setSectorFromPOST(){
+    public function setAreaFromPOST(){
         $this->setId(null)
-               ->setInitials($_POST["sectorInitials"])
-               ->setName($_POST["sectorName"]);
+               ->setInitials($_POST["areaInitials"])
+               ->setName($_POST["areaName"]);
     }
 
-    public function updateSectorFromPOST(){
-        $this->setId($_POST["sectorIdModalUpdate"])
-               ->setInitials($_POST["sectorInitialsUpdate"])
-               ->setName($_POST["sectorNameUpdate"]);
+    public function updateAreaFromPOST(){
+        $this->setId($_POST["areaIdModalUpdate"])
+               ->setInitials($_POST["areaInitialsUpdate"])
+               ->setName($_POST["areaNameUpdate"]);
     }
 
     public function getId()
