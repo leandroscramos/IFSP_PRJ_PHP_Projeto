@@ -107,13 +107,13 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<option selected disabled>Selecione</option>                                                    
                                                     <?php
                                                     foreach ($processs as $process) {
-                                                        echo "<option value='".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."'>".$process->getName()."</option>";
+                                                        echo "<option value='".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."'>".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName()."</option>";
                                                     }
                                                     ?>													
 												</select>
 											</div>
 											<div class="col-sm-4">
-												<label for="doc_proc_type">Processo/Tipo</label>
+												<label for="doc_proc_type">Tipo</label>
 												<input type="text" class="form-control" id="doc_proc_type" name="doc_proc_type" placeholder="" readonly="true">
 											</div>
 											<div class="col-sm-1">

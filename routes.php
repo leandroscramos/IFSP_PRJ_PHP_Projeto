@@ -49,10 +49,10 @@ else if ($action == 'docList') {
 
 
 
-/* Rota para Tipos de Documento */
+/* Rota para Documento */
 else if ($action == 'document') {
     //if (($_SESSION['login']['permissao']) == 'Administrador') {
-        if (isset($_POST['action'])) {
+        /*if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'create':
                     ControllerDocType::createDocType();
@@ -68,11 +68,12 @@ else if ($action == 'document') {
                     break;
             }
         } else {            
+        */    
             $doctypes = ControllerDocType::readDocType();            
             $sectors = ControllerSector::readSector();
             $processs = ControllerProcess::readProcess();
             include_once $_SESSION["root"].'php/View/viewDocument.php';
-        }
+        //}
     //} else {
       //  header("Location:logado");
     //}
