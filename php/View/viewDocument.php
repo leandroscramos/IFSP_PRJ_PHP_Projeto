@@ -15,6 +15,16 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 		document.getElementById("doc_proc_type").value = tipoProcesso;
 	}
 
+	function validade() {
+		var validade = document.getElementById("doc_type").value;
+		if (validade == 0) {
+			document.getElementById("doc_validate").value = 'NA';
+		} else {
+			document.getElementById("doc_validate").value = validade + ' anos';
+		}		
+		
+	}
+
 
 </script>
 
@@ -27,7 +37,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 			<!-- Main content -->
 			<section class="content">
 				<div class="row">
-					<div class="col-md-12 form-horizontal">
+					<div class="col-md-10 col-md-offset-1 form-horizontal">
 						<div class="box box-success">
 							<div class="box-header with-border">
 								<h3 class="box-title">Formulário para Submissão de Documentos Institucionais</h3>
@@ -48,30 +58,30 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-6">
 												<label for="doc_title"">Título</label>
 												<input type="text" class="form-control" id="doc_title" name="doc_title" placeholder="">
-											</div>															                  					                  
+											</div>											
 											<div class="col-sm-3">
 												<label for="doc_type">Tipo do Documento</label>					                    
-												<select class="form-control" id="doc_type" name="doc_type" >
+												<select class="form-control" id="doc_type" name="doc_type" onchange="validade();">
                                                     <option selected disabled>Selecione</option>
                                                     <option disabled><strong>--- Nível 1 ---</strong></option>
                                                     <?php
                                                     foreach ($doctypes as $doctype) {
                                                         if ($doctype->getLevel() == 1)
-                                                            echo "<option>".$doctype->getName()."</option>";
+                                                            echo "<option value='".$doctype->getRev()."'>".$doctype->getName()."</option>";
                                                     }
                                                     ?>
                                                     <option disabled><strong>--- Nível 2 ---</strong></option>
                                                     <?php
                                                     foreach ($doctypes as $doctype) {
                                                         if ($doctype->getLevel() == 2)
-                                                            echo "<option>".$doctype->getName()."</option>";
+                                                            echo "<option value='".$doctype->getRev()."'>".$doctype->getName()."</option>";
                                                     }
                                                     ?>
                                                     <option disabled><strong>--- Nível 3 ---</strong></option>
                                                     <?php
                                                     foreach ($doctypes as $doctype) {
                                                         if ($doctype->getLevel() == 3)
-                                                            echo "<option>".$doctype->getName()."</option>";
+                                                            echo "<option value='".$doctype->getRev()."'>".$doctype->getName()."</option>";
 													}
 													?>													
 
@@ -147,42 +157,42 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 
 										<div class="form-group">
 											<div class="col-sm-2">
-												<label for="doc_validate">Data aprovação</label>
-												<input type="date" class="form-control" id="doc_validate" name="doc_validate" placeholder="">
+												<label for="doc_approve">Data aprovação</label>
+												<input type="date" class="form-control" id="doc_approve" name="doc_approve" placeholder="">
 											</div>
 											<div class="col-sm-2">
-												<label for="doc_author">Validade</label>
-												<input type="text" class="form-control" id="doc_author" name="doc_author" placeholder="" disabled>
+												<label for="doc_validate">Validade</label>
+												<input type="text" class="form-control" id="doc_validate" name="doc_validate" placeholder="" readonly="true">
 											</div>
 											<div class="col-sm-2">
-												<label for="doc_validate">Próxima revisão</label>
-												<input type="text" class="form-control" id="doc_validate" name="doc_validate" placeholder="" disabled>
+												<label for="doc_revision">Próxima revisão</label>
+												<input type="text" class="form-control" id="doc_revision" name="doc_revision" placeholder="" readonly="true">
 											</div>											
 										</div>
 
 										<div class="form-group">
 											<div class="col-sm-2">
-												<label for="doc_validate">Processo SEI</label>
-												<input type="text" class="form-control" id="doc_validate" name="doc_validate" placeholder="">
+												<label for="doc_proc_sei">Processo SEI</label>
+												<input type="text" class="form-control" id="doc_proc_sei" name="doc_proc_sei" placeholder="">
 											</div>
 											<div class="col-sm-2">
-												<label for="doc_validate">Documento</label>
-												<input type="text" class="form-control" id="doc_validate" name="doc_validate" placeholder="">
+												<label for="doc_proc_sei">Documento</label>
+												<input type="text" class="form-control" id="doc_proc_sei" name="doc_proc_sei" placeholder="">
 											</div>
 											<div class="col-sm-2">
-												<label for="doc_validate">Despacho SEI</label>
-												<input type="text" class="form-control" id="doc_validate" name="doc_validate" placeholder="">
+												<label for="doc_despacho_sei">Despacho SEI</label>
+												<input type="text" class="form-control" id="doc_despacho_sei" name="doc_despacho_sei" placeholder="">
 											</div>										
 											<div class="col-sm-1">
-												<label for="doc_validate">Situação</label>
-												<select class="form-control" id="doc_nome_setor" name="doc_nome_setor">													
+												<label for="doc_situation">Situação</label>
+												<select class="form-control" id="doc_situation" name="doc_situation">													
 													<option selected>Ativo</option>
 													<option>Inativo</option>																										
 												</select>
 											</div>
 											<div class="col-sm-3">
-												<label for="doc_validate">Alterações</label>
-												<select class="form-control" id="doc_nome_setor" name="doc_nome_setor">
+												<label for="doc_alters">Alterações</label>
+												<select class="form-control" id="doc_alters" name="doc_alters">
 													<option selected disabled>-</option>
 													<option>Criação de Documento</option>
 													<option>Elaboração de Documento</option>
@@ -190,8 +200,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												</select>
 											</div>
 											<div class="col-sm-2">
-												<label for="doc_validate">Status</label>
-												<select class="form-control" id="doc_nome_setor" name="doc_nome_setor">
+												<label for="doc_status">Status</label>
+												<select class="form-control" id="doc_status" name="doc_status">
 													<option selected disabled>-</option>
 													<option>Publicado</option>
 													<option>Coletando assinaturas</option>
