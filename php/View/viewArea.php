@@ -18,7 +18,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 
 						<div class="box box-warning">
 							<div class="box-header with-border">
-								<h3 class="box-title">Setores</h3>
+								<h3 class="box-title">Área</h3>
 							</div>
 							<div class="box-header">
 								<?php 
@@ -52,22 +52,22 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									</thead>									
 									<tbody>										
 										<?php
-											foreach ($sectors as $sector) {
+											foreach ($areas as $area) {
 												echo "<tr>";												
-												//echo "<td>".$sector->getId()."</td>";
-												echo "<td><strong>".$sector->getInitials()."</strong></td>";
-												echo "<td>".$sector->getName()."</td>";
+												//echo "<td>".$area->getId()."</td>";
+												echo "<td><strong>".$area->getInitials()."</strong></td>";
+												echo "<td>".$area->getName()."</td>";
 												
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
-													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $sector->getId();?>','<?php echo $sector->getInitials(); ?>','<?php echo $sector->getName(); ?>')">
+													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $area->getId();?>','<?php echo $area->getInitials(); ?>','<?php echo $area->getName(); ?>')">
 														<i class="far fa-edit"></i>
 													</button>	
 												</td>												
 												<td>
 													<button type="button" class="btn btn-sm btn-danger pull-left" data-toggle="modal" data-target="#modalDelete" 
-													style="width: 100%; white-space: normal" onclick="setIdModalDelete(<?php echo $sector->getId(); ?>)">
+													style="width: 100%; white-space: normal" onclick="setIdModalDelete(<?php echo $area->getId(); ?>)">
 														<i class="far fa-trash-alt"></i>
 													</button>
 												</td>
@@ -81,27 +81,27 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 							
 						</div>
 						
-						<!-- Modal - Cadastro de Setores -->
+						<!-- Modal - Cadastro de Área -->
 						<div id="modalCreate" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Cadastro | Setores</h4>
+										<h4 class="modal-title">Cadastro | Área</h4>
 									</div>
-									<form action="sector" method="POST">
+									<form action="area" method="POST">
 									<input type="hidden" name="action" id="action" value="create">
 										<div class="modal-body">																	            								            
 											<div class="row">
 												<div class="form-group">					                  
 													<div class="col-sm-4">
-														<label for="sectorInitials"">Sigla</label>
-														<input type="text" class="form-control" id="sectorInitials" name="sectorInitials" placeholder="" pattern="[A-Z]*" maxlength="10" required="required">												
+														<label for="areaInitials"">Sigla</label>
+														<input type="text" class="form-control" id="areaInitials" name="areaInitials" placeholder="" pattern="[A-Z]*" maxlength="10" required="required">												
 													</div>
 													<div class="col-sm-8">
-														<label for="sectorName">Nome</label>
-														<input type="text" class="form-control" id="sectorName" name="sectorName" placeholder="" required="required">
+														<label for="areaName">Nome</label>
+														<input type="text" class="form-control" id="areaName" name="areaName" placeholder="" required="required">
 													</div>
 												</div>
 											</div>
@@ -115,29 +115,29 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								</div>								
 							</div>							
 						</div>
-						<!-- Modal - Atualização de Setores -->					
+						<!-- Modal - Atualização de Área -->					
 						<div id="modalUpdate" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Atualização | Setores</h4>
+										<h4 class="modal-title">Atualização | Área</h4>
 									</div>
-									<form action="sector" method="POST">
+									<form action="area" method="POST">
 									<input type="hidden" name="action" id="action" value="update">
 										<div class="modal-body">
 											<div class="row">
 												<div class="col-sm-4">
-													<label for="sectorInitialsUpdate"">Sigla</label>
-													<input type="text" class="form-control" id="sectorInitialsUpdate" name="sectorInitialsUpdate" placeholder="" pattern="[A-Z]*" maxlength="10" readonly="true">												
+													<label for="areaInitialsUpdate"">Sigla</label>
+													<input type="text" class="form-control" id="areaInitialsUpdate" name="areaInitialsUpdate" placeholder="" pattern="[A-Z]*" maxlength="10" readonly="true">												
 												</div>
 												<div class="col-sm-8">
-													<label for="sectorNameUpdate">Nome</label>
-													<input type="text" class="form-control" id="sectorNameUpdate" name="sectorNameUpdate" placeholder="" required="required">
+													<label for="areaNameUpdate">Nome</label>
+													<input type="text" class="form-control" id="areaNameUpdate" name="areaNameUpdate" placeholder="" required="required">
 												</div>
 												<div class="col-sm-4">
-													<input type="hidden" name="sectorIdModalUpdate" id="sectorIdModalUpdate">
+													<input type="hidden" name="areaIdModalUpdate" id="areaIdModalUpdate">
 												</div>
 											</div>											
 										</div>
@@ -150,16 +150,16 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								</div>								
 							</div>							
 						</div>
-						<!-- Modal - Exclusão de Setores -->
+						<!-- Modal - Exclusão de Área -->
 						<div id="modalDelete" class="modal fade" >
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Exclusão | Setores</h4>
+										<h4 class="modal-title">Exclusão | Área</h4>
 									</div>
-									<form action="sector" method="POST">
+									<form action="area" method="POST">
 									<input type="hidden" name="action" id="action" value="delete">
 										<div class="modal-body">
 					      					<p>Tem certeza que deseja excluir esse setor?</p>
@@ -194,9 +194,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 		}
 
 		function setIdModalUpdate(id, initials, name) {			
-			document.getElementById('sectorIdModalUpdate').value = id;
-			document.getElementById('sectorInitialsUpdate').value = initials;			
-			document.getElementById('sectorNameUpdate').value = name;
+			document.getElementById('areaIdModalUpdate').value = id;
+			document.getElementById('areaInitialsUpdate').value = initials;			
+			document.getElementById('areaNameUpdate').value = name;
 		}
 	</script>
 </body>

@@ -44,9 +44,10 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									<thead>
 										<tr>											
 											<th width="10%">Sigla</th>
-											<th width="50%">Nome</th>
+											<th width="40%">Nome</th>
 											<th width="29%">Macroprocesso</th>
 											<th width="5%">Número</th>																						
+											<th width="10%">Status</th>																						
 											<th width="3%"></th>																						
 											<th width="3%"></th>																						
 										</tr>
@@ -58,7 +59,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												echo "<td><strong>".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";
 												echo "<td>".$process->getName()."</td>";												
 												echo "<td>".$process->getMacroProcess()[0]->getName()."</td>";												
-												echo "<td><strong>".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";												
+												echo "<td><strong>".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";
+												echo "<td>Publicado</td>";
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
@@ -83,7 +85,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 							
 						</div>
 						
-						<!-- Modal - Cadastro de Tipos de Processos -->
+						<!-- Modal - Cadastro de Processos -->
 						<div id="modalCreate" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
@@ -93,30 +95,42 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<h4 class="modal-title">Cadastro | Processos</h4>
 									</div>
 									<form action="process" method="POST">
-									<input type="hidden" name="action" id="action" value="create">
+										<input type="hidden" name="action" id="action" value="create">
 										<div class="modal-body">																	            								            
-											<div class="row">												
-												<div class="form-group">
-													<div class="col-sm-9">
-														<label for="processName">Nome</label>
-														<input type="text" class="form-control" id="processName" name="processName" placeholder="">
-													</div>
-													<div class="col-sm-3">
-														<label for="processNumber">Número</label>
-														<input type="text" class="form-control" id="processNumber" name="processNumber" placeholder="">
-													</div>
-													&nbsp;
-													<div class="col-sm-12">
-														<label for="id_macroprocess">Macroprocesso</label>					                    
-														<select class="form-control" id="id_macroprocess" name="id_macroprocess" >
-															<option selected disabled>Selecione</option>															
-															<?php
-																foreach ($macroProcs as $macroProc) {																	
-																	echo "<option value=".$macroProc->getId().">[".$macroProc->getMacroProcType()[0]->getInitials()."".str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT)."] - ".$macroProc->getName()."</option>";
-																}
-															?>
-														</select>
-													</div>
+											
+											<div class="row">
+												<div class="col-sm-12">
+													<label for="processName">Nome</label>
+													<input type="text" class="form-control" id="processName" name="processName" placeholder="">
+												</div>
+											</div>													
+											&nbsp;
+											<div class="row">
+												<div class="col-sm-3">
+													<label for="processNumber">Número</label>
+													<input type="text" class="form-control" id="processNumber" name="processNumber" placeholder="">
+												</div>
+												<div class="col-sm-5">
+													<label for="processStatus">Status</label>
+													<select class="form-control" id="processStatus" name="processStatus">														
+														<option selected value="0">Publicado</option>
+														<option value="1">Em construção</option>
+														<option value="2">Em revisão</option>
+													</select>																										
+												</div>
+											</div>
+											&nbsp;
+											<div class="row">
+												<div class="col-sm-12">
+													<label for="id_macroprocess">Macroprocesso</label>					                    
+													<select class="form-control" id="id_macroprocess" name="id_macroprocess" >
+														<option selected disabled>Selecione</option>															
+														<?php
+															foreach ($macroProcs as $macroProc) {																	
+																echo "<option value=".$macroProc->getId().">[".$macroProc->getMacroProcType()[0]->getInitials()."".str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT)."] - ".$macroProc->getName()."</option>";
+															}
+														?>
+													</select>
 												</div>
 											</div>
 										</div>
@@ -129,7 +143,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								</div>								
 							</div>							
 						</div>
-						<!-- Modal - Atualização de Tipos de Processos -->					
+						<!-- Modal - Atualização de Processos -->					
 						<div id="modalUpdate" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
@@ -138,22 +152,45 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<span aria-hidden="true">&times;</span></button>
 										<h4 class="modal-title">Atualização | Processos</h4>
 									</div>
-									<form action="procType" method="POST">
-									<input type="hidden" name="action" id="action" value="update">
-										<div class="modal-body">
+									<form action="process" method="POST">
+										<input type="hidden" name="action" id="action" value="update">
+										<div class="modal-body">																	            								            
+											
 											<div class="row">
-												<div class="col-sm-4">
-													<label for="procTypeInitialsUpdate"">Sigla</label>
-													<input type="text" class="form-control" id="procTypeInitialsUpdate" name="procTypeInitialsUpdate" placeholder="">												
+												<div class="col-sm-12">
+													<label for="processName">Nome</label>
+													<input type="text" class="form-control" id="processName" name="processName" placeholder="">
 												</div>
-												<div class="col-sm-8">
-													<label for="procTypeNameUpdate">Nome</label>
-													<input type="text" class="form-control" id="procTypeNameUpdate" name="procTypeNameUpdate" placeholder="">
+											</div>													
+											&nbsp;
+											<div class="row">
+												<div class="col-sm-3">
+													<label for="processNumber">Número</label>
+													<input type="text" class="form-control" id="processNumber" name="processNumber" placeholder="">
 												</div>
-												<div class="col-sm-4">
-													<input type="hidden" name="procTypeIdModalUpdate" id="procTypeIdModalUpdate">
+												<div class="col-sm-5">
+													<label for="processStatus">Status</label>
+													<select class="form-control" id="processStatus" name="processStatus">														
+														<option selected value="0">Publicado</option>
+														<option value="1">Em construção</option>
+														<option value="2">Em revisão</option>
+													</select>																										
 												</div>
-											</div>											
+											</div>
+											&nbsp;
+											<div class="row">
+												<div class="col-sm-12">
+													<label for="id_macroprocess">Macroprocesso</label>					                    
+													<select class="form-control" id="id_macroprocess" name="id_macroprocess" >
+														<option selected disabled>Selecione</option>															
+														<?php
+															foreach ($macroProcs as $macroProc) {																	
+																echo "<option value=".$macroProc->getId().">[".$macroProc->getMacroProcType()[0]->getInitials()."".str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT)."] - ".$macroProc->getName()."</option>";
+															}
+														?>
+													</select>
+												</div>
+											</div>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default pull-left" data-dismiss="modal" style="width: 20%; white-space: normal">Fechar</button>
@@ -164,7 +201,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								</div>								
 							</div>							
 						</div>
-						<!-- Modal - Exclusão de Tipos de Processos -->
+						<!-- Modal - Exclusão de Processos -->
 						<div id="modalDelete" class="modal fade" >
 							<div class="modal-dialog">
 								<div class="modal-content">

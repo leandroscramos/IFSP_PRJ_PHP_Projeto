@@ -165,7 +165,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<input type="number" class="form-control" id="docTypeLevelUpdate" name="docTypeLevelUpdate" min="1" max="3" placeholder="">
 												</div>
 												<div class="col-sm-3">
-													<label for="docTypeRevUpdate">Revisão <i class="far fa-question-circle" title="Prazo máximo para revisão, em anos, de 0 a 4, sendo o 0 para quando houver necessidade."></i></label>
+													<label for="docTypeRevUpdate">Revisão <i class="far fa-question-circle" title="Prazo máximo para revisão, em anos, de 0 a 4, sendo o 0 para quando houver atualização."></i></label>
 													<input type="number" class="form-control" id="docTypeRevUpdate" name="docTypeRevUpdate" placeholder="">
 												</div>												
 											</div>											

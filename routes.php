@@ -11,7 +11,7 @@ $action = $action[0];
 // Controllers.
 include_once $_SESSION["root"].'php/Controller/ControllerLogin.php';
 include_once $_SESSION["root"].'php/Controller/ControllerDocType.php';
-include_once $_SESSION["root"].'php/Controller/ControllerSector.php';
+include_once $_SESSION["root"].'php/Controller/ControllerArea.php';
 include_once $_SESSION["root"].'php/Controller/ControllerProcType.php';
 include_once $_SESSION["root"].'php/Controller/ControllerMacroProc.php';
 include_once $_SESSION["root"].'php/Controller/ControllerProcess.php';
@@ -70,7 +70,7 @@ else if ($action == 'document') {
         } else {            
         */    
             $doctypes = ControllerDocType::readDocType();            
-            $sectors = ControllerSector::readSector();
+            $Areas = ControllerArea::readArea();
             $processs = ControllerProcess::readProcess();
             include_once $_SESSION["root"].'php/View/viewDocument.php';
         //}
@@ -112,26 +112,26 @@ else if ($action == 'docType') {
 }
 
 /* Rota para Setores */
-else if ($action == 'sector') {
+else if ($action == 'area') {
     if (($_SESSION['login']['permissao']) == 'Administrador') {
         if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'create':
-                    ControllerSector::createSector();    
-                    header("Location:sector");
+                    ControllerArea::createArea();    
+                    header("Location:area");
                     break;        
                 case 'update':
-                    ControllerSector::updateSector();    
-                    header("Location:sector");
+                    ControllerArea::updateArea();    
+                    header("Location:area");
                     break;
                 case 'delete':
-                    ControllerSector::deleteSector();    
-                    header("Location:sector");
+                    ControllerArea::deleteArea();    
+                    header("Location:area");
                     break;
             }
         } else {
-            $sectors = ControllerSector::readSector();            
-            include_once $_SESSION["root"].'php/View/ViewSector.php';
+            $areas = ControllerArea::readArea();            
+            include_once $_SESSION["root"].'php/View/ViewArea.php';
         }
     } else {
         header("Location:logado");
