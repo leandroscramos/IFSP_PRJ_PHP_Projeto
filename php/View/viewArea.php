@@ -122,7 +122,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
-										<h4 class="modal-title">Atualização | Áreaa</h4>
+										<h4 class="modal-title">Atualização | Área</h4>
 									</div>
 									<form action="area" method="POST">
 									<input type="hidden" name="action" id="action" value="update">
