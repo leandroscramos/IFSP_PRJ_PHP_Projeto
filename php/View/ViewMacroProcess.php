@@ -98,20 +98,20 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="row">
 												<div class="form-group">													
 													<div class="col-sm-8">
-														<label for="procTypeName">Nome</label>
-														<input type="text" class="form-control" id="procTypeName" name="procTypeName" placeholder="">
+														<label for="macroProcName">Nome</label>
+														<input type="text" class="form-control" id="macroProcName" name="macroProcName" placeholder="">
 													</div>
 													<div class="col-sm-4">
-														<label for="procTypeNumber"">Número</label>
-														<input type="text" class="form-control" id="procTypeNumber" name="procTypeNumber" placeholder="">												
+														<label for="macroProcNumber"">Número</label>
+														<input type="text" class="form-control" id="macroProcNumber" name="macroProcNumber" placeholder="">												
 													</div>
 													&nbsp;
 													<div class="col-sm-12">
-														<label for="id_macro_proc">Tipo de Processo</label>					                    
-														<select class="form-control" id="id_macro_proc" name="id_macro_proc" >
+														<label for="idProcType">Tipo de Processo</label>					                    
+														<select class="form-control" id="idProcType" name="idProcType" >
 															<option selected disabled>Selecione</option>															
 															<?php
-															foreach ($procTypes as $procType) {
+															foreach ($procTypes as $procType) {																	
 																echo "<option value=".$procType->getId().">".$procType->getName()."</option>";
 															}
 															?>
@@ -138,7 +138,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<span aria-hidden="true">&times;</span></button>
 										<h4 class="modal-title">Atualização | Macroprocessos</h4>
 									</div>
-									<form action="procType" method="POST">
+									<form action="macroProc" method="POST">
 									<input type="hidden" name="action" id="action" value="update">
 										<div class="modal-body">
 											<div class="row">
@@ -173,7 +173,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<span aria-hidden="true">&times;</span></button>
 										<h4 class="modal-title">Exclusão | Macroprocessos</h4>
 									</div>
-									<form action="procType" method="POST">
+									<form action="macroProc" method="POST">
 									<input type="hidden" name="action" id="action" value="delete">
 										<div class="modal-body">
 					      					<p>Tem certeza que deseja excluir esse Tipo de Macroprocessos?</p>

@@ -13,27 +13,18 @@ class ControllerMacroProc {
 
     function createMacroProc() {
 		$macroProcDAO = new MacroProcDAO();
-		$macroProc = new ModelMacroProc();
+		$macroProc = new ModelMacroProc();		
 		
-		if (($macroProcDAO->readMacroProcByInitials($_POST['procTypeInitials'])) != null) {
-			$_SESSION["flash"]["msg"] = "Sigla do Tipo de Macroprocesso já cadastrada!";
-			$_SESSION["flash"]["sucesso"] = false;
-		} else 
-		if (($macroProcDAO->readMacroProcByName($_POST['procTypeName'])) != null) {
-			$_SESSION["flash"]["msg"]="Nome do Tipo de Macroprocesso já cadastrado!";
-			$_SESSION["flash"]["sucesso"] = false;
+		$macroProc->setMacroProcFromPOST();
+		$result = $macroProcDAO->createMacroProc($macroProc);
+		
+		if ($result){
+			$_SESSION["flash"]["msg"]="Tipo de Macroprocesso cadastrado com sucesso!";
+			$_SESSION["flash"]["sucesso"] = true;			
 		} else {
-			$macroProc->setMacroProcFromPOST();        
-			$result = $macroProcDAO->createMacroProc($macroProc);
-			
-			if ($result){
-				$_SESSION["flash"]["msg"]="Tipo de Macroprocesso cadastrado com sucesso!";
-				$_SESSION["flash"]["sucesso"] = true;			
-			} else {
-				$_SESSION["flash"]["msg"]="Falha ao cadastrar Tipo de Macroprocesso!";
-				$_SESSION["flash"]["sucesso"] = false;           	
-			}
-		}
+			$_SESSION["flash"]["msg"]="Falha ao cadastrar Tipo de Macroprocesso!";
+			$_SESSION["flash"]["sucesso"] = false;           	
+		}		
     }
 
     public function updateMacroProc() {

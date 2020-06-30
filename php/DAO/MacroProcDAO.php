@@ -33,16 +33,18 @@ class MacroProcDAO
         }
     }    
 
-    public function createMacroProc($procType){			
+    public function createMacroProc($macroProc){			
         
-		try { $sql = "INSERT INTO public.tb_macroprocess (initials, name) VALUES (:initials, :name)";
+		try { $sql = "INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES (:name, :number, :id_proc_type)";
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
             $statement = $conn->prepare($sql);
-            
-            $statement->bindValue(":initials", $macroProc->getInitials());
+                        
             $statement->bindValue(":name", $macroProc->getName());
+            $statement->bindValue(":number", $macroProc->getNumber());
+            $statement->bindValue(":id_proc_type", $macroProc->getIdProcType());
+
 
             return $statement->execute();
 
