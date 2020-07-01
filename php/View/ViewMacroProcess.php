@@ -63,7 +63,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
-													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $macroProc->getId();?>','<?php echo $macroProc->getName(); ?>',,'<?php echo $macroProc->getIdProcType(); ?>''<?php echo $macroProc->getNumber(); ?>')">
+													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $macroProc->getId(); ?>','<?php echo $macroProc->getName(); ?>','<?php echo $macroProc->getMacroProcType()[0]->getName(); ?>','<?php echo $macroProc->getNumber(); ?>')">
 														<i class="far fa-edit"></i>
 													</button>	
 												</td>												
@@ -137,23 +137,35 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span></button>
 										<h4 class="modal-title">Atualização | Macroprocessos</h4>
-									</div>
+									</div>	
 									<form action="macroProc" method="POST">
 									<input type="hidden" name="action" id="action" value="update">
-										<div class="modal-body">
+									<input type="hidden" name="macroProcIdUpdate" id="macroProcIdUpdate">
+										<div class="modal-body">																	            								            
 											<div class="row">
-												<div class="col-sm-4">
-													<label for="procTypeInitialsUpdate"">Sigla</label>
-													<input type="text" class="form-control" id="procTypeInitialsUpdate" name="procTypeInitialsUpdate" placeholder="">												
+												<div class="form-group">													
+													<div class="col-sm-8">
+														<label for="macroProcNameUpdate">Nome</label>
+														<input type="text" class="form-control" id="macroProcNameUpdate" name="macroProcNameUpdate" placeholder="">
+													</div>
+													<div class="col-sm-4">
+														<label for="macroProcNumberUpdate"">Número</label>
+														<input type="text" class="form-control" id="macroProcNumberUpdate" name="macroProcNumberUpdate" placeholder="">												
+													</div>
+													&nbsp;
+													<div class="col-sm-12">
+														<label for="idProcTypeUpdate">Tipo de Processo</label>					                    
+														<select class="form-control" id="idProcTypeUpdate" name="idProcTypeUpdate" >
+															<option selected disabled>Selecione</option>															
+															<?php
+															foreach ($procTypes as $procType) {																	
+																echo "<option value=".$procType->getId().">".$procType->getName()."</option>";
+															}
+															?>
+														</select>
+													</div>
 												</div>
-												<div class="col-sm-8">
-													<label for="procTypeNameUpdate">Nome</label>
-													<input type="text" class="form-control" id="procTypeNameUpdate" name="procTypeNameUpdate" placeholder="">
-												</div>
-												<div class="col-sm-4">
-													<input type="hidden" name="procTypeIdModalUpdate" id="procTypeIdModalUpdate">
-												</div>
-											</div>											
+											</div>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default pull-left" data-dismiss="modal" style="width: 20%; white-space: normal">Fechar</button>
@@ -207,10 +219,12 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 			document.getElementById('idModalDelete').value = id;
 		}
 
-		function setIdModalUpdate(id, initials, name) {			
-			document.getElementById('procTypeIdModalUpdate').value = id;
-			document.getElementById('procTypeInitialsUpdate').value = initials;			
-			document.getElementById('procTypeNameUpdate').value = name;
+		function setIdModalUpdate(id, name, idProcType, number) {			
+			document.getElementById('macroProcIdUpdate').value = id;
+			document.getElementById('macroProcNameUpdate').value = name;
+			document.getElementById('idProcTypeUpdate').options[document.getElementById("idProcTypeUpdate").selectedIndex].text = idProcType;
+			document.getElementById('macroProcNumberUpdate').value = number;			
+			
 		}
 	</script>
 </body>
