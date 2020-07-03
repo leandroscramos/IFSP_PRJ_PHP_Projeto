@@ -15,6 +15,7 @@ include_once $_SESSION["root"].'php/Controller/ControllerArea.php';
 include_once $_SESSION["root"].'php/Controller/ControllerProcType.php';
 include_once $_SESSION["root"].'php/Controller/ControllerMacroProc.php';
 include_once $_SESSION["root"].'php/Controller/ControllerProcess.php';
+include_once $_SESSION["root"].'php/Controller/ControllerDocument.php';
 
 
 // Condicionais que verificam o roteamento das actions.
@@ -51,32 +52,31 @@ else if ($action == 'docList') {
 
 /* Rota para Documento */
 else if ($action == 'document') {
-    //if (($_SESSION['login']['permissao']) == 'Administrador') {
-        /*if (isset($_POST['action'])) {
+    if (($_SESSION['login']['permissao']) == 'Administrador') {
+        if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'create':
-                    ControllerDocType::createDocType();
-                    header("Location:docType");
+                    ControllerDocument::createDocument();                    
+                    header("Location:document");
                     break;        
                 case 'update':
-                    ControllerDocType::updateDocType();    
-                    header("Location:docType");
+                    ControllerDocument::updateDocument();    
+                    header("Location:document");
                     break;
                 case 'delete':
-                    ControllerDocType::deleteDocType();    
-                    header("Location:docType");
+                    ControllerDocument::deleteDocument();    
+                    header("Location:document");
                     break;
             }
-        } else {            
-        */    
+        } else {
             $doctypes = ControllerDocType::readDocType();            
             $areas = ControllerArea::readArea();
             $processs = ControllerProcess::readProcess();
             include_once $_SESSION["root"].'php/View/viewDocument.php';
-        //}
-    //} else {
-      //  header("Location:logado");
-    //}
+        }
+    } else {
+        header("Location:logado");
+    }
     
 }
 

@@ -53,7 +53,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 
 								  <?php //Util::debug($processs); ?>
 
-								  <form action="" method="POST">						            								            
+								  <form action="document" method="POST">
+								  <input type="hidden" name="action" id="action" value="create">
 									<div class="box-body">
 										<div class="form-group">					                  
 											<div class="col-sm-8">
@@ -61,8 +62,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="text" class="form-control" id="doc_title" name="doc_title" placeholder="">
 											</div>
 											<div class="col-sm-4">
-												<label for="doc_codigo">Código</label>
-												<input type="text" class="form-control" id="doc_codigo" name="doc_codigo" placeholder="" readonly="true">
+												<label for="doc_code">Código</label>
+												<input type="text" class="form-control" id="doc_code" name="doc_code" placeholder="" readonly="true">
 											</div>
 										</div>
 										<div class="form-group">																						
@@ -124,8 +125,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<hr>
 										<div class="form-group">
 											<div class="col-sm-6">
-												<label for="doc_proc_name">Processo</label>												
-												<select class="form-control" id="doc_proc_name" name="doc_proc_name" onchange="processos();">
+												<label for="doc_process">Processo</label>												
+												<select class="form-control" id="doc_process" name="doc_process" onchange="processos();">
 													<option selected disabled>Selecione</option>                                                    
                                                     <?php
                                                     foreach ($processs as $process) {
@@ -146,42 +147,42 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<hr>
 										<div class="form-group">
 											<div class="col-sm-2">
-												<label for="doc_proc_sei">Processo SEI</label>
-												<input type="text" class="form-control" id="doc_proc_sei" name="doc_proc_sei" placeholder="">
+												<label for="doc_process_sei">Processo SEI</label>
+												<input type="text" class="form-control" id="doc_process_sei" name="doc_process_sei" placeholder="">
 											</div>
 											<div class="col-sm-2">
-												<label for="doc_proc_sei">Documento</label>
-												<input type="text" class="form-control" id="doc_proc_sei" name="doc_proc_sei" placeholder="">
+												<label for="doc_document_sei">Documento</label>
+												<input type="text" class="form-control" id="doc_document_sei" name="doc_document_sei" placeholder="">
 											</div>
 											<div class="col-sm-2">
-												<label for="doc_despacho_sei">Despacho SEI</label>
-												<input type="text" class="form-control" id="doc_despacho_sei" name="doc_despacho_sei" placeholder="">
+												<label for="doc_dispatch_sei">Despacho SEI</label>
+												<input type="text" class="form-control" id="doc_dispatch_sei" name="doc_dispatch_sei" placeholder="">
 											</div>	
 										</div>
 										<hr>
 										<div class="form-group">
 											<div class="col-sm-3">
-												<label for="doc_version">Elaborado por</label>
-												<input type="text" class="form-control" id="doc_version" name="doc_version" placeholder="">
+												<label for="doc_maker">Elaborado por</label>
+												<input type="text" class="form-control" id="doc_maker" name="doc_maker" placeholder="">
 											</div>
 											<div class="col-sm-3">
-												<label for="doc_version">Revisado por</label>
-												<input type="text" class="form-control" id="doc_version" name="doc_version" placeholder="">
+												<label for="doc_reviewer">Revisado por</label>
+												<input type="text" class="form-control" id="doc_reviewer" name="doc_reviewer" placeholder="">
 											</div>
 											<div class="col-sm-3">
-												<label for="doc_version">Validado por</label>
-												<input type="text" class="form-control" id="doc_version" name="doc_version" placeholder="">
+												<label for="doc_validator">Validado por</label>
+												<input type="text" class="form-control" id="doc_validator" name="doc_validator" placeholder="">
 											</div>
 											<div class="col-sm-3">
-												<label for="doc_version">Aprovado por</label>
-												<input type="text" class="form-control" id="doc_version" name="doc_version" placeholder="">
+												<label for="doc_approver">Aprovado por</label>
+												<input type="text" class="form-control" id="doc_approver" name="doc_approver" placeholder="">
 											</div>
 										</div>
 
 										<div class="form-group">
 											<div class="col-sm-2">
-												<label for="doc_approve">Data aprovação</label>
-												<input type="date" class="form-control" id="doc_approve" name="doc_approve" placeholder="">
+												<label for="doc_approval_date">Data aprovação</label>
+												<input type="date" class="form-control" id="doc_approval_date" name="doc_approval_date" placeholder="">
 											</div>
 											<div class="col-sm-2">
 												<label for="doc_validate">Validade</label>
@@ -203,8 +204,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												</select>
 											</div>
 											<div class="col-sm-3">
-												<label for="doc_alters">Alterações</label>
-												<select class="form-control" id="doc_alters" name="doc_alters">
+												<label for="doc_changes">Alterações</label>
+												<select class="form-control" id="doc_changes" name="doc_changes">
 													<option selected disabled>-</option>
 													<option>Criação de Documento</option>
 													<option>Elaboração de Documento</option>
@@ -223,8 +224,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 
 										<div class="form-group">
 											<div class="col-sm-3">
-												<label for="exampleInputFile" >Arquivo</label>
-												<input type="file" id="exampleInputFile" value="Buscar">										
+												<label for="doc_file">Arquivo</label>
+												<input type="file" id="doc_file" name="doc_file" value="Buscar">										
 											</div>
 										</div>
 
