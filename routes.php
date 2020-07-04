@@ -45,6 +45,8 @@ else if ($action == 'logado') {
 
 
 else if ($action == 'docList') {
+    //$doctypes = ControllerDocType::readDocType();
+    $documents = ControllerDocument::readDocument();
     include_once $_SESSION["root"].'php/View/viewDocumentList.php';
 }
 
@@ -52,7 +54,7 @@ else if ($action == 'docList') {
 
 /* Rota para Documento */
 else if ($action == 'document') {
-    if (($_SESSION['login']['permissao']) == 'Administrador') {
+    if ( (($_SESSION['login']['permissao']) == 'Administrador') || (($_SESSION['login']['permissao']) == 'Usuário') ) {
         if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'create':

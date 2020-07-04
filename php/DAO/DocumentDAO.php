@@ -8,7 +8,7 @@ class DocumentDAO
 {
     public function readDocument(){
 
-        try { $sql = ('SELECT * FROM public.tb_document ORDER BY id');
+        try { $sql = ('SELECT * FROM public.tb_documents ORDER BY id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -35,8 +35,12 @@ class DocumentDAO
 
     public function createDocument($document){			
         
-        try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, changes) 
-                        VALUES (:title, :code, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, :changes)
+        //try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, changes) 
+        //                VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, :changes)
+        //             ');
+
+        try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, submition_date) 
+                        VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now())
                      ');
             
             $instance = DatabaseConnection::getInstance();
@@ -44,6 +48,7 @@ class DocumentDAO
             $statement = $conn->prepare($sql);
             
             $statement->bindValue(":title", $document->getTitle());
+            
             //$statement->bindValue(":code", $document->getCode());
             $statement->bindValue(":doc_type", $document->getDocType());
             $statement->bindValue(":number", $document->getNumber());
@@ -55,10 +60,9 @@ class DocumentDAO
             $statement->bindValue(":validator", $document->getValidator());
             $statement->bindValue(":approver", $document->getApprover());            
             $statement->bindValue(":approval_date", $document->getApprovalDate());
-            $statement->bindValue(":changes", $document->getChanges());            
-
-            return $statement->execute();
-            $_SESSION["flash"]["msg2"]="Falha";
+            //$statement->bindValue(":changes", $document->getChanges());            
+            
+            return $statement->execute();            
 
         } catch (PDOException $e) {
             echo "Erro ao inserir na base de dados.".$e->getMessage();            

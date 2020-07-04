@@ -1,5 +1,6 @@
 <?php
 
+include_once $_SESSION["root"].'php/DAO/DocTypeDAO.php';
 
 class ModelDocument
 {
@@ -24,19 +25,24 @@ class ModelDocument
     private $changes;
     private $submition_date;
 
-    public function setDocumentFromDatabase($value){
-       
+    public function setDocumentFromDatabase($document){        
+        $doc_type = DocTypeDAO::readDocTypeById($document["doc_type"]);
+        $this->setId($document["id"])
+            ->setTitle($document["title"])
+            ->setDocType($doc_type)
+            ->setVersion($document["version"]);
+
     }
 
     public function setDocumentFromPOST(){
         $this->setId(null)
             ->setTitle($_POST["doc_title"])
-            ->setCode($_POST["doc_code"])
-            ->setDocType($_POST["doc_type"])
+            //->setCode($_POST["doc_code"])
+            ->setDocType($_POST["doc_id_doctype"])
             ->setNumber($_POST["doc_number"])
             ->setVersion($_POST["doc_version"])
-            ->setArea($_POST["doc_area"])
-            ->setProcess($_POST["doc_process"])
+            ->setArea($_POST["doc_id_area"])
+            ->setProcess($_POST["doc_id_process"])
             ->setProcessSei($_POST["doc_process_sei"])
             ->setDocumentSei($_POST["doc_document_sei"])
             ->setDispatchSei($_POST["doc_dispatch_sei"])

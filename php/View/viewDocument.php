@@ -6,27 +6,31 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 
 <script>
 	function areas() {
-		var nomeArea = document.getElementById("doc_sigla_area").value;		
-		document.getElementById("doc_area").value = nomeArea;
+		var nomeArea = document.getElementById("doc_sigla_area").value;
+		var area_split = nomeArea.split("+");
+		document.getElementById("doc_id_area").value = area_split[0];
+		document.getElementById("doc_area").value = area_split[1];
 	}
 
 	function processos() {
-		var processData = document.getElementById("doc_proc_name").value;
-		var split = processData.split("+");
-		document.getElementById("doc_macroproc").value = split[0];
-		document.getElementById("doc_proc_type").value = split[1];
+		var processData = document.getElementById("doc_process").value;
+		var proc_split = processData.split("+");
+		console.log(proc_split);
+		document.getElementById("doc_id_process").value = proc_split[0]; 
+		document.getElementById("doc_macroproc").value = proc_split[1];
+		document.getElementById("doc_proc_type").value = proc_split[2];
 	}
 
 	function validade() {
-		var validade = document.getElementById("doc_type").value;
-		if (validade == 0) {
+		var doctypeData = document.getElementById("doc_type").value;
+		var doctype_split = doctypeData.split("+");
+		if (doctype_split[1] == 0) {
 			document.getElementById("doc_validate").value = 'NA';
 		} else {
-			document.getElementById("doc_validate").value = validade + ' anos';
-		}		
+			document.getElementById("doc_validate").value = doctype_split[1] + ' anos';
+		}
+		document.getElementById("doc_id_doctype").value = doctype_split[0];
 	}
-
-
 </script>
 
 <?php include "includes/menu.php";?>
@@ -41,9 +45,24 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 					<div class="col-md-10 col-md-offset-1 form-horizontal">
 						<div class="box box-success">
 							<div class="box-header with-border">
-								<h3 class="box-title">Formulário para Submissão de Documentos Institucionais</h3>
+								<h3 class="box-title">Formulário para Submissão de Documentos Institucionais</h3>								
 							</div>
-
+							<div class="box-header">
+								<?php 
+									if (isset($_SESSION["flash"]["msg"])) {
+										if (($_SESSION["flash"]["sucesso"]) == true) {
+											echo "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+											echo "<i class='far fa-check-circle'></i>&nbsp;&nbsp;".$_SESSION["flash"]["msg"];
+											echo "</div>";
+										} else {
+											echo "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+											echo "<i class='fas fa-exclamation-triangle'></i>&nbsp;&nbsp;".$_SESSION["flash"]["msg"];
+											echo "</div>";																			
+										}
+									}
+								?>
+							</div>
+							
 							<div class="box-body">															        
 						        <div class="box box-success">
 					              <div class="box-header with-border">
@@ -68,28 +87,29 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										</div>
 										<div class="form-group">																						
 											<div class="col-sm-5">
-												<label for="doc_type">Tipo do Documento</label>					                    
+												<label for="doc_type">Tipo do Documento</label>
+												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">							                    
 												<select class="form-control" id="doc_type" name="doc_type" onchange="validade();">
                                                     <option selected disabled>Selecione</option>
                                                     <option disabled><strong>--- Nível 1 ---</strong></option>
                                                     <?php
                                                     foreach ($doctypes as $doctype) {
                                                         if ($doctype->getLevel() == 1)
-                                                            echo "<option value='".$doctype->getRev()."'>".$doctype->getName()."</option>";
+                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."'>".$doctype->getName()."</option>";
                                                     }
                                                     ?>
                                                     <option disabled><strong>--- Nível 2 ---</strong></option>
                                                     <?php
                                                     foreach ($doctypes as $doctype) {
                                                         if ($doctype->getLevel() == 2)
-                                                            echo "<option value='".$doctype->getRev()."'>".$doctype->getName()."</option>";
+                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."'>".$doctype->getName()."</option>";
                                                     }
                                                     ?>
                                                     <option disabled><strong>--- Nível 3 ---</strong></option>
                                                     <?php
                                                     foreach ($doctypes as $doctype) {
                                                         if ($doctype->getLevel() == 3)
-                                                            echo "<option value='".$doctype->getRev()."'>".$doctype->getName()."</option>";
+                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."'>".$doctype->getName()."</option>";
 													}
 													?>													
 
@@ -104,12 +124,13 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="text" class="form-control" id="doc_version" name="doc_version" placeholder="">
 											</div>
 											<div class="col-sm-1">
-												<label for="doc_sigla_area">Área <i>(Sigla)</i></label>												
+												<label for="doc_sigla_area">Área <i>(Sigla)</i></label>
+												<input type="hidden" name="doc_id_area" id="doc_id_area">;
 												<select class="form-control" id="doc_sigla_area" name="doc_sigla_area" onchange="areas();">
 													<option selected disabled></option>                                                    
                                                     <?php
                                                     foreach ($areas as $area) {
-                                                        echo "<option value='".$area->getName()."'>".$area->getInitials()."</option>";
+														echo "<option value='".$area->getId()."+".$area->getName()."'>".$area->getInitials()."</option>";														
                                                     }
                                                     ?>													
 												</select>
@@ -125,12 +146,13 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<hr>
 										<div class="form-group">
 											<div class="col-sm-6">
-												<label for="doc_process">Processo</label>												
+												<label for="doc_process">Processo</label>
+												<input type="hidden" name="doc_id_process" id="doc_id_process">												
 												<select class="form-control" id="doc_process" name="doc_process" onchange="processos();">
 													<option selected disabled>Selecione</option>                                                    
                                                     <?php
                                                     foreach ($processs as $process) {
-                                                        echo "<option value='".$process->getMacroProcess()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."'>".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName()."</option>";
+                                                        echo "<option value='".$process->getId()."+".$process->getMacroProcess()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."'>".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName()."</option>";
                                                     }
                                                     ?>													
 												</select>
@@ -148,15 +170,15 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<div class="form-group">
 											<div class="col-sm-2">
 												<label for="doc_process_sei">Processo SEI</label>
-												<input type="text" class="form-control" id="doc_process_sei" name="doc_process_sei" placeholder="">
+												<input type="text" class="form-control" id="doc_process_sei" name="doc_process_sei" placeholder="" readonly="true">
 											</div>
 											<div class="col-sm-2">
 												<label for="doc_document_sei">Documento</label>
-												<input type="text" class="form-control" id="doc_document_sei" name="doc_document_sei" placeholder="">
+												<input type="text" class="form-control" id="doc_document_sei" name="doc_document_sei" placeholder="" readonly="true">
 											</div>
 											<div class="col-sm-2">
 												<label for="doc_dispatch_sei">Despacho SEI</label>
-												<input type="text" class="form-control" id="doc_dispatch_sei" name="doc_dispatch_sei" placeholder="">
+												<input type="text" class="form-control" id="doc_dispatch_sei" name="doc_dispatch_sei" placeholder="" readonly="true">
 											</div>	
 										</div>
 										<hr>
@@ -212,6 +234,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<option>Institucionalização de Documento</option>
 												</select>
 											</div>
+											<!--
 											<div class="col-sm-2">
 												<label for="doc_status">Status</label>
 												<select class="form-control" id="doc_status" name="doc_status">
@@ -220,6 +243,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<option>Coletando assinaturas</option>
 												</select>
 											</div>
+											-->
 										</div>
 
 										<div class="form-group">

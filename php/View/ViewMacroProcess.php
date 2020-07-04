@@ -52,10 +52,10 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										</tr>
 									</thead>									
 									<tbody>										
-										<?php											
+										<?php
+											Util::debug($macroProcs);
 											foreach ($macroProcs as $macroProc) {
 												echo "<tr>";
-												//Util::debug($macroProc);												
 												echo "<td><strong>".$macroProc->getMacroProcType()[0]->getInitials()."".str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";
 												echo "<td>".$macroProc->getName()."</td>";												
 												echo "<td>".$macroProc->getMacroProcType()[0]->getName()."</td>";

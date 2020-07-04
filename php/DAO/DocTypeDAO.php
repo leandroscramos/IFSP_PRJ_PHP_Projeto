@@ -91,6 +91,35 @@ class DocTypeDAO
         }        
     }
 
+    public function readDocTypeById($id){
+
+        try { $sql = ('SELECT * FROM public.tb_doc_type WHERE id = :id');
+            $instance = DatabaseConnection::getInstance();
+            $conn = $instance->getConnection();
+            $statement = $conn->prepare($sql);
+                        
+            $statement->bindParam(':id', $id); 
+            $statement->execute();
+
+            $records = $statement->fetchAll();
+            
+            if(count($records)==0)
+                return null;
+
+            $doctypes;
+            
+            foreach ($records as $value) {
+                $doctype = new ModelDocType();
+                $doctype->setDocTypeFromDatabase($value);
+                $doctypes[]=$doctype;
+            }
+            return $doctypes;
+
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }  
+
     public function readDocTypeByName($name){
 
         try { $sql = ('SELECT * FROM public.tb_doc_type WHERE name = :name');
