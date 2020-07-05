@@ -16,7 +16,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
 
-						<div class="box box-warning">
+						<div class="box box-success">
 							<div class="box-header with-border">
 								<h3 class="box-title">Tipos de Processos</h3>
 							</div>

@@ -4,32 +4,18 @@ include "includes/header.php";
 include_once $_SESSION["root"].'php/Util/Util.php';
 ?>
 
-<script>
-	function areas() {
-		var nomeArea = document.getElementById("doc_sigla_area").value;
-		var area_split = nomeArea.split("+");
-		document.getElementById("doc_id_area").value = area_split[0];
-		document.getElementById("doc_area").value = area_split[1];
+<script src="php/JS/defaultDocument.js"></script>
+<?php 
+	if (($_SESSION["login"]["permissao"] == "Usuário")) {
+		echo "<script src='php/JS/userDocument.js'></script>";
+	} else {
+		echo "<script src='php/JS/adminDocument.js'></script>";
 	}
+?>
 
-	function processos() {
-		var processData = document.getElementById("doc_process").value;
-		var proc_split = processData.split("+");
-		console.log(proc_split);
-		document.getElementById("doc_id_process").value = proc_split[0]; 
-		document.getElementById("doc_macroproc").value = proc_split[1];
-		document.getElementById("doc_proc_type").value = proc_split[2];
-	}
-
-	function validade() {
-		var doctypeData = document.getElementById("doc_type").value;
-		var doctype_split = doctypeData.split("+");
-		if (doctype_split[1] == 0) {
-			document.getElementById("doc_validate").value = 'NA';
-		} else {
-			document.getElementById("doc_validate").value = doctype_split[1] + ' anos';
-		}
-		document.getElementById("doc_id_doctype").value = doctype_split[0];
+<script type="text/javascript">
+	window.onload = function() {
+		readOnly();
 	}
 </script>
 
@@ -77,11 +63,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									<div class="box-body">
 										<div class="form-group">					                  
 											<div class="col-sm-8">
-												<label for="doc_title"">Título</label>
+												<label for="doc_title"">Título *</label>
 												<input type="text" class="form-control" id="doc_title" name="doc_title" placeholder="">
 											</div>
 											<div class="col-sm-4">
-												<label for="doc_code">Código</label>
+												<label for="doc_code">Código *</label>
 												<input type="text" class="form-control" id="doc_code" name="doc_code" placeholder="" readonly="true">
 											</div>
 										</div>
@@ -139,10 +125,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<label for="doc_area">Área <i>(Nome)</i></label>					                    
 												<input type="text" class="form-control" id="doc_area" name="doc_area" placeholder="" readonly="true">
 											</div>	
-										</div>
-										<div class="form-group">
-																					
-										</div>
+										</div>										
 										<hr>
 										<div class="form-group">
 											<div class="col-sm-6">
@@ -159,26 +142,26 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 											<div class="col-sm-3">
 												<label for="doc_macroproc">Macroprocesso</label>
-												<input type="text" class="form-control" id="doc_macroproc" name="doc_macroproc" placeholder="" readonly="true">
+												<input type="text" class="form-control" id="doc_macroproc" name="doc_macroproc" placeholder="">
 											</div>
 											<div class="col-sm-3">
 												<label for="doc_proc_type">Tipo do Processo</label>
-												<input type="text" class="form-control" id="doc_proc_type" name="doc_proc_type" placeholder="" readonly="true">
+												<input type="text" class="form-control" id="doc_proc_type" name="doc_proc_type" placeholder="">
 											</div>											
 										</div>
 										<hr>
 										<div class="form-group">
 											<div class="col-sm-2">
 												<label for="doc_process_sei">Processo SEI</label>
-												<input type="text" class="form-control" id="doc_process_sei" name="doc_process_sei" placeholder="" readonly="true">
+												<input type="text" class="form-control" id="doc_process_sei" name="doc_process_sei" placeholder="">
 											</div>
 											<div class="col-sm-2">
 												<label for="doc_document_sei">Documento</label>
-												<input type="text" class="form-control" id="doc_document_sei" name="doc_document_sei" placeholder="" readonly="true">
+												<input type="text" class="form-control" id="doc_document_sei" name="doc_document_sei" placeholder="">
 											</div>
 											<div class="col-sm-2">
 												<label for="doc_dispatch_sei">Despacho SEI</label>
-												<input type="text" class="form-control" id="doc_dispatch_sei" name="doc_dispatch_sei" placeholder="" readonly="true">
+												<input type="text" class="form-control" id="doc_dispatch_sei" name="doc_dispatch_sei" placeholder="">
 											</div>	
 										</div>
 										<hr>
@@ -208,17 +191,16 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 											<div class="col-sm-2">
 												<label for="doc_validate">Validade</label>
-												<input type="text" class="form-control" id="doc_validate" name="doc_validate" placeholder="" readonly="true">
+												<input type="text" class="form-control" id="doc_validate" name="doc_validate" placeholder="">
 											</div>
 											<div class="col-sm-2">
 												<label for="doc_revision">Próxima revisão</label>
-												<input type="text" class="form-control" id="doc_revision" name="doc_revision" placeholder="" readonly="true">
+												<input type="text" class="form-control" id="doc_revision" name="doc_revision" placeholder="">
 											</div>											
 										</div>
 
-										<div class="form-group">
-																				
-											<div class="col-sm-1">
+										<div class="form-group">																				
+											<div class="col-sm-1" id="doc_situation">
 												<label for="doc_situation">Situação</label>
 												<select class="form-control" id="doc_situation" name="doc_situation">													
 													<option selected>Ativo</option>
@@ -233,25 +215,17 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<option>Elaboração de Documento</option>
 													<option>Institucionalização de Documento</option>
 												</select>
-											</div>
-											<!--
-											<div class="col-sm-2">
-												<label for="doc_status">Status</label>
-												<select class="form-control" id="doc_status" name="doc_status">
-													<option selected disabled>-</option>
-													<option>Publicado</option>
-													<option>Coletando assinaturas</option>
-												</select>
-											</div>
-											-->
+											</div>																																	
 										</div>
-
+										<hr>
 										<div class="form-group">
 											<div class="col-sm-3">
 												<label for="doc_file">Arquivo</label>
 												<input type="file" id="doc_file" name="doc_file" value="Buscar">										
 											</div>
 										</div>
+										
+										<input type="hidden" name="doc_status" id="doc_status" value="0">
 
 										<div class="box-footer">				                
 											<button type="submit" class="btn btn-success pull-right col-sm-1" name="submitInternacao">Submit</button>
@@ -270,5 +244,6 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 	</div>
 	<!-- /.content-wrapper -->
 	<?php include $_SESSION["root"].'includes/footer.php'; ?>
+	
 </body>
 </html>

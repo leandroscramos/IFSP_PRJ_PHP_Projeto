@@ -16,7 +16,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
 
-						<div class="box box-warning">
+						<div class="box box-success">
 							<div class="box-header with-border">
 								<h3 class="box-title">Macroprocessos</h3>
 							</div>
@@ -53,7 +53,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									</thead>									
 									<tbody>										
 										<?php
-											Util::debug($macroProcs);
+											//Util::debug($macroProcs);
 											foreach ($macroProcs as $macroProc) {
 												echo "<tr>";
 												echo "<td><strong>".$macroProc->getMacroProcType()[0]->getInitials()."".str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";

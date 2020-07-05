@@ -13,7 +13,7 @@ include "includes/header.php";
 			<section class="content">
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1 form-horizontal">
-						<div class="box box-warning">
+						<div class="box box-success">
 							<div class="box-header">
 								<h3 class="box-title">Lista de Documentos submetidos para o Setor de Gestão da Qualidade</h3>
 							</div>							
@@ -26,8 +26,8 @@ include "includes/header.php";
 											<th width="15%">Tipo do Documento</th>
 											<th width="50%">Título do Documento</th>
 											<th width="2%">Versão</th>
-											<th width="10%">Status</th>
-											<th width="2%"></th>											
+											<th width="8%">Status</th>											
+											<th width="10%">Data Submissão</th>											
 										</tr>
 									</thead>									
 									<tbody>	
@@ -39,8 +39,13 @@ include "includes/header.php";
 												echo "<td>".$document->getDocType()[0]->getName()."</td>";
 												echo "<td><strong>".$document->getTitle()."</strong></td>";
 												echo "<td>".$document->getVersion()."</td>";												
-												echo "<td><span class='label label-warning'>Aguardando revisão</span></td>";
-												echo "<td><span class='glyphicon glyphicon-edit'></td>";
+												if ($document->getStatus() == 0) {
+													echo "<td><span class='label label-danger'>Submetido</span></td>";	
+												} else {
+													echo "<td><span class='label label-success'>Publicado</span></td>";
+												}
+												$date = new DateTime($document->getSubmitionDate());
+												echo "<td>".$date->format('d/m/Y')."</td>";												
 												echo "</tr>";												
 											}
 										?>										

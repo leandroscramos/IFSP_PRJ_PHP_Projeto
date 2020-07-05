@@ -39,8 +39,8 @@ class DocumentDAO
         //                VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, :changes)
         //             ');
 
-        try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, submition_date) 
-                        VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now())
+        try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, submition_date, status) 
+                        VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status)
                      ');
             
             $instance = DatabaseConnection::getInstance();
@@ -60,6 +60,7 @@ class DocumentDAO
             $statement->bindValue(":validator", $document->getValidator());
             $statement->bindValue(":approver", $document->getApprover());            
             $statement->bindValue(":approval_date", $document->getApprovalDate());
+            $statement->bindValue(":status", $document->getStatus());
             //$statement->bindValue(":changes", $document->getChanges());            
             
             return $statement->execute();            

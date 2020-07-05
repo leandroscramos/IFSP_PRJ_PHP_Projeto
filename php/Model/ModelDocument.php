@@ -30,7 +30,9 @@ class ModelDocument
         $this->setId($document["id"])
             ->setTitle($document["title"])
             ->setDocType($doc_type)
-            ->setVersion($document["version"]);
+            ->setVersion($document["version"])
+            ->setStatus($document["status"])
+            ->setSubmitionDate($document["submition_date"]);
 
     }
 
