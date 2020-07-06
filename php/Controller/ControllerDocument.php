@@ -16,9 +16,19 @@ class ControllerDocument {
 		$documentDAO = new DocumentDAO();
 		$document = new ModelDocument();
 		
-		$document->setDocumentFromPOST();
-		$_SESSION["flash"]["teste"]=$document;		
+		$document->setDocumentFromPOST();			
 		$result = $documentDAO->createDocument($document);
+
+		if (isset($_FILES['doc_file'])) {
+
+			$extensao = strtolower(substr($_FILES['doc_file']['name'], -4)); //pega a extensão do arquivo
+			$novo_nome = md5(time()) . $extensao; //define o nome do arquivo
+			$diretorio = "upload/"; //define o diretorio para onde enviaremos o arquivo
+	
+			move_uploaded_file($_FILES['doc_file']['tmp_name'], $diretorio.$novo_nome); //efetua o upload
+			
+		}
+	
 		
 		if ($result){
 			$_SESSION["flash"]["msg"]="Documento submetido com sucesso!";

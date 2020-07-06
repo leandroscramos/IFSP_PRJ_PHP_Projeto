@@ -25,4 +25,3 @@ function validade() {
     }
     document.getElementById("doc_id_doctype").value = doctype_split[0];
 }
-

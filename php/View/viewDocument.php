@@ -13,6 +13,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 	}
 ?>
 
+
 <script type="text/javascript">
 	window.onload = function() {
 		readOnly();
@@ -58,13 +59,13 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 
 								  <?php //Util::debug($processs); ?>
 
-								  <form action="document" method="POST">
-								  <input type="hidden" name="action" id="action" value="create">
+								  <form action="document" method="POST" enctype="multipart/form-data">
+								  	<input type="hidden" name="action" id="action" value="create">
 									<div class="box-body">
 										<div class="form-group">					                  
 											<div class="col-sm-8">
 												<label for="doc_title"">Título *</label>
-												<input type="text" class="form-control" id="doc_title" name="doc_title" placeholder="">
+												<input type="text" class="form-control" id="doc_title" name="doc_title" required>
 											</div>
 											<div class="col-sm-4">
 												<label for="doc_code">Código *</label>
@@ -72,10 +73,10 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 										</div>
 										<div class="form-group">																						
-											<div class="col-sm-5">
+											<div class="col-sm-4">
 												<label for="doc_type">Tipo do Documento</label>
 												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">							                    
-												<select class="form-control" id="doc_type" name="doc_type" onchange="validade();">
+												<select class="form-control" id="doc_type" name="doc_type" onchange="validade();" required>
                                                     <option selected disabled>Selecione</option>
                                                     <option disabled><strong>--- Nível 1 ---</strong></option>
                                                     <?php
@@ -102,17 +103,21 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												</select>
 											</div>
 											<div class="col-sm-1">
+												<label for="doc_validate">Validade</label>
+												<input type="text" class="form-control" id="doc_validate" name="doc_validate" placeholder="">
+											</div>
+											<div class="col-sm-1">
 												<label for="doc_number">Número</label>
-												<input type="text" class="form-control" id="doc_number" name="doc_number" placeholder="">
+												<input type="text" class="form-control" id="doc_number" name="doc_number" placeholder="" required>
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_version">Versão</label>
-												<input type="text" class="form-control" id="doc_version" name="doc_version" placeholder="">
+												<input type="text" class="form-control" id="doc_version" name="doc_version" placeholder="" required>
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_sigla_area">Área <i>(Sigla)</i></label>
 												<input type="hidden" name="doc_id_area" id="doc_id_area">;
-												<select class="form-control" id="doc_sigla_area" name="doc_sigla_area" onchange="areas();">
+												<select class="form-control" id="doc_sigla_area" name="doc_sigla_area" onchange="areas();" required>
 													<option selected disabled></option>                                                    
                                                     <?php
                                                     foreach ($areas as $area) {
@@ -129,9 +134,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<hr>
 										<div class="form-group">
 											<div class="col-sm-6">
-												<label for="doc_process">Processo</label>
+												<label for="doc_process">Processo *</label>
 												<input type="hidden" name="doc_id_process" id="doc_id_process">												
-												<select class="form-control" id="doc_process" name="doc_process" onchange="processos();">
+												<select class="form-control" id="doc_process" name="doc_process" onchange="processos();" required>
 													<option selected disabled>Selecione</option>                                                    
                                                     <?php
                                                     foreach ($processs as $process) {
@@ -167,49 +172,41 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<hr>
 										<div class="form-group">
 											<div class="col-sm-3">
-												<label for="doc_maker">Elaborado por</label>
-												<input type="text" class="form-control" id="doc_maker" name="doc_maker" placeholder="">
+												<label for="doc_maker">Elaborado por *</label>
+												<input type="text" class="form-control" id="doc_maker" name="doc_maker" placeholder="" required>
 											</div>
 											<div class="col-sm-3">
-												<label for="doc_reviewer">Revisado por</label>
-												<input type="text" class="form-control" id="doc_reviewer" name="doc_reviewer" placeholder="">
+												<label for="doc_reviewer">Revisado por *</label>
+												<input type="text" class="form-control" id="doc_reviewer" name="doc_reviewer" placeholder="" required>
 											</div>
 											<div class="col-sm-3">
-												<label for="doc_validator">Validado por</label>
-												<input type="text" class="form-control" id="doc_validator" name="doc_validator" placeholder="">
+												<label for="doc_validator">Validado por *</label>
+												<input type="text" class="form-control" id="doc_validator" name="doc_validator" placeholder="" required>
 											</div>
 											<div class="col-sm-3">
-												<label for="doc_approver">Aprovado por</label>
-												<input type="text" class="form-control" id="doc_approver" name="doc_approver" placeholder="">
+												<label for="doc_approver">Aprovado por *</label>
+												<input type="text" class="form-control" id="doc_approver" name="doc_approver" placeholder="" required>
 											</div>
 										</div>
 
 										<div class="form-group">
 											<div class="col-sm-2">
-												<label for="doc_approval_date">Data aprovação</label>
-												<input type="date" class="form-control" id="doc_approval_date" name="doc_approval_date" placeholder="">
-											</div>
-											<div class="col-sm-2">
-												<label for="doc_validate">Validade</label>
-												<input type="text" class="form-control" id="doc_validate" name="doc_validate" placeholder="">
-											</div>
-											<div class="col-sm-2">
-												<label for="doc_revision">Próxima revisão</label>
-												<input type="text" class="form-control" id="doc_revision" name="doc_revision" placeholder="">
-											</div>											
+												<label for="doc_approval_date">Data aprovação *</label>
+												<input type="date" class="form-control" id="doc_approval_date" name="doc_approval_date" placeholder="" onchange="nextRevision()" required>
+											</div>																																	
 										</div>
 
 										<div class="form-group">																				
-											<div class="col-sm-1" id="doc_situation">
-												<label for="doc_situation">Situação</label>
-												<select class="form-control" id="doc_situation" name="doc_situation">													
+											<div class="col-sm-1" id="situation_div" style="display: none">
+												<label for="situation">Situação</label>
+												<select class="form-control" id="situation" name="situation">													
 													<option selected>Ativo</option>
 													<option>Inativo</option>																										
 												</select>
 											</div>
 											<div class="col-sm-3">
 												<label for="doc_changes">Alterações</label>
-												<select class="form-control" id="doc_changes" name="doc_changes">
+												<select class="form-control" id="doc_changes" name="doc_changes" required>
 													<option selected disabled>-</option>
 													<option>Criação de Documento</option>
 													<option>Elaboração de Documento</option>
@@ -221,8 +218,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<div class="form-group">
 											<div class="col-sm-3">
 												<label for="doc_file">Arquivo</label>
-												<input type="file" id="doc_file" name="doc_file" value="Buscar">										
-											</div>
+												<input type="file" id="doc_file" name="doc_file" onchange="extensionValidate(this)" required> 
+												<div id="file_validate"></div>																						
+											</div>											
 										</div>
 										
 										<input type="hidden" name="doc_status" id="doc_status" value="0">
