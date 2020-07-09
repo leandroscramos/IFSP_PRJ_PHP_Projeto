@@ -20,34 +20,51 @@ include "includes/header.php";
 						<!-- /.box-header -->
 							<div class="box-body">
 								<table id="TabelaDocumentos" class="table table-bordered table-striped">							
+								<?php									
+									if (!is_null($documents)) {
+								?>
 									<thead>
 										<tr>
 											<th width="15%">Código</th>											
-											<th width="15%">Tipo do Documento</th>
-											<th width="50%">Título do Documento</th>
+											<th width="20%">Tipo do Documento</th>
+											<th width="40%">Título do Documento</th>
 											<th width="2%">Versão</th>
 											<th width="8%">Status</th>											
-											<th width="10%">Data Submissão</th>											
+											<th width="6%">Data Submissão</th>											
+											<th width="2%"></th>											
+											<th width="2%"></th>											
 										</tr>
 									</thead>									
 									<tbody>	
 										<?php
-										//Util::debug($documents);
+											//Util::debug($documents);										
 											foreach ($documents as $document) {
 												echo "<tr>";												
-												echo "<td>".$document->getId()."</td>";
+												echo "<td><strong>".$document->getCode()."</strong></td>";
 												echo "<td>".$document->getDocType()[0]->getName()."</td>";
 												echo "<td><strong>".$document->getTitle()."</strong></td>";
-												echo "<td>".$document->getVersion()."</td>";												
-												if ($document->getStatus() == 0) {
-													echo "<td><span class='label label-danger'>Submetido</span></td>";	
-												} else {
-													echo "<td><span class='label label-success'>Publicado</span></td>";
+												echo "<td>".$document->getVersion()."</td>";																								
+												switch ($document->getStatus()) {
+													case 0:
+														echo "<td><span class='label label-default'>Submetido</span></td>";
+														break;
+													case 1:
+														echo "<td><span class='label label-warning'>Em validação</span></td>";
+														break;
+													case 2:
+														echo "<td><span class='label label-danger'>Devolvido</span></td>";
+														break;
+													case 3:
+														echo "<td><span class='label label-success'>Publicado</span></td>";
+														break;
 												}
 												$date = new DateTime($document->getSubmitionDate());
 												echo "<td>".$date->format('d/m/Y')."</td>";												
+												echo "<td><a href='".$_SESSION["upload_sub"]."".$document->getFilenameDoc()."'><i class='fas fa-file-word' style='color: blue; font-size: 15pt'></i></a></td>";												
+												echo "<td><i class='fas fa-file-pdf' style='color: red; font-size: 15pt'></i></td>";												
 												echo "</tr>";												
 											}
+										}
 										?>										
 									</tbody>
 								</table>

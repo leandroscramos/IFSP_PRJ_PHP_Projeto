@@ -24,22 +24,28 @@ class ModelDocument
     private $status;
     private $changes;
     private $submition_date;
+    private $filename_doc;
+    private $filename_pdf;
+    private $submit_user;
 
     public function setDocumentFromDatabase($document){        
         $doc_type = DocTypeDAO::readDocTypeById($document["doc_type"]);
         $this->setId($document["id"])
+            ->setCode($document["code"])
             ->setTitle($document["title"])
             ->setDocType($doc_type)
             ->setVersion($document["version"])
             ->setStatus($document["status"])
-            ->setSubmitionDate($document["submition_date"]);
+            ->setSubmitionDate($document["created_at"])
+            ->setFilenameDoc($document["filename_doc"])
+            ->setSubmitUser($document["submit_user"]);
 
     }
 
     public function setDocumentFromPOST(){
         $this->setId(null)
             ->setTitle($_POST["doc_title"])
-            //->setCode($_POST["doc_code"])
+            ->setCode($_POST["doc_code"])
             ->setDocType($_POST["doc_id_doctype"])
             ->setNumber($_POST["doc_number"])
             ->setVersion($_POST["doc_version"])
@@ -55,7 +61,9 @@ class ModelDocument
             ->setApprovalDate($_POST["doc_approval_date"])
             ->setSituation($_POST["doc_situation"])
             ->setStatus($_POST["doc_status"])
-            ->setChanges($_POST["doc_changes"]);            
+            ->setChanges($_POST["doc_changes"])
+            ->setFilenameDoc($_POST['doc_code'].".".substr(strrchr($_FILES['doc_file']['name'],'.'),1))
+            ->setSubmitUser($_SESSION["login"]["usuario"]);
     }
 
     public function updateDocumentFromPOST(){
@@ -279,6 +287,39 @@ class ModelDocument
     public function setSubmitionDate($submition_date)
     {
         $this->submition_date = $submition_date;
+        return $this;
+    }
+
+    public function getFilenameDoc()
+    {
+        return $this->filename_doc;
+    }
+
+    public function setFilenameDoc($filename_doc)
+    {
+        $this->filename_doc = $filename_doc;
+        return $this;
+    }
+
+    public function getFilenamePdf()
+    {
+        return $this->filename_pdf;
+    }
+
+    public function setFilenamePdf($filename_pdf)
+    {
+        $this->filename_pdf = $filename_pdf;
+        return $this;
+    }
+
+    public function getSubmitUser()
+    {
+        return $this->submit_user;
+    }
+
+    public function setSubmitUser($submit_user)
+    {
+        $this->submit_user = $submit_user;
         return $this;
     }
 }

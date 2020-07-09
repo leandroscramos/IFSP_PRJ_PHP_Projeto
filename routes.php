@@ -45,8 +45,7 @@ else if ($action == 'logado') {
 
 
 else if ($action == 'docList') {
-    //$doctypes = ControllerDocType::readDocType();
-    $documents = ControllerDocument::readDocument();
+    $documents = ControllerDocument::readDocumentByUser($_SESSION["login"]["usuario"]);
     include_once $_SESSION["root"].'php/View/viewDocumentList.php';
 }
 

@@ -10,6 +10,13 @@ class ControllerDocument {
         $documents = $documentDAO->readDocument();
         //Util::debug($documents);
         return $documents;
+	}
+	
+	public function readDocumentByUser($user) {
+        $documentDAO = new DocumentDAO();
+        $documents = $documentDAO->readDocumentByUser($user);
+        //Util::debug($documents);
+        return $documents;
     }
 
     public function createDocument() {
@@ -20,11 +27,9 @@ class ControllerDocument {
 		$result = $documentDAO->createDocument($document);
 
 		if (isset($_FILES['doc_file'])) {
-
-			$extensao = strtolower(substr($_FILES['doc_file']['name'], -4)); //pega a extensão do arquivo
-			$novo_nome = md5(time()) . $extensao; //define o nome do arquivo
-			$diretorio = "upload/"; //define o diretorio para onde enviaremos o arquivo
-	
+			
+			$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['doc_file']['name'],'.'),1); //define o nome do arquivo
+			$diretorio = "upload/submissions/"; //define o diretorio para onde enviaremos o arquivo	
 			move_uploaded_file($_FILES['doc_file']['tmp_name'], $diretorio.$novo_nome); //efetua o upload
 			
 		}

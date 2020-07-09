@@ -14,13 +14,38 @@ class DocumentDAO
             $statement = $conn->prepare($sql);
             $statement->execute();
 
-            $records = $statement->fetchAll();
-            //Verifico se houve algum retorno, senão retorno null
+            $records = $statement->fetchAll();            
             if(count($records)==0)
                 return null;
-            //Var que irá armazenar um array de obj de tipos de documentos
-            $documents;
-            //Util::debug($linhas);
+            
+            $documents;            
+            foreach ($records as $value) {
+                $document = new ModelDocument();
+                $document->setDocumentFromDatabase($value);
+                $documents[]=$document;
+            }
+            return $documents;
+
+        } catch (PDOException $e) {
+            echo "Erro ao ler registros na base de dados.".$e->getMessage();
+        }
+    }
+
+    public function readDocumentByUser($user){
+
+        try { $sql = ('SELECT * FROM public.tb_documents WHERE submit_user = :user ORDER BY id');
+            $instance = DatabaseConnection::getInstance();
+            $conn = $instance->getConnection();
+            $statement = $conn->prepare($sql);
+
+            $statement->bindParam(':user', $user); 
+            $statement->execute();
+
+            $records = $statement->fetchAll();            
+            if(count($records)==0)
+                return null;
+            
+            $documents;            
             foreach ($records as $value) {
                 $document = new ModelDocument();
                 $document->setDocumentFromDatabase($value);
@@ -39,17 +64,16 @@ class DocumentDAO
         //                VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, :changes)
         //             ');
 
-        try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, submition_date, status) 
-                        VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status)
+        try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc, submit_user) 
+                        VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status, :code, :filename_doc, :submit_user)
                      ');
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
             $statement = $conn->prepare($sql);
             
-            $statement->bindValue(":title", $document->getTitle());
-            
-            //$statement->bindValue(":code", $document->getCode());
+            $statement->bindValue(":title", $document->getTitle());            
+            $statement->bindValue(":code", $document->getCode());
             $statement->bindValue(":doc_type", $document->getDocType());
             $statement->bindValue(":number", $document->getNumber());
             $statement->bindValue(":version", $document->getVersion());
@@ -61,6 +85,9 @@ class DocumentDAO
             $statement->bindValue(":approver", $document->getApprover());            
             $statement->bindValue(":approval_date", $document->getApprovalDate());
             $statement->bindValue(":status", $document->getStatus());
+            $statement->bindValue(":filename_doc", $document->getFilenameDoc());
+            $statement->bindValue(":submit_user", $document->getSubmitUser());
+
             //$statement->bindValue(":changes", $document->getChanges());            
             
             return $statement->execute();            

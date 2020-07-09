@@ -57,46 +57,55 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 					            	<div class="box-tools pull-right">
 						          </div>
 
-								  <?php //Util::debug($processs); ?>
+								  <?php //Util::debug($doctypes); ?>
 
 								  <form action="document" method="POST" enctype="multipart/form-data">
 								  	<input type="hidden" name="action" id="action" value="create">
 									<div class="box-body">
 										<div class="form-group">					                  
-											<div class="col-sm-8">
+											<div class="col-sm-7">
 												<label for="doc_title"">Título *</label>
 												<input type="text" class="form-control" id="doc_title" name="doc_title" required>
 											</div>
-											<div class="col-sm-4">
-												<label for="doc_code">Código *</label>
-												<input type="text" class="form-control" id="doc_code" name="doc_code" placeholder="" readonly="true">
-											</div>
+											<div class="col-sm-3">
+												<label for="doc_changes">Submissão *</label>
+												<select class="form-control" id="doc_changes" name="doc_changes" required>
+													<option selected disabled>Selecione</option>
+													<option>Novo Documento</option>
+													<option>Revisão de Documento</option>													
+												</select>
+											</div>											
+											<div class="col-sm-2">
+												<label for="doc_approval_date">Data aprovação *</label>
+												<input type="date" class="form-control" id="doc_approval_date" name="doc_approval_date" placeholder="" onchange="nextRevision()" required>
+											</div>																																											
 										</div>
 										<div class="form-group">																						
 											<div class="col-sm-4">
-												<label for="doc_type">Tipo do Documento</label>
+												<label for="doc_type">Tipo do Documento *</label>
 												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">							                    
-												<select class="form-control" id="doc_type" name="doc_type" onchange="validade();" required>
+												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype">							                    
+												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()" required>
                                                     <option selected disabled>Selecione</option>
                                                     <option disabled><strong>--- Nível 1 ---</strong></option>
-                                                    <?php
+                                                    <?php													
                                                     foreach ($doctypes as $doctype) {
                                                         if ($doctype->getLevel() == 1)
-                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."'>".$doctype->getName()."</option>";
+                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
                                                     }
                                                     ?>
                                                     <option disabled><strong>--- Nível 2 ---</strong></option>
                                                     <?php
                                                     foreach ($doctypes as $doctype) {
                                                         if ($doctype->getLevel() == 2)
-                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."'>".$doctype->getName()."</option>";
+                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
                                                     }
                                                     ?>
                                                     <option disabled><strong>--- Nível 3 ---</strong></option>
                                                     <?php
                                                     foreach ($doctypes as $doctype) {
                                                         if ($doctype->getLevel() == 3)
-                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."'>".$doctype->getName()."</option>";
+                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
 													}
 													?>													
 
@@ -107,21 +116,22 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="text" class="form-control" id="doc_validate" name="doc_validate" placeholder="">
 											</div>
 											<div class="col-sm-1">
-												<label for="doc_number">Número</label>
-												<input type="text" class="form-control" id="doc_number" name="doc_number" placeholder="" required>
+												<label for="doc_number">Número *</label>
+												<input type="text" class="form-control" id="doc_number" name="doc_number" pattern="[0-9]{3}" maxlength="3" placeholder="" required>
 											</div>
 											<div class="col-sm-1">
-												<label for="doc_version">Versão</label>
-												<input type="text" class="form-control" id="doc_version" name="doc_version" placeholder="" required>
+												<label for="doc_version">Versão *</label>
+												<input type="text" class="form-control" id="doc_version" name="doc_version" pattern="[0-9]{2}" maxlength="2" placeholder="" required>
 											</div>
 											<div class="col-sm-1">
-												<label for="doc_sigla_area">Área <i>(Sigla)</i></label>
-												<input type="hidden" name="doc_id_area" id="doc_id_area">;
+												<label for="doc_sigla_area">Área <i>(Sigla)</i> *</label>
+												<input type="hidden" name="doc_id_area" id="doc_id_area">
+												<input type="hidden" name="doc_initials_area" id="doc_initials_area">
 												<select class="form-control" id="doc_sigla_area" name="doc_sigla_area" onchange="areas();" required>
 													<option selected disabled></option>                                                    
                                                     <?php
                                                     foreach ($areas as $area) {
-														echo "<option value='".$area->getId()."+".$area->getName()."'>".$area->getInitials()."</option>";														
+														echo "<option value='".$area->getId()."+".$area->getName()."+".$area->getInitials()."'>".$area->getInitials()."</option>";														
                                                     }
                                                     ?>													
 												</select>
@@ -130,17 +140,36 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<label for="doc_area">Área <i>(Nome)</i></label>					                    
 												<input type="text" class="form-control" id="doc_area" name="doc_area" placeholder="" readonly="true">
 											</div>	
+										</div>
+										<div class="form-group">
+											<div class="col-sm-3">
+												<label for="doc_maker">Elaborado por *</label>
+												<input type="text" class="form-control" id="doc_maker" name="doc_maker" placeholder="" required>
+											</div>
+											<div class="col-sm-3">
+												<label for="doc_reviewer">Revisado por *</label>
+												<input type="text" class="form-control" id="doc_reviewer" name="doc_reviewer" placeholder="" required>
+											</div>											
+											<div class="col-sm-3">
+												<label for="doc_approver">Aprovado por *</label>
+												<input type="text" class="form-control" id="doc_approver" name="doc_approver" placeholder="" required>
+											</div>
+											<div class="col-sm-3">
+												<label for="doc_validator">Validado por *</label>
+												<input type="text" class="form-control" id="doc_validator" name="doc_validator" placeholder="" required>
+											</div>
 										</div>										
 										<hr>
 										<div class="form-group">
 											<div class="col-sm-6">
 												<label for="doc_process">Processo *</label>
-												<input type="hidden" name="doc_id_process" id="doc_id_process">												
-												<select class="form-control" id="doc_process" name="doc_process" onchange="processos();" required>
+												<input type="hidden" name="doc_id_process" id="doc_id_process">
+												<input type="hidden" name="doc_initials_process" id="doc_initials_process">
+												<select class="form-control" id="doc_process" name="doc_process" onchange="processos()" required>
 													<option selected disabled>Selecione</option>                                                    
                                                     <?php
                                                     foreach ($processs as $process) {
-                                                        echo "<option value='".$process->getId()."+".$process->getMacroProcess()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."'>".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName()."</option>";
+                                                        echo "<option value='".$process->getId()."+".$process->getMacroProcess()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)."'>".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName()."</option>";
                                                     }
                                                     ?>													
 												</select>
@@ -161,7 +190,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="text" class="form-control" id="doc_process_sei" name="doc_process_sei" placeholder="">
 											</div>
 											<div class="col-sm-2">
-												<label for="doc_document_sei">Documento</label>
+												<label for="doc_document_sei">Documento SEI</label>
 												<input type="text" class="form-control" id="doc_document_sei" name="doc_document_sei" placeholder="">
 											</div>
 											<div class="col-sm-2">
@@ -169,51 +198,33 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="text" class="form-control" id="doc_dispatch_sei" name="doc_dispatch_sei" placeholder="">
 											</div>	
 										</div>
-										<hr>
-										<div class="form-group">
-											<div class="col-sm-3">
-												<label for="doc_maker">Elaborado por *</label>
-												<input type="text" class="form-control" id="doc_maker" name="doc_maker" placeholder="" required>
-											</div>
-											<div class="col-sm-3">
-												<label for="doc_reviewer">Revisado por *</label>
-												<input type="text" class="form-control" id="doc_reviewer" name="doc_reviewer" placeholder="" required>
-											</div>
-											<div class="col-sm-3">
-												<label for="doc_validator">Validado por *</label>
-												<input type="text" class="form-control" id="doc_validator" name="doc_validator" placeholder="" required>
-											</div>
-											<div class="col-sm-3">
-												<label for="doc_approver">Aprovado por *</label>
-												<input type="text" class="form-control" id="doc_approver" name="doc_approver" placeholder="" required>
-											</div>
-										</div>
-
+										<hr>										
+										
 										<div class="form-group">
 											<div class="col-sm-2">
-												<label for="doc_approval_date">Data aprovação *</label>
-												<input type="date" class="form-control" id="doc_approval_date" name="doc_approval_date" placeholder="" onchange="nextRevision()" required>
-											</div>																																	
-										</div>
-
-										<div class="form-group">																				
-											<div class="col-sm-1" id="situation_div" style="display: none">
+												<label for="doc_code">Código do documento *</label>
+												<input type="text" class="form-control" id="doc_code" name="doc_code" placeholder="" readonly="true" required>
+												<button type="button" class="btn btn-success col-sm-12" name="submitInternacao" onclick="gerarCodigo()">Gerar código</button>												
+											</div>
+											<div class="col-sm-2" id="situation_div" style="display: none">
 												<label for="situation">Situação</label>
 												<select class="form-control" id="situation" name="situation">													
 													<option selected>Ativo</option>
 													<option>Inativo</option>																										
 												</select>
 											</div>
-											<div class="col-sm-3">
-												<label for="doc_changes">Alterações</label>
-												<select class="form-control" id="doc_changes" name="doc_changes" required>
-													<option selected disabled>-</option>
-													<option>Criação de Documento</option>
-													<option>Elaboração de Documento</option>
-													<option>Institucionalização de Documento</option>
+											<div class="col-sm-2" id="status_div" style="display: none">
+												<label for="status">Status</label>
+												<select class="form-control" id="status" name="status">													
+													<option selected>Submetido</option>
+													<option>Em validação</option>																										
+													<option>Devolvido</option>																										
+													<option>Publicado</option>																										
 												</select>
-											</div>																																	
+											</div>																
 										</div>
+
+										
 										<hr>
 										<div class="form-group">
 											<div class="col-sm-3">
