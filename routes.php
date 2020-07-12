@@ -45,8 +45,22 @@ else if ($action == 'logado') {
 
 
 else if ($action == 'docList') {
-    $documents = ControllerDocument::readDocumentByUser($_SESSION["login"]["usuario"]);
-    include_once $_SESSION["root"].'php/View/viewDocumentList.php';
+    if ((($_SESSION['login']['permissao']) == 'Usuário') ) {
+        $documents = ControllerDocument::readDocumentByUser($_SESSION["login"]["usuario"]);
+        include_once $_SESSION["root"].'php/View/viewDocumentList.php';
+    } else {
+        header("Location:logado");
+    }
+}
+
+else if ($action == 'docListAdmin') {
+    if ((($_SESSION['login']['permissao']) == 'Administrador') ) {
+        $documents = ControllerDocument::readDocument();
+        include_once $_SESSION["root"].'php/View/viewDocumentListAdmin.php';
+    } else {
+        header("Location:logado");
+    }
+    
 }
 
 
