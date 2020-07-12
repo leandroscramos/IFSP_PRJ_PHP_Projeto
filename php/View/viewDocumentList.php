@@ -28,11 +28,13 @@ include "includes/header.php";
 											<th width="15%">Código</th>											
 											<th width="20%">Tipo do Documento</th>
 											<th width="40%">Título do Documento</th>
-											<th width="2%">Versão</th>
+											<th width="5%">Versão</th>
 											<th width="8%">Status</th>											
-											<th width="6%">Data Submissão</th>											
+											<th width="12%">Data da Submissão</th>											
+											<!--
 											<th width="2%"></th>											
 											<th width="2%"></th>											
+											-->
 										</tr>
 									</thead>									
 									<tbody>	
@@ -59,9 +61,9 @@ include "includes/header.php";
 														break;
 												}
 												$date = new DateTime($document->getSubmitionDate());
-												echo "<td>".$date->format('d/m/Y')."</td>";												
-												echo "<td><a href='".$_SESSION["upload_sub"]."".$document->getFilenameDoc()."'><i class='fas fa-file-word' style='color: blue; font-size: 15pt'></i></a></td>";												
-												echo "<td><i class='fas fa-file-pdf' style='color: red; font-size: 15pt'></i></td>";												
+												echo "<td><strong>".$date->format('d/m/Y')."</strong></td>";
+												//echo "<td><a href='".$_SESSION["upload_sub"]."".$document->getFilenameDoc()."'><i class='fas fa-file-word' style='color: blue; font-size: 15pt'></i></a></td>";												
+												//echo "<td><i class='fas fa-file-pdf' style='color: red; font-size: 15pt'></i></td>";												
 												echo "</tr>";												
 											}
 										}

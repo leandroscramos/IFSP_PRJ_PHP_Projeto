@@ -44,7 +44,7 @@
           <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">                              
-              <span class="hidden-xs"><strong><?php echo $_SESSION["login"]["permissao"]; ?></strong></span>
+              <span class="hidden-xs"><strong><?php echo $_SESSION["login"]["usuario"]; ?></strong></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
