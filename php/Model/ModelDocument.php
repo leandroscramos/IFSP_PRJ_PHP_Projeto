@@ -1,6 +1,8 @@
 <?php
 
 include_once $_SESSION["root"].'php/DAO/DocTypeDAO.php';
+include_once $_SESSION["root"].'php/DAO/AreaDAO.php';
+include_once $_SESSION["root"].'php/DAO/ProcessDAO.php';
 
 class ModelDocument
 {
@@ -17,8 +19,8 @@ class ModelDocument
     private $dispatch_sei;
     private $maker;
     private $reviewer;
-    private $validator;
     private $approver;
+    private $validator;    
     private $approval_date;
     private $situation;
     private $status;
@@ -30,11 +32,21 @@ class ModelDocument
 
     public function setDocumentFromDatabase($document){        
         $doc_type = DocTypeDAO::readDocTypeById($document["doc_type"]);
+        $area = AreaDAO::readAreaById($document["area"]);
+        $process = ProcessDAO::readProcessById($document["process"]);
         $this->setId($document["id"])
             ->setCode($document["code"])
             ->setTitle($document["title"])
             ->setDocType($doc_type)
+            ->setNumber($document["number"])
             ->setVersion($document["version"])
+            ->setArea($area)
+            ->setMaker($document["maker"])
+            ->setReviewer($document["reviewer"])
+            ->setValidator($document["validator"])
+            ->setApprover($document["approver"])
+            ->setStatus($document["status"])
+            ->setProcess($process)
             ->setStatus($document["status"])
             ->setSubmitionDate($document["created_at"])
             ->setFilenameDoc($document["filename_doc"])

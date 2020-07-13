@@ -57,7 +57,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 					            	<div class="box-tools pull-right">
 						          </div>
 
-								  <?php //Util::debug($doctypes); ?>
+								  <?php //Util::debug($document); ?>								  
 
 								  <form action="document" method="POST" enctype="multipart/form-data">
 								  	<input type="hidden" name="action" id="action" value="create">
@@ -65,7 +65,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<div class="form-group">					                  
 											<div class="col-sm-7">
 												<label for="doc_title"">Título *</label>
-												<input type="text" class="form-control" id="doc_title" name="doc_title" required>
+												<input type="text" class="form-control" id="doc_title" name="doc_title" value="<?php echo (isset($document)) ? $document->getTitle() : "" ?>" required>
 											</div>
 											<div class="col-sm-3">
 												<label for="doc_changes">Submissão *</label>
@@ -117,11 +117,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_number">Número *</label>
-												<input type="text" class="form-control" id="doc_number" name="doc_number" pattern="[0-9]{3}" maxlength="3" placeholder="" required>
+												<input type="text" class="form-control" id="doc_number" name="doc_number" pattern="[0-9]{3}" maxlength="3" placeholder="" value="<?php echo (isset($document)) ? $document->getNumber() : "" ?>" required>
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_version">Versão *</label>
-												<input type="text" class="form-control" id="doc_version" name="doc_version" pattern="[0-9]{2}" maxlength="2" placeholder="" required>
+												<input type="text" class="form-control" id="doc_version" name="doc_version" pattern="[0-9]{2}" maxlength="2" placeholder="" value="<?php echo (isset($document)) ? $document->getVersion() : "" ?>" required>
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_sigla_area">Área <i>(Sigla)</i> *</label>
@@ -144,19 +144,19 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<div class="form-group">
 											<div class="col-sm-3">
 												<label for="doc_maker">Elaborado por *</label>
-												<input type="text" class="form-control" id="doc_maker" name="doc_maker" placeholder="" required>
+												<input type="text" class="form-control" id="doc_maker" name="doc_maker" value="<?php echo (isset($document)) ? $document->getMaker() : "" ?>" required>
 											</div>
 											<div class="col-sm-3">
 												<label for="doc_reviewer">Revisado por *</label>
-												<input type="text" class="form-control" id="doc_reviewer" name="doc_reviewer" placeholder="" required>
+												<input type="text" class="form-control" id="doc_reviewer" name="doc_reviewer" value="<?php echo (isset($document)) ? $document->getReviewer() : "" ?>" required>
 											</div>											
 											<div class="col-sm-3">
 												<label for="doc_approver">Aprovado por *</label>
-												<input type="text" class="form-control" id="doc_approver" name="doc_approver" placeholder="" required>
+												<input type="text" class="form-control" id="doc_approver" name="doc_approver" value="<?php echo (isset($document)) ? $document->getApprover() : "" ?>" required>
 											</div>
 											<div class="col-sm-3">
 												<label for="doc_validator">Validado por *</label>
-												<input type="text" class="form-control" id="doc_validator" name="doc_validator" placeholder="" required>
+												<input type="text" class="form-control" id="doc_validator" name="doc_validator" value="<?php echo (isset($document)) ? $document->getValidator() : "" ?>" required>
 											</div>
 										</div>										
 										<hr>

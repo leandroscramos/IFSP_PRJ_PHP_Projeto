@@ -58,6 +58,33 @@ class DocumentDAO
         }
     }
 
+    public function readDocumentById($id){
+
+        try { $sql = ('SELECT * FROM public.tb_documents WHERE id = :id');
+            $instance = DatabaseConnection::getInstance();
+            $conn = $instance->getConnection();
+            $statement = $conn->prepare($sql);
+
+            $statement->bindParam(':id', $id);             
+            $statement->execute();
+
+            $records = $statement->fetchAll();
+            if(count($records)==0)
+                return null;
+            
+            //$documents;            
+            foreach ($records as $value) {
+                $document = new ModelDocument();
+                $document->setDocumentFromDatabase($value);
+                //$documents[]=$document;
+            }
+            return $document;
+
+        } catch (PDOException $e) {
+            echo "Erro ao ler registros na base de dados.".$e->getMessage();
+        }
+    }
+
     public function createDocument($document){			
         
         //try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, changes) 

@@ -17,6 +17,13 @@ class ControllerDocument {
         $documents = $documentDAO->readDocumentByUser($user);
         //Util::debug($documents);
         return $documents;
+	}
+	
+	public function readDocumentById($id) {		
+        $documentDAO = new DocumentDAO();
+		$document = $documentDAO->readDocumentById($id);		
+        //Util::debug($documents);
+        return $document;
     }
 
     public function createDocument() {

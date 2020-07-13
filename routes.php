@@ -54,16 +54,14 @@ else if ($action == 'docList') {
 }
 
 else if ($action == 'docListAdmin') {
+    unset($document);     
     if ((($_SESSION['login']['permissao']) == 'Administrador') ) {
         $documents = ControllerDocument::readDocument();
         include_once $_SESSION["root"].'php/View/viewDocumentListAdmin.php';
     } else {
         header("Location:logado");
-    }
-    
+    }    
 }
-
-
 
 /* Rota para Documento */
 else if ($action == 'document') {
@@ -73,6 +71,13 @@ else if ($action == 'document') {
                 case 'create':
                     ControllerDocument::createDocument();                    
                     header("Location:document");
+                    break;        
+                case 'edit':
+                    $doctypes = ControllerDocType::readDocType();            
+                    $areas = ControllerArea::readArea();
+                    $processs = ControllerProcess::readProcess();                    
+                    $document = ControllerDocument::readDocumentById($_POST['idDocument']);                    
+                    include_once $_SESSION["root"].'php/View/viewDocument.php';
                     break;        
                 case 'update':
                     ControllerDocument::updateDocument();    

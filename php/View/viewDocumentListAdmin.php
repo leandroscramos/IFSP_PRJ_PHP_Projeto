@@ -13,136 +13,71 @@ include "includes/header.php";
 			<section class="content">
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1 form-horizontal">
-						<div class="box box-warning">
+						<div class="box box-success">
 							<div class="box-header">
 								<h3 class="box-title">Lista de Documentos submetidos para o Setor de Gestão da Qualidade</h3>
-							</div>
+							</div>							
 						<!-- /.box-header -->
 							<div class="box-body">
 								<table id="TabelaDocumentos" class="table table-bordered table-striped">							
+								<?php									
+									if (!is_null($documents)) {
+								?>
 									<thead>
 										<tr>
-											<th width="15%">Código</th>											
-											<th width="15%">Tipo do Documento</th>
-											<th width="50%">Título do Documento</th>
-											<th width="2%">Versão</th>
-											<th width="10%">Status</th>
-											<th width="2%"></th>											
+											<th width="14%">Código</th>											
+											<th width="20%">Tipo do Documento</th>
+											<th width="40%">Título do Documento</th>
+											<th width="4%">Versão</th>
+											<th width="7%">Status</th>											
+											<th width="10%">Data da Submissão</th>																						
+											<th width="1%"></th>											
+											<th width="1%"></th>																						
+											<th width="1%"></th>																						
 										</tr>
 									</thead>									
-									<tbody>								
-										<tr>
-											<td>DEX.SGQSP.PG0300.001</td>											
-											<td>Documento Externo</td>
-											<td><strong>Manual de diretrizes e requisitos do programa e selo Ebserh de qualidade</strong></td>
-											<td>01</td>
-											<td><span class="label label-warning">Aguardando revisão</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>DEX.SGQSP.PG0302.001</td>											
-											<td>Documento Externo</td>
-											<td><strong>Guia de avaliação do selo Ebserh de qualidade</strong></td>
-											<td>01</td>
-											<td><span class="label label-danger">Aguardando Aprovação</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>DEX.SGQSP.PG0304.001</td>											
-											<td>Política Institucional</td>
-											<td><strong>Política de Comunicação</strong></td>
-											<td>01</td>
-											<td><span class="label label-info">Aguardando Validação</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>DEX.SGQSP.PG0304.002</td>											
-											<td>Política Institucional</td>
-											<td><strong>Política de Gestão Ambiental</strong></td>
-											<td>01</td>
-											<td><span class="label label-success">Aprovado</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>DEX.SGQSP.PG0304.003</td>											
-											<td>Política Institucional</td>
-											<td><strong>Política de Gestão de Custos</strong></td>
-											<td>01</td>
-											<td><span class="label label-warning">Aguardando revisão</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>POL.DAF.PG0203.005</td>
-											<td>Política Institucional</td>
-											<td><strong>Política de Gestão de Fornecedores de Pordutos e Serviços</strong></td>
-											<td>01</td>
-											<td><span class="label label-danger">Aguardando Aprovação</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>POL.DIVGP.PG0203.006</td>
-											<td>Regulamento</td>
-											<td><strong>Regulamento da Gerência Administrativa</strong></td>
-											<td>01</td>
-											<td><span class="label label-info">Aguardando Validação</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>POL.GA.PG0203.002</td>
-											<td>Regimento</td>
-											<td><strong>Regimento interno HU-UFSCar</strong></td>
-											<td>01</td>
-											<td><span class="label label-warning">Aguardando revisão</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>POL.SL.PG0203.004</td>
-											<td>Documento Externo</td>
-											<td><strong>Manual do usuário VIGIHOSP - Software de gestão de riscos e segurança do paciente</strong></td>
-											<td>01</td>
-											<td><span class="label label-success">Aprovado</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>POL.UCC.PG0203.003</td>
-											<td>Documento Externo</td>
-											<td><strong>Manual do usuário NOTIVISA - Módulo de notificação</strong></td>
-											<td>01</td>
-											<td><span class="label label-info">Aguardando Validação</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>POL.UCS.PG0203.001</td>
-											<td>Documento Externo</td>
-											<td><strong>Manual do usuário NOTIVISA - Preenchimento dos formulários para notificação</strong></td>
-											<td>01</td>
-											<td><span class="label label-warning">Aguardando revisão</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>POL.USP.PG0203.008</td>
-											<td>Política Institucional</td>
-											<td><strong>Política de Gestão Financeira</strong></td>
-											<td>01</td>
-											<td><span class="label label-success">Aprovado</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
-										<tr>
-											<td>REG.SUP.PG0202.001</td>
-											<td>Política Institucional</td>
-											<td><strong>Política de Gestão de Pessoas</strong></td>
-											<td>01</td>
-											<td><span class="label label-info">Aguardando Validação</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>										
-										<tr>
-											<td>RGL.GA.PG0202.002</td>
-											<td>Política Institucional</td>
-											<td><strong>Política de Segurança do Paciente</strong></td>
-											<td>01</td>
-											<td><span class="label label-success">Aprovado</span></td>
-											<td><span class="glyphicon glyphicon-edit"></td>
-										</tr>
+									<tbody>	
+										<?php
+											//Util::debug($documents);										
+											foreach ($documents as $document) {
+												echo "<tr>";												
+												echo "<td><strong>".$document->getCode()."</strong></td>";
+												echo "<td>".$document->getDocType()[0]->getName()."</td>";
+												echo "<td><strong>".$document->getTitle()."</strong></td>";
+												echo "<td>".$document->getVersion()."</td>";																								
+												switch ($document->getStatus()) {
+													case 0:
+														echo "<td><span class='label label-default'>Submetido</span></td>";
+														break;
+													case 1:
+														echo "<td><span class='label label-warning'>Em validação</span></td>";
+														break;
+													case 2:
+														echo "<td><span class='label label-danger'>Devolvido</span></td>";
+														break;
+													case 3:
+														echo "<td><span class='label label-success'>Publicado</span></td>";
+														break;
+												}
+												$date = new DateTime($document->getSubmitionDate());
+												echo "<td><strong>".$date->format('d/m/Y')."</strong></td>";
+												echo "<td><a href='".$_SESSION["upload_sub"]."".$document->getFilenameDoc()."'><i class='fas fa-file-word' style='color: blue; font-size: 15pt'></i></a></td>";												
+												echo "<td><i class='fas fa-file-pdf' style='color: gray; font-size: 15pt'></i></td>";
+												echo "<td>";
+											?>
+												<form action="document" method="post">
+													<input type="hidden" name="action" id="action" value="edit">
+													<input type="hidden" name="idDocument" id="idDocument" value="<?php echo $document->getId(); ?>">
+													<button type='submit' class='btn btn-sm pull-left'><i class='fas fa-pencil-alt' style='color: red'></i></button>
+												</form>
+												
+												
+											<?php
+												echo "</td>";
+												echo "</tr>";												
+											}
+										}
+										?>										
 									</tbody>
 								</table>
 							</div>
