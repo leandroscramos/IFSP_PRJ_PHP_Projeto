@@ -23,19 +23,20 @@ class ModelDocument
     private $validator;    
     private $approval_date;
     private $situation;
-    private $status;
-    private $changes;
-    private $submition_date;
+    private $status;       
     private $filename_doc;
     private $filename_pdf;
     private $submit_user;
+    private $submition;
+    private $submition_date;
+    
 
     public function setDocumentFromDatabase($document){        
         $doc_type = DocTypeDAO::readDocTypeById($document["doc_type"]);
         $area = AreaDAO::readAreaById($document["area"]);
         $process = ProcessDAO::readProcessById($document["process"]);
         $this->setId($document["id"])
-            ->setCode($document["code"])
+            
             ->setTitle($document["title"])
             ->setDocType($doc_type)
             ->setNumber($document["number"])
@@ -48,7 +49,8 @@ class ModelDocument
             ->setStatus($document["status"])
             ->setProcess($process)
             ->setStatus($document["status"])
-            ->setSubmitionDate($document["created_at"])
+            ->setCode($document["code"])
+            ->setSubDate($document["created_at"])
             ->setFilenameDoc($document["filename_doc"])
             ->setSubmitUser($document["submit_user"]);
 
@@ -72,10 +74,10 @@ class ModelDocument
             ->setApprover($_POST["doc_approver"])
             ->setApprovalDate($_POST["doc_approval_date"])
             ->setSituation($_POST["doc_situation"])
-            ->setStatus($_POST["doc_status"])
-            ->setChanges($_POST["doc_changes"])
+            ->setStatus($_POST["doc_status"])            
             ->setFilenameDoc($_POST['doc_code'].".".substr(strrchr($_FILES['doc_file']['name'],'.'),1))
-            ->setSubmitUser($_SESSION["login"]["usuario"]);
+            ->setSubmitUser($_SESSION["login"]["usuario"])
+            ->setSubmit($_SESSION["submition"]);
     }
 
     public function updateDocumentFromPOST(){
@@ -278,27 +280,27 @@ class ModelDocument
     {
         $this->status = $status;
         return $this;
-    }
+    }    
 
-    public function getChanges()
-    {
-        return $this->changes;
-    }
-
-    public function setChanges($changes)
-    {
-        $this->changes = $changes;
-        return $this;
-    }
-
-    public function getSubmitionDate()
+    public function getSubDate()
     {
         return $this->submition_date;
     }
 
-    public function setSubmitionDate($submition_date)
+    public function setSubDate($submition_date)
     {
         $this->submition_date = $submition_date;
+        return $this;
+    }
+
+    public function getSubmit()
+    {
+        return $this->submition;
+    }
+
+    public function setSubmit($submition)
+    {
+        $this->submition = $submition;
         return $this;
     }
 

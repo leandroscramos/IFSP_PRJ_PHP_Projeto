@@ -60,7 +60,7 @@ include "includes/header.php";
 														echo "<td><span class='label label-success'>Publicado</span></td>";
 														break;
 												}
-												$date = new DateTime($document->getSubmitionDate());
+												$date = new DateTime($document->getSubDate());
 												echo "<td><strong>".$date->format('d/m/Y')."</strong></td>";
 												//echo "<td><a href='".$_SESSION["upload_sub"]."".$document->getFilenameDoc()."'><i class='fas fa-file-word' style='color: blue; font-size: 15pt'></i></a></td>";												
 												//echo "<td><i class='fas fa-file-pdf' style='color: red; font-size: 15pt'></i></td>";												

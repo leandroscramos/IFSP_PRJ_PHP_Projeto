@@ -91,8 +91,8 @@ class DocumentDAO
         //                VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, :changes)
         //             ');
 
-        try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc, submit_user) 
-                        VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status, :code, :filename_doc, :submit_user)
+        try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc, submit_user, submition, situation) 
+                        VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status, :code, :filename_doc, :submit_user, :submition, :situation)
                      ');
             
             $instance = DatabaseConnection::getInstance();
@@ -114,6 +114,8 @@ class DocumentDAO
             $statement->bindValue(":status", $document->getStatus());
             $statement->bindValue(":filename_doc", $document->getFilenameDoc());
             $statement->bindValue(":submit_user", $document->getSubmitUser());
+            $statement->bindValue(":submition", $document->getSubmit());
+            $statement->bindValue(":situation", $document->getSituation());
 
             //$statement->bindValue(":changes", $document->getChanges());            
             

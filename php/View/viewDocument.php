@@ -68,11 +68,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="text" class="form-control" id="doc_title" name="doc_title" value="<?php echo (isset($document)) ? $document->getTitle() : "" ?>" required>
 											</div>
 											<div class="col-sm-3">
-												<label for="doc_changes">Submissão *</label>
-												<select class="form-control" id="doc_changes" name="doc_changes" required>
+												<label for="submition">Submissão *</label>
+												<select class="form-control" id="submition" name="submition" required>
 													<option selected disabled>Selecione</option>
-													<option>Novo Documento</option>
-													<option>Revisão de Documento</option>													
+													<option value="N">Novo Documento</option>
+													<option value="R">Revisão de Documento</option>													
 												</select>
 											</div>											
 											<div class="col-sm-2">
@@ -203,14 +203,14 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<div class="form-group">
 											<div class="col-sm-2">
 												<label for="doc_code">Código do documento *</label>
-												<input type="text" class="form-control" id="doc_code" name="doc_code" placeholder="" readonly="true" required>
+												<input type="text" class="form-control" id="doc_code" name="doc_code" value="<?php echo (isset($document)) ? $document->getCode() : "" ?>" readonly="true" required>
 												<button type="button" class="btn btn-success col-sm-12" name="submitInternacao" onclick="gerarCodigo()">Gerar código</button>												
 											</div>
 											<div class="col-sm-2" id="situation_div" style="display: none">
-												<label for="situation">Situação</label>
-												<select class="form-control" id="situation" name="situation">													
-													<option selected>Ativo</option>
-													<option>Inativo</option>																										
+												<label for="doc_situation">Situação</label>
+												<select class="form-control" id="doc_situation" name="doc_situation" value="<?php echo (isset($document)) ? $document->getSituation() : "" ?>">													
+													<option value="A" selected>Ativo</option>
+													<option value="I">Inativo</option>																										
 												</select>
 											</div>
 											<div class="col-sm-2" id="status_div" style="display: none">
