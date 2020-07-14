@@ -25,14 +25,14 @@ include "includes/header.php";
 								?>
 									<thead>
 										<tr>
-											<th width="14%">Código</th>											
+											<th></th>											
+											<th width="12%">Código</th>											
 											<th width="20%">Tipo do Documento</th>
 											<th width="40%">Título do Documento</th>
+											<th width="4%">Número</th>
 											<th width="4%">Versão</th>
 											<th width="7%">Status</th>											
-											<th width="10%">Data da Submissão</th>																						
-											<th width="1%"></th>											
-											<th width="1%"></th>																						
+											<th width="7%">Submissão</th>
 											<th width="1%"></th>																						
 										</tr>
 									</thead>									
@@ -40,11 +40,13 @@ include "includes/header.php";
 										<?php
 											//Util::debug($documents);										
 											foreach ($documents as $document) {
-												echo "<tr>";												
+												echo "<tr>";
+												echo ($document->getTypeSubmit() == "N") ? "<td align='center'><small class='label pull-right bg-green' title='Novo Documento'>N</small></td>" : "<td align='center'><strong><small class='label pull-right bg-blue' title='Revisão de Documento'>R</small></td>";												
 												echo "<td><strong>".$document->getCode()."</strong></td>";
 												echo "<td>".$document->getDocType()[0]->getName()."</td>";
 												echo "<td><strong>".$document->getTitle()."</strong></td>";
-												echo "<td>".$document->getVersion()."</td>";																								
+												echo "<td>".$document->getNumber()."</td>";
+												echo "<td>".$document->getVersion()."</td>";
 												switch ($document->getStatus()) {
 													case 0:
 														echo "<td><span class='label label-default'>Submetido</span></td>";
@@ -61,17 +63,13 @@ include "includes/header.php";
 												}
 												$date = new DateTime($document->getSubDate());
 												echo "<td><strong>".$date->format('d/m/Y')."</strong></td>";
-												echo "<td><a href='".$_SESSION["upload_sub"]."".$document->getFilenameDoc()."'><i class='fas fa-file-word' style='color: blue; font-size: 15pt'></i></a></td>";												
-												echo "<td><i class='fas fa-file-pdf' style='color: gray; font-size: 15pt'></i></td>";
 												echo "<td>";
 											?>
 												<form action="document" method="post">
 													<input type="hidden" name="action" id="action" value="edit">
 													<input type="hidden" name="idDocument" id="idDocument" value="<?php echo $document->getId(); ?>">
-													<button type='submit' class='btn btn-sm pull-left'><i class='fas fa-pencil-alt' style='color: red'></i></button>
+													<button type="submit" class="btn btn-sm btn-warning pull-left" style="width: 100%; white-space: normal"><i class="far fa-edit"></i></button>
 												</form>
-												
-												
 											<?php
 												echo "</td>";
 												echo "</tr>";												

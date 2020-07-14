@@ -26,17 +26,16 @@ class ModelDocument
     private $status;       
     private $filename_doc;
     private $filename_pdf;
-    private $submit_user;
-    private $submition;
+    private $user_submit;    
     private $submition_date;
+    private $type_submit;
     
 
     public function setDocumentFromDatabase($document){        
         $doc_type = DocTypeDAO::readDocTypeById($document["doc_type"]);
         $area = AreaDAO::readAreaById($document["area"]);
         $process = ProcessDAO::readProcessById($document["process"]);
-        $this->setId($document["id"])
-            
+        $this->setId($document["id"])            
             ->setTitle($document["title"])
             ->setDocType($doc_type)
             ->setNumber($document["number"])
@@ -52,7 +51,9 @@ class ModelDocument
             ->setCode($document["code"])
             ->setSubDate($document["created_at"])
             ->setFilenameDoc($document["filename_doc"])
-            ->setSubmitUser($document["submit_user"]);
+            ->setUserSubmit($document["submit_user"])
+            ->setFilenameDoc($document["filename_doc"])
+            ->setTypeSubmit($document["submit_type"]);
 
     }
 
@@ -76,8 +77,8 @@ class ModelDocument
             ->setSituation($_POST["doc_situation"])
             ->setStatus($_POST["doc_status"])            
             ->setFilenameDoc($_POST['doc_code'].".".substr(strrchr($_FILES['doc_file']['name'],'.'),1))
-            ->setSubmitUser($_SESSION["login"]["usuario"])
-            ->setSubmit($_SESSION["submition"]);
+            ->setUserSubmit($_SESSION["login"]["usuario"])
+            ->setTypeSubmit($_POST["type_submit"]);
     }
 
     public function updateDocumentFromPOST(){
@@ -293,17 +294,6 @@ class ModelDocument
         return $this;
     }
 
-    public function getSubmit()
-    {
-        return $this->submition;
-    }
-
-    public function setSubmit($submition)
-    {
-        $this->submition = $submition;
-        return $this;
-    }
-
     public function getFilenameDoc()
     {
         return $this->filename_doc;
@@ -326,14 +316,25 @@ class ModelDocument
         return $this;
     }
 
-    public function getSubmitUser()
+    public function getUserSubmit()
     {
-        return $this->submit_user;
+        return $this->user_submit;
     }
 
-    public function setSubmitUser($submit_user)
+    public function setUserSubmit($user_submit)
     {
-        $this->submit_user = $submit_user;
+        $this->user_submit = $user_submit;
+        return $this;
+    }
+
+    public function getTypeSubmit()
+    {
+        return $this->type_submit;
+    }
+
+    public function setTypeSubmit($type_submit)
+    {
+        $this->type_submit = $type_submit;
         return $this;
     }
 }

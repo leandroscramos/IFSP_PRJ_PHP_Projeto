@@ -68,9 +68,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="text" class="form-control" id="doc_title" name="doc_title" value="<?php echo (isset($document)) ? $document->getTitle() : "" ?>" required>
 											</div>
 											<div class="col-sm-3">
-												<label for="submition">Submissão *</label>
-												<select class="form-control" id="submition" name="submition" required>
-													<option selected disabled>Selecione</option>
+												<label for="type_submit">Submissão *</label>
+												<select class="form-control" id="type_submit" name="type_submit" required>
+													<option selected disabled></option>
 													<option value="N">Novo Documento</option>
 													<option value="R">Revisão de Documento</option>													
 												</select>
@@ -84,9 +84,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-4">
 												<label for="doc_type">Tipo do Documento *</label>
 												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">							                    
-												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype">							                    
-												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()" required>
-                                                    <option selected disabled>Selecione</option>
+												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype">												
+												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()"  required>
+                                                    <option selected disabled><?php echo (isset($document)) ? $document->getDocType()[0]->getName() : "Selecione" ?></option>
                                                     <option disabled><strong>--- Nível 1 ---</strong></option>
                                                     <?php													
                                                     foreach ($doctypes as $doctype) {
@@ -221,19 +221,40 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<option>Devolvido</option>																										
 													<option>Publicado</option>																										
 												</select>
-											</div>																
+											</div>									
 										</div>
-
 										
 										<hr>
+										
 										<div class="form-group">
-											<div class="col-sm-3">
+											
+											<?php if (isset($document)) { ?>
+											<div class="col-sm-2">
+												<label for="submit_document">Arquivo Submetido</label><br>													
+												<p><a href="<?php echo $_SESSION["upload_sub"]."".$document->getFilenameDoc() ?>"><?php echo $document->getFilenameDoc() ?></a></p>
+											</div>											
+											<?php }	?>
+										
+											<div class="col-sm-2">
 												<label for="doc_file">Arquivo</label>
 												<input type="file" id="doc_file" name="doc_file" onchange="extensionValidate(this)" required> 
 												<div id="file_validate"></div>																						
-											</div>											
-										</div>
+											</div>
+											<div class="col-sm-2">
+												<label for="doc_file2">Arquivo DOC Final <i class="fas fa-file-word" style="color: blue"></i></label>
+												<input type="file" id="doc_file2" name="doc_file2" onchange="extensionValidate(this)" required> 
+												<div id="file_validate"></div>																						
+											</div>
+
+											<div class="col-sm-2">
+												<label for="doc_file3">Arquivo PDF Final <i class="fas fa-file-pdf" style="color: red"></i></label>
+												<input type="file" id="doc_file3" name="doc_file3" onchange="extensionValidate(this)" required> 
+												<div id="file_validate"></div>																						
+											</div>
+										</div>	
 										
+										
+																				
 										<input type="hidden" name="doc_status" id="doc_status" value="0">
 
 										<div class="box-footer">				                
