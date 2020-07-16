@@ -57,7 +57,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 					            	<div class="box-tools pull-right">
 						          </div>
 
-								  <?php //Util::debug($document); ?>								  
+								  <?php Util::debug($document); ?>								  
 
 								  <form action="document" method="POST" enctype="multipart/form-data">
 								  	<input type="hidden" name="action" id="action" value="create">
@@ -65,7 +65,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<div class="form-group">					                  
 											<div class="col-sm-7">
 												<label for="doc_title"">Título *</label>
-												<input type="text" class="form-control" id="doc_title" name="doc_title" value="<?php echo (isset($document)) ? $document->getTitle() : "" ?>" required>
+												<input type="text" class="form-control" id="doc_title" name="doc_title" value="<?php //echo (isset($document)) ? $document->getTitle() : "" ?>" required>
 											</div>
 											<div class="col-sm-3">
 												<label for="type_submit">Submissão *</label>
@@ -77,16 +77,16 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>											
 											<div class="col-sm-2">
 												<label for="doc_approval_date">Data aprovação *</label>
-												<input type="date" class="form-control" id="doc_approval_date" name="doc_approval_date" placeholder="" onchange="nextRevision()" required>
+												<input type="date" class="form-control" id="doc_approval_date" name="doc_approval_date" placeholder="" value="<?php //echo (isset($document)) ? date("Y-m-d", strtotime($document->getApprovalDate())) : "" ?>" required>
 											</div>																																											
-										</div>
+										</div>										
 										<div class="form-group">																						
 											<div class="col-sm-4">
 												<label for="doc_type">Tipo do Documento *</label>
 												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">							                    
 												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype">												
-												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()"  required>
-                                                    <option selected disabled><?php echo (isset($document)) ? $document->getDocType()[0]->getName() : "Selecione" ?></option>
+												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()" required>
+                                                    <option selected disabled><?php //echo (isset($document)) ? $document->getDocType()[0]->getName() : "Selecione" ?></option>
                                                     <option disabled><strong>--- Nível 1 ---</strong></option>
                                                     <?php													
                                                     foreach ($doctypes as $doctype) {
@@ -117,18 +117,18 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_number">Número *</label>
-												<input type="text" class="form-control" id="doc_number" name="doc_number" pattern="[0-9]{3}" maxlength="3" placeholder="" value="<?php echo (isset($document)) ? $document->getNumber() : "" ?>" required>
+												<input type="text" class="form-control" id="doc_number" name="doc_number" pattern="[0-9]{3}" maxlength="3" placeholder="" value="<?php //echo (isset($document)) ? $document->getNumber() : "" ?>" required>
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_version">Versão *</label>
-												<input type="text" class="form-control" id="doc_version" name="doc_version" pattern="[0-9]{2}" maxlength="2" placeholder="" value="<?php echo (isset($document)) ? $document->getVersion() : "" ?>" required>
+												<input type="text" class="form-control" id="doc_version" name="doc_version" pattern="[0-9]{2}" maxlength="2" placeholder="" value="<?php //echo (isset($document)) ? $document->getVersion() : "" ?>" required>
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_sigla_area">Área <i>(Sigla)</i> *</label>
 												<input type="hidden" name="doc_id_area" id="doc_id_area">
 												<input type="hidden" name="doc_initials_area" id="doc_initials_area">
 												<select class="form-control" id="doc_sigla_area" name="doc_sigla_area" onchange="areas();" required>
-													<option selected disabled></option>                                                    
+													<option selected disabled><?php //echo (isset($document)) ? $document->getArea()[0]->getInitials() : "Selecione" ?></option>                                                    
                                                     <?php
                                                     foreach ($areas as $area) {
 														echo "<option value='".$area->getId()."+".$area->getName()."+".$area->getInitials()."'>".$area->getInitials()."</option>";														
@@ -138,25 +138,25 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 											<div class="col-sm-4">
 												<label for="doc_area">Área <i>(Nome)</i></label>					                    
-												<input type="text" class="form-control" id="doc_area" name="doc_area" placeholder="" readonly="true">
+												<input type="text" class="form-control" id="doc_area" name="doc_area" placeholder="" value="<?php //echo (isset($document)) ? $document->getArea()[0]->getName() : "" ?>" readonly="true">
 											</div>	
 										</div>
 										<div class="form-group">
 											<div class="col-sm-3">
 												<label for="doc_maker">Elaborado por *</label>
-												<input type="text" class="form-control" id="doc_maker" name="doc_maker" value="<?php echo (isset($document)) ? $document->getMaker() : "" ?>" required>
+												<input type="text" class="form-control" id="doc_maker" name="doc_maker" value="<?php //echo (isset($document)) ? $document->getMaker() : "" ?>" required>
 											</div>
 											<div class="col-sm-3">
 												<label for="doc_reviewer">Revisado por *</label>
-												<input type="text" class="form-control" id="doc_reviewer" name="doc_reviewer" value="<?php echo (isset($document)) ? $document->getReviewer() : "" ?>" required>
+												<input type="text" class="form-control" id="doc_reviewer" name="doc_reviewer" value="<?php //echo (isset($document)) ? $document->getReviewer() : "" ?>" required>
 											</div>											
 											<div class="col-sm-3">
 												<label for="doc_approver">Aprovado por *</label>
-												<input type="text" class="form-control" id="doc_approver" name="doc_approver" value="<?php echo (isset($document)) ? $document->getApprover() : "" ?>" required>
+												<input type="text" class="form-control" id="doc_approver" name="doc_approver" value="<?php //echo (isset($document)) ? $document->getApprover() : "" ?>" required>
 											</div>
 											<div class="col-sm-3">
 												<label for="doc_validator">Validado por *</label>
-												<input type="text" class="form-control" id="doc_validator" name="doc_validator" value="<?php echo (isset($document)) ? $document->getValidator() : "" ?>" required>
+												<input type="text" class="form-control" id="doc_validator" name="doc_validator" value="<?php //echo (isset($document)) ? $document->getValidator() : "" ?>" required>
 											</div>
 										</div>										
 										<hr>
@@ -166,7 +166,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="hidden" name="doc_id_process" id="doc_id_process">
 												<input type="hidden" name="doc_initials_process" id="doc_initials_process">
 												<select class="form-control" id="doc_process" name="doc_process" onchange="processos()" required>
-													<option selected disabled>Selecione</option>                                                    
+													<option selected disabled><?php //echo (isset($document)) ? $document->getProcess()[0]->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($document->getProcess()[0]->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($document->getProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$document->getProcess()[0]->getName() : "Selecione" ?></option>
+													
                                                     <?php
                                                     foreach ($processs as $process) {
                                                         echo "<option value='".$process->getId()."+".$process->getMacroProcess()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)."'>".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName()."</option>";
@@ -176,26 +177,26 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 											<div class="col-sm-3">
 												<label for="doc_macroproc">Macroprocesso</label>
-												<input type="text" class="form-control" id="doc_macroproc" name="doc_macroproc" placeholder="">
+												<input type="text" class="form-control" id="doc_macroproc" name="doc_macroproc" placeholder="" value="<?php //echo (isset($document)) ? $document->getProcess()[0]->getMacroProcess()[0]->getName() : "" ?>">
 											</div>
 											<div class="col-sm-3">
 												<label for="doc_proc_type">Tipo do Processo</label>
-												<input type="text" class="form-control" id="doc_proc_type" name="doc_proc_type" placeholder="">
+												<input type="text" class="form-control" id="doc_proc_type" name="doc_proc_type" placeholder="" value="<?php //echo (isset($document)) ? $document->getProcess()[0]->getMacroProcess()[0]->getMacroProcType()[0]->getName() : "" ?>">
 											</div>											
 										</div>
 										<hr>
 										<div class="form-group">
 											<div class="col-sm-2">
 												<label for="doc_process_sei">Processo SEI</label>
-												<input type="text" class="form-control" id="doc_process_sei" name="doc_process_sei" placeholder="">
+												<input type="text" class="form-control" id="doc_process_sei" name="doc_process_sei" placeholder="" value="<?php //echo (isset($document)) ? $document->getProcessSei() : "" ?>">
 											</div>
 											<div class="col-sm-2">
 												<label for="doc_document_sei">Documento SEI</label>
-												<input type="text" class="form-control" id="doc_document_sei" name="doc_document_sei" placeholder="">
+												<input type="text" class="form-control" id="doc_document_sei" name="doc_document_sei" placeholder="" value="<?php //echo (isset($document)) ? $document->getDocumentSei() : "" ?>">
 											</div>
 											<div class="col-sm-2">
 												<label for="doc_dispatch_sei">Despacho SEI</label>
-												<input type="text" class="form-control" id="doc_dispatch_sei" name="doc_dispatch_sei" placeholder="">
+												<input type="text" class="form-control" id="doc_dispatch_sei" name="doc_dispatch_sei" placeholder="" value="<?php //echo (isset($document)) ? $document->getDispatchSei() : "" ?>">
 											</div>	
 										</div>
 										<hr>										
@@ -203,12 +204,12 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<div class="form-group">
 											<div class="col-sm-2">
 												<label for="doc_code">Código do documento *</label>
-												<input type="text" class="form-control" id="doc_code" name="doc_code" value="<?php echo (isset($document)) ? $document->getCode() : "" ?>" readonly="true" required>
+												<input type="text" class="form-control" id="doc_code" name="doc_code" value="<?php //echo (isset($document)) ? $document->getCode() : "" ?>" readonly="true" required>
 												<button type="button" class="btn btn-success col-sm-12" name="submitInternacao" onclick="gerarCodigo()">Gerar código</button>												
 											</div>
 											<div class="col-sm-2" id="situation_div" style="display: none">
 												<label for="doc_situation">Situação</label>
-												<select class="form-control" id="doc_situation" name="doc_situation" value="<?php echo (isset($document)) ? $document->getSituation() : "" ?>">													
+												<select class="form-control" id="doc_situation" name="doc_situation" value="<?php //echo (isset($document)) ? $document->getSituation() : "" ?>">													
 													<option value="A" selected>Ativo</option>
 													<option value="I">Inativo</option>																										
 												</select>

@@ -30,7 +30,7 @@ class ControllerDocument {
 		$documentDAO = new DocumentDAO();
 		$document = new ModelDocument();
 		
-		$document->setDocumentFromPOST();			
+		$document->setDocumentFromPOST();		
 		$result = $documentDAO->createDocument($document);
 
 		if (isset($_FILES['doc_file'])) {
