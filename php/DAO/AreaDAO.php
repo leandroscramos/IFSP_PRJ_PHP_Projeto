@@ -8,7 +8,9 @@ class AreaDAO
 {
     public function readArea(){
 
-        try { $sql = ('SELECT * FROM public.tb_area ORDER BY id');
+        try { 
+            $sql = ('SELECT * FROM public.tb_area ORDER BY id');
+            
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -35,7 +37,10 @@ class AreaDAO
 
     public function readAreaById($id){
 
-        try { $sql = ('SELECT * FROM public.tb_area where id = :id');
+        try { 
+            
+            $sql = ('SELECT * FROM public.tb_area where id = :id');
+            
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -64,7 +69,9 @@ class AreaDAO
 
     public function createArea($area){			
         
-		try { $sql = "INSERT INTO public.tb_area (initials, name) VALUES (:initials, :name)";
+		try { 
+            
+            $sql = "INSERT INTO public.tb_area (initials, name) VALUES (:initials, :name)";
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
@@ -82,7 +89,9 @@ class AreaDAO
 
     public function updateArea($area) {
         
-        try { $sql = ('UPDATE public.tb_area SET initials = :initials, name = :name WHERE id = :id');
+        try { 
+            
+            $sql = ('UPDATE public.tb_area SET initials = :initials, name = :name WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -101,7 +110,9 @@ class AreaDAO
     
     public function deleteArea($id) {        
 
-        try { $sql = ('DELETE FROM public.tb_area WHERE id = :id');
+        try { 
+            
+            $sql = ('DELETE FROM public.tb_area WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -119,7 +130,9 @@ class AreaDAO
     
     public function readAreaByName($name){
 
-        try { $sql = ('SELECT * FROM public.tb_area WHERE name = :name');
+        try { 
+            
+            $sql = ('SELECT * FROM public.tb_area WHERE name = :name');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -148,7 +161,10 @@ class AreaDAO
     
     public function readAreaByInitials($initials){
 
-        try { $sql = ('SELECT * FROM public.tb_area WHERE initials = :initials');
+        try { 
+            
+            $sql = ('SELECT * FROM public.tb_area WHERE initials = :initials');
+            
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
