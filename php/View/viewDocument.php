@@ -95,7 +95,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-4">
 												<label for="doc_type">Tipo do Documento *</label>
 												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">							                    
-												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype">												
+												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype" value="<?php echo (isset($document)) ? $document->getDocType()[0]->getInitials() : "" ?>">												
 												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()" required>
                                                     <option selected disabled><?php echo (isset($document)) ? $document->getDocType()[0]->getName() : "Selecione" ?></option>
                                                     <option disabled><strong>--- Nível 1 ---</strong></option>
@@ -137,7 +137,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-1">
 												<label for="doc_sigla_area">Área <i>(Sigla)</i> *</label>
 												<input type="hidden" name="doc_id_area" id="doc_id_area">
-												<input type="hidden" name="doc_initials_area" id="doc_initials_area">
+												<input type="hidden" name="doc_initials_area" id="doc_initials_area" value="<?php echo (isset($document)) ? $document->getArea()[0]->getInitials() : "" ?>">
 												<select class="form-control" id="doc_sigla_area" name="doc_sigla_area" onchange="areas();" required>
 													<option selected disabled><?php echo (isset($document)) ? $document->getArea()[0]->getInitials() : "Selecione" ?></option>                                                    
                                                     <?php
@@ -175,7 +175,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-6">
 												<label for="doc_process">Processo *</label>
 												<input type="hidden" name="doc_id_process" id="doc_id_process">
-												<input type="hidden" name="doc_initials_process" id="doc_initials_process">
+												<input type="hidden" name="doc_initials_process" id="doc_initials_process" value="<?php echo (isset($document)) ? $document->getProcess()[0]->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($document->getProcess()[0]->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($document->getProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT) : "" ?>">
 												<select class="form-control" id="doc_process" name="doc_process" onchange="processos()" required>
 													<option selected disabled><?php echo (isset($document)) ? $document->getProcess()[0]->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($document->getProcess()[0]->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($document->getProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$document->getProcess()[0]->getName() : "Selecione" ?></option>
 													

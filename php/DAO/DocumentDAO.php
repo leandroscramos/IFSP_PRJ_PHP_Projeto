@@ -8,7 +8,7 @@ class DocumentDAO
 {
     public function readDocument(){
 
-        try { $sql = ('SELECT * FROM public.tb_documents ORDER BY id');
+        try { $sql = ('SELECT * FROM public.tb_documents ORDER BY created_at');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
