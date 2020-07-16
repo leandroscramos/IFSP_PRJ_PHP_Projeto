@@ -91,9 +91,6 @@ class DocumentDAO
         //                VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, :changes)
         //             ');
 
-        //try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc, submit_user, situation, submit_type, document_sei, process_sei, dispatch_sei) 
-          //              VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status, :code, :filename_doc, :submit_user, :situation, :submit_type, :document_sei, :process_sei, :dispatch_sei)
-            //         ');
         try { $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc, submit_user, situation, submit_type) 
                         VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status, :code, :filename_doc, :submit_user, :situation, :submit_type)
                      ');
@@ -118,9 +115,7 @@ class DocumentDAO
             $statement->bindValue(":filename_doc", $document->getFilenameDoc());
             $statement->bindValue(":submit_user", $document->getUserSubmit());            
             $statement->bindValue(":situation", $document->getSituation());
-            //$statement->bindValue(":document_sei", $document->getDocumentSei());
-            //$statement->bindValue(":process_sei", $document->getProcessSei());
-            //$statement->bindValue(":dispatch_sei", $document->getDispatchSei());
+            $statement->bindValue(":submit_type", $document->getTypeSubmit());
 
                      
             

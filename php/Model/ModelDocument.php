@@ -37,7 +37,6 @@ class ModelDocument
         $process = ProcessDAO::readProcessById($document["process"]);
         $this->setId($document["id"])            
             ->setTitle($document["title"])
-            ->setApprovalDate($document["approval_date"])
             ->setDocType($doc_type)
             ->setNumber($document["number"])
             ->setVersion($document["version"])
@@ -54,11 +53,7 @@ class ModelDocument
             ->setFilenameDoc($document["filename_doc"])
             ->setUserSubmit($document["submit_user"])
             ->setFilenameDoc($document["filename_doc"])
-            ->setTypeSubmit($document["submit_type"])
-            ->setProcessSei($document["process_sei"])
-            ->setDocumentSei($document["document_sei"])
-            ->setDispatchSei($document["dispatch_sei"]);
-            
+            ->setTypeSubmit($document["submit_type"]);
 
     }
 
@@ -71,9 +66,9 @@ class ModelDocument
             ->setVersion($_POST["doc_version"])
             ->setArea($_POST["doc_id_area"])
             ->setProcess($_POST["doc_id_process"])
-            //->setProcessSei($_POST["doc_process_sei"])
-            //->setDocumentSei($_POST["doc_document_sei"])
-            //->setDispatchSei($_POST["doc_dispatch_sei"])
+            ->setProcessSei($_POST["doc_process_sei"])
+            ->setDocumentSei($_POST["doc_document_sei"])
+            ->setDispatchSei($_POST["doc_dispatch_sei"])
             ->setMaker($_POST["doc_maker"])
             ->setReviewer($_POST["doc_reviewer"])
             ->setValidator($_POST["doc_validator"])
