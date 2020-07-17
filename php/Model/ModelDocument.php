@@ -53,8 +53,11 @@ class ModelDocument
             ->setFilenameDoc($document["filename_doc"])
             ->setUserSubmit($document["submit_user"])
             ->setFilenameDoc($document["filename_doc"])
-            ->setTypeSubmit($document["submit_type"]);
-
+            ->setTypeSubmit($document["submit_type"])
+            ->setProcessSei($document["process_sei"])
+            ->setDocSei($document["document_sei"])
+            ->setDispatchSei($document["dispatch_sei"])
+            ->setApprovalDate($document["approval_date"]);
     }
 
     public function setDocumentFromPOST(){
@@ -65,10 +68,7 @@ class ModelDocument
             ->setNumber($_POST["doc_number"])
             ->setVersion($_POST["doc_version"])
             ->setArea($_POST["doc_id_area"])
-            ->setProcess($_POST["doc_id_process"])
-            ->setProcessSei($_POST["doc_process_sei"])
-            ->setDocumentSei($_POST["doc_document_sei"])
-            ->setDispatchSei($_POST["doc_dispatch_sei"])
+            ->setProcess($_POST["doc_id_process"])            
             ->setMaker($_POST["doc_maker"])
             ->setReviewer($_POST["doc_reviewer"])
             ->setValidator($_POST["doc_validator"])
@@ -78,7 +78,10 @@ class ModelDocument
             ->setStatus($_POST["doc_status"])            
             ->setFilenameDoc($_POST['doc_code'].".".substr(strrchr($_FILES['doc_file']['name'],'.'),1))
             ->setUserSubmit($_SESSION["login"]["usuario"])
-            ->setTypeSubmit($_POST["type_submit"]);
+            ->setTypeSubmit($_POST["type_submit"])
+            ->setProcessSei($_POST["process_sei"])
+            ->setDocSei($_POST["document_sei"])
+            ->setDispatchSei($_POST["dispatch_sei"]);
     }
 
     public function updateDocumentFromPOST(){
@@ -184,12 +187,12 @@ class ModelDocument
         return $this;
     }
 
-    public function getDocumentSei()
+    public function getDocSei()
     {
         return $this->document_sei;
     }
 
-    public function setDocumentSei($document_sei)
+    public function setDocSei($document_sei)
     {
         $this->document_sei = $document_sei;
         return $this;
