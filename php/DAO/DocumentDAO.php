@@ -129,6 +129,41 @@ class DocumentDAO
 
     public function updateDocument($document) {        
         
+        try { 
+            
+            $sql = ('UPDATE public.tb_documents SET status = :status WHERE id = :id');
+            
+            $instance = DatabaseConnection::getInstance();
+            $conn = $instance->getConnection();			
+            $statement = $conn->prepare($sql);
+            
+            $statement->bindValue(":id", $document->getId());
+            /* $statement->bindValue(":title", $document->getTitle());            
+            $statement->bindValue(":code", $document->getCode());
+            $statement->bindValue(":doc_type", $document->getDocType());
+            $statement->bindValue(":number", $document->getNumber());
+            $statement->bindValue(":version", $document->getVersion());
+            $statement->bindValue(":area", $document->getArea());
+            $statement->bindValue(":process", $document->getProcess());
+            $statement->bindValue(":maker", $document->getMaker());
+            $statement->bindValue(":reviewer", $document->getReviewer());
+            $statement->bindValue(":validator", $document->getValidator());
+            $statement->bindValue(":approver", $document->getApprover());            
+            $statement->bindValue(":approval_date", $document->getApprovalDate()); */
+            $statement->bindValue(":status", $document->getStatus());
+            /* $statement->bindValue(":filename_doc", $document->getFilenameDoc());
+            $statement->bindValue(":submit_user", $document->getUserSubmit());            
+            $statement->bindValue(":situation", $document->getSituation());
+            $statement->bindValue(":submit_type", $document->getTypeSubmit());
+            $statement->bindValue(":process_sei", $document->getProcessSei());
+            $statement->bindValue(":document_sei", $document->getDocSei());
+            $statement->bindValue(":dispatch_sei", $document->getDispatchSei()); */                    
+            
+            return $statement->execute();            
+
+        } catch (PDOException $e) {
+            echo "Erro ao inserir na base de dados.".$e->getMessage();            
+        }
     }
     
     public function deleteDocument($id) {        

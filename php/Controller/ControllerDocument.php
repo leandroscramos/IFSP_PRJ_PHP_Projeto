@@ -51,12 +51,12 @@ class ControllerDocument {
 		};
     }
 
-	/*
+	
     public function updateDocument() {
         $documentDAO = new DocumentDAO();
 		$document = new ModelDocument();
 
-		$document->updateDocumentFromPOST();
+		$document->updateDocumentFromPOST();		
 		$result = $documentDAO->updateDocument($document);
 
 		if ($result){
@@ -68,7 +68,7 @@ class ControllerDocument {
 		}
 
 		// O trecho abaixo verifica os nomes dos documentos já cadastrados *** PRECISA DE AJUSTES ***
-		
+		/*
 		if (($documentDAO->readDocumentByName($_POST['documentTitleUpdate'])) == null) {
 			$document->updateDocumentFromPOST();
 			$result = $documentDAO->updateDocument($document);
@@ -84,8 +84,10 @@ class ControllerDocument {
 			$_SESSION["flash"]["msg"]="Tipo de documento já cadastrado!";
 			$_SESSION["flash"]["sucesso"]=false;
 		}
-		
-    }
+		*/
+	}
+	
+	/*
     
     public function deleteDocument() {
         $documentDAO = new DocumentDAO();

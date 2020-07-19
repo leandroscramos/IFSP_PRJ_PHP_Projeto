@@ -70,18 +70,20 @@ else if ($action == 'document') {
             switch ($_POST['action']) {
                 case 'create':
                     ControllerDocument::createDocument();                    
-                    header("Location:document");
+                    header("Location:docListAdmin");
                     break;        
                 case 'edit':
                     $doctypes = ControllerDocType::readDocType();            
                     $areas = ControllerArea::readArea();
-                    $processs = ControllerProcess::readProcess();                    
+                    $processs = ControllerProcess::readProcess();                                     
                     $document = ControllerDocument::readDocumentById($_POST['idDocument']);                    
                     include_once $_SESSION["root"].'php/View/viewDocument.php';
                     break;        
                 case 'update':
+                    $_SESSION["update"]["id"] = $_POST['id_document'];
+                    $_SESSION["update"]["status"] = $_POST['status'];                    
                     ControllerDocument::updateDocument();    
-                    header("Location:document");
+                    header("Location:docListAdmin");
                     break;
                 case 'delete':
                     ControllerDocument::deleteDocument();    

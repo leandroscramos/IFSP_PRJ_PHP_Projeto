@@ -47,7 +47,6 @@ class ModelDocument
             ->setApprover($document["approver"])
             ->setStatus($document["status"])
             ->setProcess($process)
-            ->setStatus($document["status"])
             ->setCode($document["code"])
             ->setSubDate($document["created_at"])
             ->setFilenameDoc($document["filename_doc"])
@@ -75,7 +74,7 @@ class ModelDocument
             ->setApprover($_POST["doc_approver"])
             ->setApprovalDate($_POST["doc_approval_date"])
             ->setSituation($_POST["doc_situation"])
-            ->setStatus($_POST["doc_status"])            
+            ->setStatus($_POST["status"])            
             ->setFilenameDoc($_POST['doc_code'].".".substr(strrchr($_FILES['doc_file']['name'],'.'),1))
             ->setUserSubmit($_SESSION["login"]["usuario"])
             ->setTypeSubmit($_POST["type_submit"])
@@ -85,7 +84,8 @@ class ModelDocument
     }
 
     public function updateDocumentFromPOST(){
-        
+        $this->setId($_POST["id_document"])            
+            ->setStatus($_POST["status"]);
     }
 
     public function getId()
