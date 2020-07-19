@@ -19,7 +19,6 @@
   "devDependencies": {
     "browser-sync": "^2.26.7",
     "gulp": "^4.0.2",
-    "gulp-connect-php": "^1.0.3",
-    "lodash": ">=4.17.19"
+    "gulp-connect-php": "^1.0.3"
   }
 }
