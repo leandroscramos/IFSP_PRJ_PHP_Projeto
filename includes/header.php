@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 	<head>
-		<meta charset="utf-8">
+		<meta charset="utf-8">		
 		<title><?php echo $_SESSION["title"];?></title>
 			
 		<!-- CSS -->
@@ -40,9 +40,10 @@
 
 		<!-- DataTables -->		
 		<script src="includes/Datatables/jquery.dataTables.min.js"></script>
-		<script src="includes/Datatables/dataTables.bootstrap.min.js"></script>
+		<script src="includes/Datatables/dataTables.bootstrap.min.js"></script>		
 
-		<?php //Util::debug($_SESSION); ?>		
+		<?php //Util::debug($_SESSION); ?>				
 
 	</head>
 <body class="hold-transition skin-green layout-top-nav">
+

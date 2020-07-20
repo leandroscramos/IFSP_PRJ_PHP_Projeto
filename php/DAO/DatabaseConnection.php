@@ -29,6 +29,7 @@ class DatabaseConnection {
 		return self::$instance;
 	}
 	public function getConnection() {
+		$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		return $this->conn;
 	}
 }

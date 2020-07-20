@@ -16,14 +16,15 @@ class ModelMacroProc
         $this->setId($macroProc["id"])            
                 ->setName($macroProc["name"])
                 ->setnumber($macroProc["number"])
-                ->seIdProcType($macroProc["id_proc_type"])
+                ->setIdProcType($macroProc["id_proc_type"])
                 ->setMacroProcType($macroProcType);                
     }
 
     public function setMacroProcFromPOST(){
         $this->setId(null)               
                 ->setName($_POST["macroProcName"])
-                ->setnumber($_POST["macroProcNumber"]);
+                ->setnumber($_POST["macroProcNumber"])
+                ->setIdProcType($_POST["idProcType"]);
     }
 
     public function updateMacroProcFromPOST(){
@@ -70,7 +71,7 @@ class ModelMacroProc
         return $this->id_proc_type;        
     }
 
-    public function seIdProcType($id_proc_type)
+    public function setIdProcType($id_proc_type)
     {
         $this->id_proc_type = $id_proc_type;
         return $this;

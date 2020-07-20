@@ -15,7 +15,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestão de Documentos <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <?php
-                        echo "<li><a href='docList'>Lista de Documentos</a></li>";
+                        echo ($_SESSION["login"]["permissao"] == "Administrador") ? "<li><a href='docListAdmin'>Lista de Documentos</a></li>" : "<li><a href='docList'>Lista de Documentos</a></li>";
                         echo "<li><a href='document'>Novo Documento</a></li>";
                     ?>
                 </ul>            
@@ -44,7 +44,7 @@
           <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">                              
-              <span class="hidden-xs"><strong><?php echo $_SESSION["login"]["permissao"]; ?></strong></span>
+              <span class="hidden-xs"><strong><?php echo $_SESSION["login"]["usuario"]; ?></strong></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->

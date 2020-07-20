@@ -3,6 +3,8 @@
 session_start();
 
 $_SESSION["root"] = realpath('projeto');
+$_SESSION["upload_sub"] = '/projeto/upload/submissions/';
+$_SESSION["upload_pub"] = '/projeto/upload/published/';
 
 $_SESSION["title"] = "Documentos | SGQ";
 //$_SESSION["root_functions"] = "/var/www/html/intranet/";

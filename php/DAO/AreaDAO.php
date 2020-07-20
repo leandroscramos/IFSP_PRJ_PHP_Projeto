@@ -31,7 +31,36 @@ class AreaDAO
         } catch (PDOException $e) {
             echo "Erro ao ler registros na base de dados.".$e->getMessage();
         }
-    }    
+    }
+
+    public function readAreaById($id){
+
+        try { $sql = ('SELECT * FROM public.tb_area where id = :id');
+            $instance = DatabaseConnection::getInstance();
+            $conn = $instance->getConnection();
+            $statement = $conn->prepare($sql);
+
+            $statement->bindValue(":id", $id);
+            $statement->execute();
+
+            $records = $statement->fetchAll();
+            //Verifico se houve algum retorno, senão retorno null
+            if(count($records)==0)
+                return null;
+            //Var que irá armazenar um array de obj do tipo funcionário
+            $areas;
+            //Util::debug($linhas);
+            foreach ($records as $value) {
+                $area = new ModelArea();
+                $area->setAreaFromDatabase($value);
+                $areas[]=$area;
+            }
+            return $areas;
+
+        } catch (PDOException $e) {
+            echo "Erro ao ler registros na base de dados.".$e->getMessage();
+        }
+    } 
 
     public function createArea($area){			
         

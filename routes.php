@@ -15,6 +15,7 @@ include_once $_SESSION["root"].'php/Controller/ControllerArea.php';
 include_once $_SESSION["root"].'php/Controller/ControllerProcType.php';
 include_once $_SESSION["root"].'php/Controller/ControllerMacroProc.php';
 include_once $_SESSION["root"].'php/Controller/ControllerProcess.php';
+include_once $_SESSION["root"].'php/Controller/ControllerDocument.php';
 
 
 // Condicionais que verificam o roteamento das actions.
@@ -44,39 +45,64 @@ else if ($action == 'logado') {
 
 
 else if ($action == 'docList') {
-    include_once $_SESSION["root"].'php/View/viewDocumentList.php';
+    if ((($_SESSION['login']['permissao']) == 'Usuário') ) {
+        $documents = ControllerDocument::readDocumentByUser($_SESSION["login"]["usuario"]);
+        include_once $_SESSION["root"].'php/View/viewDocumentList.php';
+    } else {
+        header("Location:logado");
+    }
 }
 
-
+else if ($action == 'docListAdmin') {
+    unset($document);     
+    if ((($_SESSION['login']['permissao']) == 'Administrador') ) {
+        $documents = ControllerDocument::readDocument();
+        include_once $_SESSION["root"].'php/View/viewDocumentListAdmin.php';
+    } else {
+        header("Location:logado");
+    }    
+}
 
 /* Rota para Documento */
 else if ($action == 'document') {
-    //if (($_SESSION['login']['permissao']) == 'Administrador') {
-        /*if (isset($_POST['action'])) {
+    if ( (($_SESSION['login']['permissao']) == 'Administrador') || (($_SESSION['login']['permissao']) == 'Usuário') ) {
+        if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'create':
-                    ControllerDocType::createDocType();
-                    header("Location:docType");
+                    ControllerDocument::createDocument();
+                    if ((($_SESSION['login']['permissao']) == 'Administrador') ) {
+                        header("Location:docListAdmin");
+                    } else {
+                        header("Location:docList");
+                    }
+                    break;        
+                case 'edit':
+                    $doctypes = ControllerDocType::readDocType();            
+                    $areas = ControllerArea::readArea();
+                    $processs = ControllerProcess::readProcess();                                     
+                    $document = ControllerDocument::readDocumentById($_POST['idDocument']);                    
+                    include_once $_SESSION["root"].'php/View/viewDocument.php';
                     break;        
                 case 'update':
-                    ControllerDocType::updateDocType();    
-                    header("Location:docType");
+                    $_SESSION["update"]["id"] = $_POST['id_document'];
+                    $_SESSION["update"]["status"] = $_POST['status'];                    
+                    ControllerDocument::updateDocument();    
+                    header("Location:docListAdmin");
                     break;
                 case 'delete':
-                    ControllerDocType::deleteDocType();    
-                    header("Location:docType");
+                    ControllerDocument::deleteDocument();    
+                    header("Location:document");
                     break;
             }
-        } else {            
-        */    
+        } else {
             $doctypes = ControllerDocType::readDocType();            
-            $Areas = ControllerArea::readArea();
+            $areas = ControllerArea::readArea();
             $processs = ControllerProcess::readProcess();
             include_once $_SESSION["root"].'php/View/viewDocument.php';
-        //}
-    //} else {
-      //  header("Location:logado");
-    //}
+        }
+    } else {
+        header("Location:logado");
+    }
     
 }
 
