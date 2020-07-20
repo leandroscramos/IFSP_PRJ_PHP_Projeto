@@ -74,17 +74,22 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-3">
 												<label for="type_submit">Submissão *</label>
 												<select class="form-control" id="type_submit" name="type_submit" required>
-													<option selected disabled>Selecione</option>
+													
 													<?php 
-														if (isset($document)) {
-															if ($document->getTypeSubmit() == "N")
-																echo "<option selected value='".$document->getTypeSubmit()."'>Novo Documento</option>";																															
-															if ($document->getTypeSubmit() == "R")
-																echo "<option selected value='".$document->getTypeSubmit()."'>Revisão de Documento</option>";
-														} 															
+														if (isset($document)) {																														
 													?>
-													<option value="N">Novo Documento</option>
-													<option value="R">Revisão de Documento</option>													
+														<option value="N" <?php echo $document->getTypeSubmit() == 'N' ? 'selected' : '';?> >Novo Documento</option>
+														<option value="R" <?php echo $document->getTypeSubmit() == 'R' ? 'selected' : '';?> >Revisão de Documento</option>
+													<?php 
+														} else {
+													?>
+														<option selected disabled>Selecione</option>
+														<option value="N">Novo Documento</option>
+														<option value="R">Revisão de Documento</option>
+													<?php
+														}
+													?>
+																									
 												</select>
 											</div>											
 											<div class="col-sm-2">
