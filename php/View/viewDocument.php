@@ -49,22 +49,21 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									}
 								?>
 							</div>
-							
+							<?php //Util::debug($document); ?>
 							<div class="box-body">															        
 						        <div class="box box-success">
 					              <div class="box-header with-border">
 					                <h3 class="box-title" align="center">Novo Documento</h3>						            
 					            	<div class="box-tools pull-right">
 						          </div>								  
-								  
 								  <form action="document" method="POST" enctype="multipart/form-data">
-									  <?php 
-									 	if (!isset($document)) {
+									<?php 
+										if (!isset($document)) {
 											echo "<input type='hidden' name='action' id='action' value='create'>";
-										 } else {
+										} else {
 											echo "<input type='hidden' name='action' id='action' value='update'>";
-										 }
-									  ?>									
+										}
+									?>									
 									<div class="box-body">
 									<input type="hidden" name="id_document" id="id_document" value="<?php echo (isset($document)) ? $document->getId() : "" ?>">
 										<div class="form-group">					                  
@@ -130,11 +129,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_number">Número *</label>
-												<input type="text" class="form-control" id="doc_number" name="doc_number" pattern="[0-9]{3}" maxlength="3" placeholder="" value="<?php echo (isset($document)) ? $document->getNumber() : "" ?>" required>
+												<input type="text" class="form-control" id="doc_number" name="doc_number" pattern="[0-9]{3}" maxlength="3" placeholder="" value="<?php echo (isset($document)) ? str_pad($document->getNumber() , 3 , '0' , STR_PAD_LEFT) : "" ?>" required>
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_version">Versão *</label>
-												<input type="text" class="form-control" id="doc_version" name="doc_version" pattern="[0-9]{2}" maxlength="2" placeholder="" value="<?php echo (isset($document)) ? $document->getVersion() : "" ?>" required>
+												<input type="text" class="form-control" id="doc_version" name="doc_version" pattern="[0-9]{2}" maxlength="2" placeholder="" value="<?php echo (isset($document)) ? str_pad($document->getVersion() , 2 , '0' , STR_PAD_LEFT) : "" ?>" required>
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_sigla_area">Área <i>(Sigla)</i> *</label>
@@ -223,7 +222,15 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-2" id="situation_div" style="display: none">
 												<label for="doc_situation">Situação</label>
 												<select class="form-control" id="doc_situation" name="doc_situation" value="<?php echo (isset($document)) ? $document->getSituation() : "" ?>">													
-													<option value="A" selected>Ativo</option>
+													<?php 
+														if (isset($document)) {
+															if ($document->getSituation() == "A")
+																echo "<option selected value='".$document->getSituation()."'>Ativo</option>";																															
+															if ($document->getSituation() == "I")
+																echo "<option selected value='".$document->getSituation()."'>Inativo</option>";																				
+														}
+													?>	
+													<option value="A">Ativo</option>
 													<option value="I">Inativo</option>																										
 												</select>
 											</div>
@@ -292,8 +299,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 						</div>
 					</div>
 				</div>
-			</section>
-			<?php //Util::debug($document); ?>								  
+			</section>											  
 		</div>		
 	</div>
 	<!-- /.content-wrapper -->

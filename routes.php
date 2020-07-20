@@ -69,8 +69,12 @@ else if ($action == 'document') {
         if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case 'create':
-                    ControllerDocument::createDocument();                    
-                    header("Location:docListAdmin");
+                    ControllerDocument::createDocument();
+                    if ((($_SESSION['login']['permissao']) == 'Administrador') ) {
+                        header("Location:docListAdmin");
+                    } else {
+                        header("Location:docList");
+                    }
                     break;        
                 case 'edit':
                     $doctypes = ControllerDocType::readDocType();            

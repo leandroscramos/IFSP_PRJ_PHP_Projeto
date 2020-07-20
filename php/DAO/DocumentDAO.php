@@ -8,7 +8,7 @@ class DocumentDAO
 {
     public function readDocument(){
 
-        try { $sql = ('SELECT * FROM public.tb_documents ORDER BY created_at');
+        try { $sql = ('SELECT * FROM public.tb_documents ORDER BY created_at DESC');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -31,9 +31,38 @@ class DocumentDAO
         }
     }
 
+    /*
+    public function readDocumentPublished($status){
+
+        try { $sql = ('SELECT * FROM public.tb_documents WHERE status = :status ORDER BY created_at DESC');
+            $instance = DatabaseConnection::getInstance();
+            $conn = $instance->getConnection();
+            $statement = $conn->prepare($sql);
+
+            $statement->bindParam(':status', $status); 
+            $statement->execute();
+
+            $records = $statement->fetchAll();            
+            if(count($records)==0)
+                return null;
+            
+            $documents;            
+            foreach ($records as $value) {
+                $document = new ModelDocument();
+                $document->setDocumentFromDatabase($value);
+                $documents[]=$document;
+            }
+            return $documents;
+
+        } catch (PDOException $e) {
+            echo "Erro ao ler registros na base de dados.".$e->getMessage();
+        }
+    }
+    */
+
     public function readDocumentByUser($user){
 
-        try { $sql = ('SELECT * FROM public.tb_documents WHERE submit_user = :user ORDER BY id');
+        try { $sql = ('SELECT * FROM public.tb_documents WHERE submit_user = :user ORDER BY created_at DESC');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);

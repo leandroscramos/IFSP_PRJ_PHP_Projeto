@@ -7,22 +7,26 @@ class ControllerDocument {
 
     public function readDocument() {
         $documentDAO = new DocumentDAO();
-        $documents = $documentDAO->readDocument();
-        //Util::debug($documents);
+        $documents = $documentDAO->readDocument();        
         return $documents;
 	}
+	/*
+    public function readDocumentPublished($status) {
+        $documentDAO = new DocumentDAO();
+        $documents = $documentDAO->readDocumentPublished($status);        
+        return $documents;
+	}
+	*/
 	
 	public function readDocumentByUser($user) {
         $documentDAO = new DocumentDAO();
-        $documents = $documentDAO->readDocumentByUser($user);
-        //Util::debug($documents);
+        $documents = $documentDAO->readDocumentByUser($user);        
         return $documents;
 	}
 	
 	public function readDocumentById($id) {		
         $documentDAO = new DocumentDAO();
-		$document = $documentDAO->readDocumentById($id);		
-        //Util::debug($documents);
+		$document = $documentDAO->readDocumentById($id);		        
         return $document;
     }
 
@@ -60,10 +64,10 @@ class ControllerDocument {
 		$result = $documentDAO->updateDocument($document);
 
 		if ($result){
-			$_SESSION["flash"]["msg"]="Tipo de documento atualizado com sucesso!";
+			$_SESSION["flash"]["msg"]="Documento atualizado com sucesso!";
 			$_SESSION["flash"]["sucesso"]=true;
 		} else {
-			$_SESSION["flash"]["msg"]="Falha ao atualizar tipo de documento!";
+			$_SESSION["flash"]["msg"]="Falha ao atualizar documento!";
 			$_SESSION["flash"]["sucesso"]=false;
 		}
 

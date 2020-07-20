@@ -46,6 +46,7 @@ class ModelDocument
             ->setValidator($document["validator"])
             ->setApprover($document["approver"])
             ->setStatus($document["status"])
+            ->setSituation($document["situation"])
             ->setProcess($process)
             ->setCode($document["code"])
             ->setSubDate($document["created_at"])
