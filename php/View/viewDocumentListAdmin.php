@@ -17,7 +17,21 @@ include "includes/header.php";
 							<div class="box-header">
 								<h3 class="box-title">Lista de Documentos submetidos para o Setor de Gestão da Qualidade</h3>
 							</div>							
-						<!-- /.box-header -->
+							<div class="box-header">
+								<?php 
+									if (isset($_SESSION["flash"]["msg"])) {
+										if (($_SESSION["flash"]["sucesso"]) == true) {
+											echo "<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+											echo "<i class='far fa-check-circle'></i>&nbsp;&nbsp;".$_SESSION["flash"]["msg"];
+											echo "</div>";
+										} else {
+											echo "<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+											echo "<i class='fas fa-exclamation-triangle'></i>&nbsp;&nbsp;".$_SESSION["flash"]["msg"];
+											echo "</div>";																			
+										}
+									}
+								?>
+							</div>
 							<div class="box-body">
 								<table id="TabelaDocumentos" class="table table-bordered table-striped">							
 								<?php									
@@ -32,6 +46,7 @@ include "includes/header.php";
 											<th width="4%">Número</th>
 											<th width="4%">Versão</th>
 											<th width="7%">Status</th>											
+											<th width="4%">Situação</th>											
 											<th width="7%">Submissão</th>
 											<th width="1%"></th>																						
 										</tr>
@@ -45,8 +60,8 @@ include "includes/header.php";
 												echo "<td><strong>".$document->getCode()."</strong></td>";
 												echo "<td>".$document->getDocType()[0]->getName()."</td>";
 												echo "<td><strong>".$document->getTitle()."</strong></td>";
-												echo "<td>".$document->getNumber()."</td>";
-												echo "<td>".$document->getVersion()."</td>";
+												echo "<td>".str_pad($document->getNumber() , 3 , '0' , STR_PAD_LEFT)."</td>";
+												echo "<td>".str_pad($document->getVersion() , 2 , '0' , STR_PAD_LEFT)."</td>";
 												switch ($document->getStatus()) {
 													case 0:
 														echo "<td><span class='label label-default'>Submetido</span></td>";
@@ -61,6 +76,7 @@ include "includes/header.php";
 														echo "<td><span class='label label-success'>Publicado</span></td>";
 														break;
 												}
+												echo ($document->getSituation() == "A") ? "<td align='center'><small class='label pull-center bg-green' title='Ativo'>A</small></td>" : "<td align='center'><strong><small class='label pull-center bg-red' title='Inativo'>I</small></td>";
 												$date = new DateTime($document->getSubDate());
 												echo "<td><strong>".$date->format('d/m/Y')."</strong></td>";
 												echo "<td>";
@@ -92,7 +108,8 @@ include "includes/header.php";
 	<script>
 	  $(function () {  	
 	    $('#TabelaDocumentos').DataTable({		        
-			"lengthMenu": [[10], [10]]
+			"lengthMenu": [[10], [10]],
+			"order": [[ 7, "asc"], [ 8, "desc" ]]
 		});
 	  });
 	</script>
