@@ -242,22 +242,25 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-2" id="status_div" style="display: none">
 												<label for="status">Status</label>
 												<select class="form-control" id="status" name="status">
+
 													<?php 
-														if (isset($document)) {
-															if ($document->getStatus() == "0")
-																echo "<option selected value='".$document->getStatus()."'>Submetido</option>";																															
-															if ($document->getStatus() == "1")
-																echo "<option selected value='".$document->getStatus()."'>Em validação</option>";			
-															if ($document->getStatus() == "2")
-																echo "<option selected value='".$document->getStatus()."'>Devolvido</option>";			
-															if ($document->getStatus() == "3")
-																echo "<option selected value='".$document->getStatus()."'>Publicado</option>";			
+														if (isset($document)) {																														
+													?>
+														<option value="0" <?php echo $document->getStatus() == '0' ? 'selected' : '';?> >Submetido</option>
+														<option value="1" <?php echo $document->getStatus() == '1' ? 'selected' : '';?> >Em validação</option>
+														<option value="2" <?php echo $document->getStatus() == '2' ? 'selected' : '';?> >Devolvido</option>
+														<option value="3" <?php echo $document->getStatus() == '3' ? 'selected' : '';?> >Publicado</option>
+													<?php 
+														} else {
+													?>
+														<option value="0">Submetido</option>
+														<option value="1"> >Em validação</option>
+														<option value="2"> >Devolvido</option>
+														<option value="3"> >Publicado</option>
+													<?php
 														}
-													?>													
-													<option value="0">Submetido</option>
-													<option value="1">Em validação</option>																										
-													<option value="2">Devolvido</option>																										
-													<option value="3">Publicado</option>																										
+													?>
+																																						
 												</select>
 											</div>									
 										</div>

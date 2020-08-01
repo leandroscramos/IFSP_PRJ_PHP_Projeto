@@ -72,9 +72,6 @@ include "includes/header.php";
 										?>										
 									</tbody>
 								</table>
-										
-
-								
 							</div>
 						<!-- /.box-body -->
 					  	</div>
