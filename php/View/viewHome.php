@@ -7,7 +7,7 @@ include "includes/header.php";
 		<nav class="navbar navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
-					<a href="logado" class="navbar-brand"><b>HU</b> - UFSCar</a>
+					<a href="index" class="navbar-brand"><b>HU</b> - UFSCar</a>
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
 					<i class="fa fa-bars"></i>
 					</button>
@@ -64,8 +64,16 @@ include "includes/header.php";
 												echo "<td><strong>".$document->getTitle()."</strong></td>";												
 												echo "<td>".$document->getProcess()[0]->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($document->getProcess()[0]->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($document->getProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$document->getProcess()[0]->getName()."</td>";
 												echo "<td>".str_pad($document->getVersion() , 2 , '0' , STR_PAD_LEFT)."</td>";												
-												$date = new DateTime($document->getSubDate());
-												echo "<td><strong>".$date->format('d/m/Y')."</strong></td>";												
+												$revision_date = new DateTime($document->getApprovalDate());
+												switch ($document->getDocType()[0]->getRev()) {
+													case 0:
+														echo "<td><strong>NA</strong></td>";
+														break;
+													default:
+														$revision_date->modify('+'.$document->getDocType()[0]->getRev().' year');
+														echo "<td><strong>".$revision_date->format('d/m/Y')."</strong></td>";
+														break;													
+												}																								
 												echo "</tr>";												
 											}
 										}

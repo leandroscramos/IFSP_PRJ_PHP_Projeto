@@ -123,7 +123,6 @@ else if ($action == 'document') {
     }
 }
 
-
 /* Rota para Tipos de Documento */
 else if ($action == 'docType') {
     if ($_SESSION["logado"] == true) {
@@ -144,9 +143,7 @@ else if ($action == 'docType') {
                         break;
                 }
             } else {
-                $doctypes = ControllerDocType::readDocType();
-                //$cDocType = new ControllerDocType();
-                //$doctypes = $cDocType->readDocType();
+                $doctypes = ControllerDocType::readDocType();                
                 include_once $_SESSION["root"].'php/View/viewDocumentType.php';
             }
         } else {
@@ -281,11 +278,6 @@ else if ($action == 'process') {
     } else {
         header("Location: login");
     }
-}
-
-// Rotas para páginas não encontradas.
-else {
-    include_once $_SESSION["root"].'php/View/View404.php'; 
 }
 
 ?>
