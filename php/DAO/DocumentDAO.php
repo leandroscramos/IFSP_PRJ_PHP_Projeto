@@ -31,14 +31,15 @@ class DocumentDAO
         }
     }
 
-    /*
-    public function readDocumentPublished($status){
+
+    public function readDocumentPublished(){
 
         try { $sql = ('SELECT * FROM public.tb_documents WHERE status = :status ORDER BY created_at DESC');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
 
+            $status = 3;
             $statement->bindParam(':status', $status); 
             $statement->execute();
 
@@ -58,7 +59,7 @@ class DocumentDAO
             echo "Erro ao ler registros na base de dados.".$e->getMessage();
         }
     }
-    */
+
 
     public function readDocumentByUser($user){
 
@@ -118,8 +119,8 @@ class DocumentDAO
 
         try { 
             
-            $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc, submit_user, situation, submit_type, process_sei, document_sei, dispatch_sei) 
-                        VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status, :code, :filename_doc, :submit_user, :situation, :submit_type, :process_sei, :document_sei, :dispatch_sei)
+            $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc_sub, submit_user, situation, submit_type, process_sei, document_sei, dispatch_sei) 
+                        VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status, :code, :filename_doc_sub, :submit_user, :situation, :submit_type, :process_sei, :document_sei, :dispatch_sei)
             ');
             
             $instance = DatabaseConnection::getInstance();
@@ -139,7 +140,7 @@ class DocumentDAO
             $statement->bindValue(":approver", $document->getApprover());            
             $statement->bindValue(":approval_date", $document->getApprovalDate());
             $statement->bindValue(":status", $document->getStatus());
-            $statement->bindValue(":filename_doc", $document->getFilenameDoc());
+            $statement->bindValue(":filename_doc_sub", $document->getFilenameDoc());
             $statement->bindValue(":submit_user", $document->getUserSubmit());            
             $statement->bindValue(":situation", $document->getSituation());
             $statement->bindValue(":submit_type", $document->getTypeSubmit());

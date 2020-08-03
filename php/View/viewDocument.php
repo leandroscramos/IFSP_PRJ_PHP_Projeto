@@ -254,9 +254,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 														} else {
 													?>
 														<option value="0">Submetido</option>
-														<option value="1"> >Em validação</option>
-														<option value="2"> >Devolvido</option>
-														<option value="3"> >Publicado</option>
+														<option value="1">Em validação</option>
+														<option value="2">Devolvido</option>
+														<option value="3">Publicado</option>
 													<?php
 														}
 													?>
@@ -276,27 +276,27 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>											
 											<?php }	?>
 										
-											<div class="col-sm-3">
-												<label for="doc_file">Arquivo</label>
-												<input type="file" id="doc_file" name="doc_file" onchange="extensionValidate(this)"> 
-												<div id="file_validate"></div>																						
+											<div class="col-sm-3" id="div_doc_sub">
+												<label for="doc_file_sub">Arquivo</label>
+												<input type="file" id="doc_file_sub" name="doc_file_sub" onchange="extensionValidate(this)"> 
+												<div id="file_validate_doc_sub"></div>																						
 											</div>
 											
 											<div class="col-sm-3" id="div_doc_final" style="display: none">
-												<label for="doc_file2">Arquivo DOC Final <i class="fas fa-file-word" style="color: blue"></i></label>
-												<input type="file" id="doc_file2" name="doc_file2" onchange="extensionValidate(this)" > 
+												<label for="doc_file_final">Arquivo DOC Final <i class="fas fa-file-word" style="color: blue"></i></label>
+												<input type="file" id="doc_file_final" name="doc_file_final" onchange="extensionValidate(this)" > 
 												<div id="file_validate"></div>																						
 											</div>
 
 											<div class="col-sm-3" id="div_pdf_final" style="display: none">
-												<label for="doc_file3">Arquivo PDF Final <i class="fas fa-file-pdf" style="color: red"></i></label>
-												<input type="file" id="doc_file3" name="doc_file3" onchange="extensionValidate(this)" > 
+												<label for="pdf_file_final">Arquivo PDF Final <i class="fas fa-file-pdf" style="color: red"></i></label>
+												<input type="file" id="pdf_file_final" name="pdf_file_final" onchange="extensionValidate(this)" > 
 												<div id="file_validate"></div>																						
 											</div>
 										</div>	
 
 										<div class="box-footer">				                
-											<button type="submit" class="btn btn-success pull-right col-sm-1" name="submitInternacao">Submit</button>
+											<button type="submit" class="btn btn-success pull-right col-sm-1">Submit</button>
 											<button type="reset" class="btn btn-default pull-right col-sm-1">Reset</button>
 										</div>					                
 									</div>

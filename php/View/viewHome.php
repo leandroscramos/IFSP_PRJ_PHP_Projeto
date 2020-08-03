@@ -32,7 +32,7 @@ include "includes/header.php";
 			<!-- Main content -->
 			<section class="content">
 				<div class="row">
-					<div class="col-md-12 form-horizontal">
+					<div class="col-md-10 col-md-offset-1 form-horizontal">
 						<div class="box box-warning">
 							<div class="box-header">
 								<h3 class="box-title">Documentos Institucionais - Gestão da Qualidade</h3>

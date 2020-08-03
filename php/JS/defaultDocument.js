@@ -44,3 +44,14 @@ function gerarCodigo() {
         document.getElementById("doc_code").value = docTypeInitials + '.' + areaInitials + '.' + processInitials + '.' + documentNumber;
     }
 }
+
+function extensionValidate($file) {
+    document.getElementById('file_validate_doc_sub').innerHTML = '';
+    var extPermitidas = ['doc', 'docx'];
+    var extArquivo = $file.value.split('.').pop();
+  
+    if(typeof extPermitidas.find(function(ext){ return extArquivo == ext; }) == 'undefined') {        
+        document.getElementById('doc_file_sub').value = "";
+        document.getElementById('file_validate_doc_sub').innerHTML = 'Formato de arquivo inválido!';
+    } 
+}

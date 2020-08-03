@@ -2,7 +2,7 @@
   <nav class="navbar navbar-static-top">
     <div class="container">
       <div class="navbar-header">
-        <a href="logado" class="navbar-brand"><b>HU</b> - UFSCar</a>
+        <a href="index.php" class="navbar-brand"><b>HU</b> - UFSCar</a>
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
           <i class="fa fa-bars"></i>
         </button>

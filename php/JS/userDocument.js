@@ -10,13 +10,4 @@ function readOnly() {
 
 }
 
-function extensionValidate($file) {
-    document.getElementById('file_validate').innerHTML = '';
-    var extPermitidas = ['doc', 'docx'];
-    var extArquivo = $file.value.split('.').pop();
-  
-    if(typeof extPermitidas.find(function(ext){ return extArquivo == ext; }) == 'undefined') {        
-        document.getElementById('doc_file').value = "";
-        document.getElementById('file_validate').innerHTML = 'Formato de arquivo inválido!';
-    } 
-}
+
