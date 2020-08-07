@@ -15,10 +15,28 @@ include "includes/header.php";
 				<!-- Navbar Right Menu -->
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
-					<!-- User Account Menu -->
-					<li class="dropdown user user-menu">
-						<li><a href="login"><i class="fas fa-sign-in-alt"></i> Login</span></a></li>
-					</li>
+						<?php 
+							if (isset($_SESSION["logado"])) {
+						?>
+							<li class="dropdown user user-menu">								
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">                              
+									<span class="hidden-xs"><strong><?php echo $_SESSION["login"]["usuario"]; ?></strong></span>
+								</a>
+								<ul class="dropdown-menu">								
+									<li class="user-header"><p><small><i><strong>Tecnologia da Informação</strong></i></small><br></p></li>
+									<li class="user-footer"><div><a href="https://servicosti.ebserh.gov.br/" target="_blank" class="btn btn-block btn-default btn-flat">Perfil</a></div></li>
+								</ul>
+								<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
+							</li>
+						<?php
+							} else {
+						?>
+						<li class="dropdown user user-menu">
+							<li><a href="login"><i class="fas fa-sign-in-alt"></i> Login</span></a></li>
+						</li>
+						<?php 
+							}
+						?>
 					</ul>
 				</div>		
 			</div>		
