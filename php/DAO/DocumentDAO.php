@@ -164,7 +164,8 @@ class DocumentDAO
             $sql = ('UPDATE public.tb_documents SET title = :title, submit_type = :type_submit, approval_date = :doc_approval_date, doc_type = :doc_id_doctype,
                                                     number = :number, version = :version, area = :area, maker = :maker, reviewer = :reviewer, validator = :validator,
                                                     approver = :approver, process = :process, process_sei = :process_sei, document_sei = :document_sei,
-                                                    dispatch_sei = :dispatch_sei, status = :status, situation = :situation
+                                                    dispatch_sei = :dispatch_sei, situation = :situation, status = :status,
+                                                    filename_doc_final = :filename_doc_final, filename_pdf_final = :filename_pdf_final
                     WHERE id = :id');
             
             $instance = DatabaseConnection::getInstance();
@@ -188,8 +189,9 @@ class DocumentDAO
             $statement->bindValue(":document_sei", $document->getDocSei());
             $statement->bindValue(":dispatch_sei", $document->getDispatchSei());
             $statement->bindValue(":situation", $document->getSituation());
-
             $statement->bindValue(":status", $document->getStatus());
+            $statement->bindValue(":filename_doc_final", $document->getFilenameDocFinal());
+            $statement->bindValue(":filename_pdf_final", $document->getFilenamePdfFinal());
 
             /*
             

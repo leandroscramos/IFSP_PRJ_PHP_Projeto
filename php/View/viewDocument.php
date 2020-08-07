@@ -78,8 +78,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<?php 
 														if (isset($document)) {																														
 													?>
-														<option value="N" <?php echo $document->getTypeSubmit() == 'N' ? 'selected' : ''?> >Novo Documento</option>
-														<option value="R" <?php echo $document->getTypeSubmit() == 'R' ? 'selected' : ''?> >Revisão de Documento</option>
+														<option value="N" <?php echo $document->getTypeSubmit() == 'N' ? 'selected' : '' ?> >Novo Documento</option>
+														<option value="R" <?php echo $document->getTypeSubmit() == 'R' ? 'selected' : '' ?> >Revisão de Documento</option>
 													<?php 
 														} else {
 													?>
@@ -103,29 +103,12 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">							                    
 												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype" value="<?php echo (isset($document)) ? $document->getDocType()[0]->getInitials() : "" ?>">												
 												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()" required>
-                                                    <option selected><?php echo (isset($document)) ? $document->getDocType()[0]->getName() : "Selecione" ?></option>
-                                                    <option disabled><strong>--- Nível 1 ---</strong></option>
+                                                    <option selected><?php echo (isset($document)) ? $document->getDocType()[0]->getName() : "Selecione" ?></option>                                                    
                                                     <?php													
-                                                    foreach ($doctypes as $doctype) {
-                                                        if ($doctype->getLevel() == 1)
-                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
-                                                    }
-                                                    ?>
-                                                    <option disabled><strong>--- Nível 2 ---</strong></option>
-                                                    <?php
-                                                    foreach ($doctypes as $doctype) {
-                                                        if ($doctype->getLevel() == 2)
-                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
-                                                    }
-                                                    ?>
-                                                    <option disabled><strong>--- Nível 3 ---</strong></option>
-                                                    <?php
-                                                    foreach ($doctypes as $doctype) {
-                                                        if ($doctype->getLevel() == 3)
-                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
-													}
-													?>													
-
+														foreach ($doctypes as $doctype) {														
+															echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
+														} 
+													?>
 												</select>
 											</div>
 											<div class="col-sm-1">

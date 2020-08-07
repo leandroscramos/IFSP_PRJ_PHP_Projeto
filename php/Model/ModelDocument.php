@@ -25,7 +25,8 @@ class ModelDocument
     private $situation;
     private $status;       
     private $filename_doc;
-    private $filename_pdf;
+    private $filename_doc_final;
+    private $filename_pdf_final;
     private $user_submit;    
     private $submition_date;
     private $type_submit;
@@ -96,13 +97,14 @@ class ModelDocument
             ->setReviewer($_POST["doc_reviewer"])
             ->setValidator($_POST["doc_validator"])
             ->setApprover($_POST["doc_approver"])
-            ->setProcess($_POST["doc_id_process"])
+            ->setProcess($_POST["doc_id_process"])  
             ->setProcessSei($_POST["process_sei"])
             ->setDocSei($_POST["document_sei"])
             ->setDispatchSei($_POST["dispatch_sei"])
             ->setSituation($_POST["doc_situation"])
-
             ->setStatus($_POST["status"])
+            ->setFilenameDocFinal($_POST['doc_code'].".".substr(strrchr($_FILES['doc_file_final']['name'],'.'),1))
+            ->setFilenamePdfFinal($_POST['doc_code'].".".substr(strrchr($_FILES['pdf_file_final']['name'],'.'),1))
 
             ;            
     }
@@ -327,14 +329,25 @@ class ModelDocument
         return $this;
     }
 
-    public function getFilenamePdf()
+    public function getFilenameDocFinal()
     {
-        return $this->filename_pdf;
+        return $this->filename_doc_final;
     }
 
-    public function setFilenamePdf($filename_pdf)
+    public function setFilenameDocFinal($filename_doc_final)
     {
-        $this->filename_pdf = $filename_pdf;
+        $this->filename_doc_final = $filename_doc_final;
+        return $this;
+    }
+
+    public function getFilenamePdfFinal()
+    {
+        return $this->filename_pdf_final;
+    }
+
+    public function setFilenamePdfFinal($filename_pdf_final)
+    {
+        $this->filename_pdf_final = $filename_pdf_final;
         return $this;
     }
 
