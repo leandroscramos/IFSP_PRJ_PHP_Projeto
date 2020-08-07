@@ -85,7 +85,26 @@ class ModelDocument
 
     public function updateDocumentFromPOST(){
         $this->setId($_POST["id_document"])            
-            ->setStatus($_POST["status"]);
+            ->setTitle($_POST["doc_title"]) 
+            ->setTypeSubmit($_POST["type_submit"])
+            ->setApprovalDate($_POST["doc_approval_date"])
+            ->setDocType($_POST["doc_id_doctype"])
+            ->setNumber($_POST["doc_number"])
+            ->setVersion($_POST["doc_version"])
+            ->setArea($_POST["doc_id_area"])
+            ->setMaker($_POST["doc_maker"])
+            ->setReviewer($_POST["doc_reviewer"])
+            ->setValidator($_POST["doc_validator"])
+            ->setApprover($_POST["doc_approver"])
+            ->setProcess($_POST["doc_id_process"])
+            ->setProcessSei($_POST["process_sei"])
+            ->setDocSei($_POST["document_sei"])
+            ->setDispatchSei($_POST["dispatch_sei"])
+            ->setSituation($_POST["doc_situation"])
+
+            ->setStatus($_POST["status"])
+
+            ;            
     }
 
     public function getId()

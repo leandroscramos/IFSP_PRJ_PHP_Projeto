@@ -161,33 +161,57 @@ class DocumentDAO
         
         try { 
             
-            $sql = ('UPDATE public.tb_documents SET status = :status WHERE id = :id');
+            $sql = ('UPDATE public.tb_documents SET title = :title, submit_type = :type_submit, approval_date = :doc_approval_date, doc_type = :doc_id_doctype,
+                                                    number = :number, version = :version, area = :area, maker = :maker, reviewer = :reviewer, validator = :validator,
+                                                    approver = :approver, process = :process, process_sei = :process_sei, document_sei = :document_sei,
+                                                    dispatch_sei = :dispatch_sei, status = :status, situation = :situation
+                    WHERE id = :id');
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
             $statement = $conn->prepare($sql);
             
             $statement->bindValue(":id", $document->getId());
-            /* $statement->bindValue(":title", $document->getTitle());            
-            $statement->bindValue(":code", $document->getCode());
-            $statement->bindValue(":doc_type", $document->getDocType());
+            $statement->bindValue(":title", $document->getTitle());
+            $statement->bindValue(":type_submit", $document->getTypeSubmit());
+            $statement->bindValue(":doc_approval_date", $document->getApprovalDate());
+            $statement->bindValue(":doc_id_doctype", $document->getDocType());
             $statement->bindValue(":number", $document->getNumber());
             $statement->bindValue(":version", $document->getVersion());
             $statement->bindValue(":area", $document->getArea());
-            $statement->bindValue(":process", $document->getProcess());
             $statement->bindValue(":maker", $document->getMaker());
             $statement->bindValue(":reviewer", $document->getReviewer());
             $statement->bindValue(":validator", $document->getValidator());
-            $statement->bindValue(":approver", $document->getApprover());            
-            $statement->bindValue(":approval_date", $document->getApprovalDate()); */
-            $statement->bindValue(":status", $document->getStatus());
-            /* $statement->bindValue(":filename_doc", $document->getFilenameDoc());
-            $statement->bindValue(":submit_user", $document->getUserSubmit());            
-            $statement->bindValue(":situation", $document->getSituation());
-            $statement->bindValue(":submit_type", $document->getTypeSubmit());
+            $statement->bindValue(":approver", $document->getApprover());
+            $statement->bindValue(":process", $document->getProcess());
             $statement->bindValue(":process_sei", $document->getProcessSei());
             $statement->bindValue(":document_sei", $document->getDocSei());
-            $statement->bindValue(":dispatch_sei", $document->getDispatchSei()); */                    
+            $statement->bindValue(":dispatch_sei", $document->getDispatchSei());
+            $statement->bindValue(":situation", $document->getSituation());
+
+            $statement->bindValue(":status", $document->getStatus());
+
+            /*
+            
+                       
+            
+
+            /*
+            $statement->bindValue(":code", $document->getCode());
+            $statement->bindValue(":doc_type", $document->getDocType());
+            
+            
+            
+                        
+            $statement->bindValue(":approval_date", $document->getApprovalDate());
+            */
+
+            
+            /* $statement->bindValue(":filename_doc", $document->getFilenameDoc());
+            $statement->bindValue(":submit_user", $document->getUserSubmit());            
+            
+            $statement->bindValue(":submit_type", $document->getTypeSubmit());
+            */                    
             
             return $statement->execute();            
 
