@@ -78,8 +78,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<?php 
 														if (isset($document)) {																														
 													?>
-														<option value="N" <?php echo $document->getTypeSubmit() == 'N' ? 'selected' : '';?> >Novo Documento</option>
-														<option value="R" <?php echo $document->getTypeSubmit() == 'R' ? 'selected' : '';?> >Revisão de Documento</option>
+														<option value="N" <?php echo $document->getTypeSubmit() == 'N' ? 'selected' : ''?> >Novo Documento</option>
+														<option value="R" <?php echo $document->getTypeSubmit() == 'R' ? 'selected' : ''?> >Revisão de Documento</option>
 													<?php 
 														} else {
 													?>
@@ -227,17 +227,23 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-2" id="situation_div" style="display: none">
 												<label for="doc_situation">Situação</label>
 												<select class="form-control" id="doc_situation" name="doc_situation" value="<?php echo (isset($document)) ? $document->getSituation() : "" ?>">													
+													
 													<?php 
-														if (isset($document)) {
-															if ($document->getSituation() == "A")
-																echo "<option selected value='".$document->getSituation()."'>Ativo</option>";																															
-															if ($document->getSituation() == "I")
-																echo "<option selected value='".$document->getSituation()."'>Inativo</option>";																				
+														if (isset($document)) {																														
+													?>
+														<option value="A" <?php echo $document->getSituation() == 'A' ? 'selected' : ''?> >Ativo</option>
+														<option value="I" <?php echo $document->getSituation() == 'I' ? 'selected' : ''?> >Inativo</option>
+													<?php 
+														} else {
+													?>
+														<option selected disabled>Selecione</option>
+														<option value="A">Ativo</option>
+														<option value="I">Inativo</option>
+													<?php
 														}
-													?>	
-													<option value="A">Ativo</option>
-													<option value="I">Inativo</option>																										
-												</select>
+													?>
+
+												</select>	
 											</div>
 											<div class="col-sm-2" id="status_div" style="display: none">
 												<label for="status">Status</label>
@@ -246,10 +252,10 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<?php 
 														if (isset($document)) {																														
 													?>
-														<option value="0" <?php echo $document->getStatus() == '0' ? 'selected' : '';?> >Submetido</option>
-														<option value="1" <?php echo $document->getStatus() == '1' ? 'selected' : '';?> >Em validação</option>
-														<option value="2" <?php echo $document->getStatus() == '2' ? 'selected' : '';?> >Devolvido</option>
-														<option value="3" <?php echo $document->getStatus() == '3' ? 'selected' : '';?> >Publicado</option>
+														<option value="0" <?php echo $document->getStatus() == '0' ? 'selected' : ''?> >Submetido</option>
+														<option value="1" <?php echo $document->getStatus() == '1' ? 'selected' : ''?> >Em validação</option>
+														<option value="2" <?php echo $document->getStatus() == '2' ? 'selected' : ''?> >Devolvido</option>
+														<option value="3" <?php echo $document->getStatus() == '3' ? 'selected' : ''?> >Publicado</option>
 													<?php 
 														} else {
 													?>
