@@ -45,7 +45,7 @@ function gerarCodigo() {
     }
 }
 
-function extensionValidate($file) {
+function extensionValidateDocSub($file) {
     document.getElementById('file_validate_doc_sub').innerHTML = '';
     var extPermitidas = ['doc', 'docx'];
     var extArquivo = $file.value.split('.').pop();
@@ -56,8 +56,31 @@ function extensionValidate($file) {
     } 
 }
 
+function extensionValidateDocPub($file) {
+    document.getElementById('file_validate_doc_pub').innerHTML = '';
+    var extPermitidas = ['doc', 'docx'];
+    var extArquivo = $file.value.split('.').pop();
+  
+    if(typeof extPermitidas.find(function(ext){ return extArquivo == ext; }) == 'undefined') {        
+        document.getElementById('doc_file_final').value = "";
+        document.getElementById('file_validate_doc_pub').innerHTML = 'Formato de arquivo inválido!';
+    } 
+}
+
+function extensionValidatePDF($file) {
+    document.getElementById('file_validate_pdf_pub').innerHTML = '';
+    var extPermitidas = ['pdf'];
+    var extArquivo = $file.value.split('.').pop();
+  
+    if(typeof extPermitidas.find(function(ext){ return extArquivo == ext; }) == 'undefined') {        
+        document.getElementById('pdf_file_final').value = "";
+        document.getElementById('file_validate_pdf_pub').innerHTML = 'Formato de arquivo inválido!';
+    } 
+}
+
 function submitUpdateDocument() {
     docType();
     areas();
     processos();
+    gerarCodigo();
 }

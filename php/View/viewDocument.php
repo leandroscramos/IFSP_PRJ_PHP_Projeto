@@ -301,20 +301,20 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										
 											<div class="col-sm-3" id="div_doc_sub">
 												<label for="doc_file_sub">Arquivo</label>
-												<input type="file" id="doc_file_sub" name="doc_file_sub" onchange="extensionValidate(this)"> 
+												<input type="file" id="doc_file_sub" name="doc_file_sub" onchange="extensionValidateDocSub(this)"> 
 												<div id="file_validate_doc_sub"></div>																						
 											</div>
 											
 											<div class="col-sm-3" id="div_doc_final" style="display: none">
 												<label for="doc_file_final">Arquivo DOC Final <i class="fas fa-file-word" style="color: blue"></i></label>
-												<input type="file" id="doc_file_final" name="doc_file_final" onchange="extensionValidate(this)" > 
-												<div id="file_validate"></div>																						
+												<input type="file" id="doc_file_final" name="doc_file_final" onchange="extensionValidateDocPub(this)" > 
+												<div id="file_validate_doc_pub"></div>																						
 											</div>
 
 											<div class="col-sm-3" id="div_pdf_final" style="display: none">
 												<label for="pdf_file_final">Arquivo PDF Final <i class="fas fa-file-pdf" style="color: red"></i></label>
-												<input type="file" id="pdf_file_final" name="pdf_file_final" onchange="extensionValidate(this)" > 
-												<div id="file_validate"></div>																						
+												<input type="file" id="pdf_file_final" name="pdf_file_final" onchange="extensionValidatePDF(this)" > 
+												<div id="file_validate_pdf_pub"></div>																						
 											</div>
 										</div>	
 

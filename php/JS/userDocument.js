@@ -6,8 +6,7 @@ function readOnly() {
     document.getElementById("document_sei").readOnly = true;
     document.getElementById("dispatch_sei").readOnly = true;
     document.getElementById("doc_validate").readOnly = true;
-    document.getElementById("doc_revision").readOnly = true;    
-
+    document.getElementById("doc_revision").readOnly = true;
 }
 
 
