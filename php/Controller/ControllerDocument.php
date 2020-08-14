@@ -59,6 +59,17 @@ class ControllerDocument {
 		$document->updateDocumentFromPOST();		
 		$result = $documentDAO->updateDocument($document);
 
+		if (isset($_FILES['doc_file_final'])) {			
+			$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['doc_file_final']['name'],'.'),1); //define o nome do arquivo
+			$diretorio = "upload/published/"; //define o diretorio para onde enviaremos o arquivo	
+			move_uploaded_file($_FILES['doc_file_final']['tmp_name'], $diretorio.$novo_nome); //efetua o upload			
+		}
+		if (isset($_FILES['pdf_file_final'])) {			
+			$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['pdf_file_final']['name'],'.'),1); //define o nome do arquivo
+			$diretorio = "upload/published/"; //define o diretorio para onde enviaremos o arquivo	
+			move_uploaded_file($_FILES['pdf_file_final']['tmp_name'], $diretorio.$novo_nome); //efetua o upload			
+		}
+
 		if ($result){
 			$_SESSION["flash"]["msg"]="Documento atualizado com sucesso!";
 			$_SESSION["flash"]["sucesso"]=true;

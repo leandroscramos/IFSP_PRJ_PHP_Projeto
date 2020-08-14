@@ -53,6 +53,8 @@ class ModelDocument
             ->setSubDate($document["created_at"])            
             ->setUserSubmit($document["submit_user"])
             ->setFilenameDoc($document["filename_doc_sub"])
+            ->setFilenameDocFinal($document["filename_doc_final"])
+            ->setFilenamePdfFinal($document["filename_pdf_final"])
             ->setTypeSubmit($document["submit_type"])
             ->setProcessSei($document["process_sei"])
             ->setDocSei($document["document_sei"])

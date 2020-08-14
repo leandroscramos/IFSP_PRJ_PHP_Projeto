@@ -101,13 +101,25 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-4">
 												<label for="doc_type">Tipo do Documento *</label>
 												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">							                    
-												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype" value="<?php echo (isset($document)) ? $document->getDocType()[0]->getInitials() : "" ?>">												
-												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()" required>
-                                                    <option selected><?php echo (isset($document)) ? $document->getDocType()[0]->getName() : "Selecione" ?></option>                                                    
-                                                    <?php													
-														foreach ($doctypes as $doctype) {														
-															echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
-														} 
+												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype">																							
+												
+												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()" required>                                                    
+                                                    
+													<?php
+														if (isset($document)) {
+															foreach ($doctypes as $doctype) {																
+													?>
+															<option value="<?php echo $doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials() ?>" <?php echo ($doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()) == ($document->getDocType()[0]->getId()."+".$document->getDocType()[0]->getRev()."+".$document->getDocType()[0]->getInitials()) ? 'selected' : '' ?> ><?php echo $doctype->getName() ?></option>
+																
+													<?php
+															}
+														} else {
+															echo "<option selected disabled>Selecione</option>";
+															foreach ($doctypes as $doctype) {														
+																echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
+															} 
+														}
+														
 													?>
 												</select>
 											</div>
@@ -214,8 +226,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<?php 
 														if (isset($document)) {																														
 													?>
-														<option value="A" <?php echo $document->getSituation() == 'A' ? 'selected' : ''?> >Ativo</option>
-														<option value="I" <?php echo $document->getSituation() == 'I' ? 'selected' : ''?> >Inativo</option>
+														<option value="A" <?php echo $document->getSituation() == 'A' ? 'selected' : '' ?> >Ativo</option>
+														<option value="I" <?php echo $document->getSituation() == 'I' ? 'selected' : '' ?> >Inativo</option>
 													<?php 
 														} else {
 													?>
@@ -235,10 +247,10 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													<?php 
 														if (isset($document)) {																														
 													?>
-														<option value="0" <?php echo $document->getStatus() == '0' ? 'selected' : ''?> >Submetido</option>
-														<option value="1" <?php echo $document->getStatus() == '1' ? 'selected' : ''?> >Em validação</option>
-														<option value="2" <?php echo $document->getStatus() == '2' ? 'selected' : ''?> >Devolvido</option>
-														<option value="3" <?php echo $document->getStatus() == '3' ? 'selected' : ''?> >Publicado</option>
+														<option value="0" <?php echo $document->getStatus() == '0' ? 'selected' : '' ?> >Submetido</option>
+														<option value="1" <?php echo $document->getStatus() == '1' ? 'selected' : '' ?> >Em validação</option>
+														<option value="2" <?php echo $document->getStatus() == '2' ? 'selected' : '' ?> >Devolvido</option>
+														<option value="3" <?php echo $document->getStatus() == '3' ? 'selected' : '' ?> >Publicado</option>
 													<?php 
 														} else {
 													?>

@@ -77,7 +77,7 @@ include "includes/header.php";
 											//Util::debug($documents);										
 											foreach ($documents as $document) {
 												echo "<tr>";												
-												echo "<td><a href='".$_SESSION["upload_sub"]."".$document->getFilenameDoc()."'><strong>".$document->getCode()."</strong></a></td>";
+												echo "<td><a href='".$_SESSION["upload_pub"]."".$document->getFilenamePdfFinal()."' download><strong>".$document->getCode()."</strong></a></td>";
 												echo "<td>".$document->getDocType()[0]->getName()."</td>";
 												echo "<td><strong>".$document->getTitle()."</strong></td>";												
 												echo "<td>".$document->getProcess()[0]->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($document->getProcess()[0]->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($document->getProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$document->getProcess()[0]->getName()."</td>";
