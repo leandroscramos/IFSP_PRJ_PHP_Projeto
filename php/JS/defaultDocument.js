@@ -55,3 +55,9 @@ function extensionValidate($file) {
         document.getElementById('file_validate_doc_sub').innerHTML = 'Formato de arquivo inválido!';
     } 
 }
+
+function submitUpdateDocument() {
+    docType();
+    areas();
+    processos();
+}

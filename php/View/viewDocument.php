@@ -7,7 +7,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 <script src="php/JS/defaultDocument.js"></script>
 <?php 
 	if (($_SESSION["login"]["permissao"] == "Usuário")) {
-		echo "<script src='php/JS/userDocument.js'></script>";
+		if (isset($document)) {
+			echo "<script src='php/JS/userDocumentEdit.js'></script>";
+		} else {
+			echo "<script src='php/JS/userDocument.js'></script>";
+		}		
 	} else {
 		echo "<script src='php/JS/adminDocument.js'></script>";
 	}
@@ -50,6 +54,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 								?>
 							</div>
 							<?php //Util::debug($document); ?>
+
 							<div class="box-body">															        
 						        <div class="box box-success">
 					              <div class="box-header with-border">
@@ -140,12 +145,22 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="hidden" name="doc_id_area" id="doc_id_area">
 												<input type="hidden" name="doc_initials_area" id="doc_initials_area" value="<?php echo (isset($document)) ? $document->getArea()[0]->getInitials() : "" ?>">
 												<select class="form-control" id="doc_sigla_area" name="doc_sigla_area" onchange="areas();" required>
-													<option selected><?php echo (isset($document)) ? $document->getArea()[0]->getInitials() : "Selecione" ?></option>                                                    
-                                                    <?php
-                                                    foreach ($areas as $area) {
-														echo "<option value='".$area->getId()."+".$area->getName()."+".$area->getInitials()."'>".$area->getInitials()."</option>";														
-                                                    }
-                                                    ?>													
+												<?php
+													if (isset($document)) {
+														foreach ($areas as $area) {																
+												?>
+														<option value="<?php echo $area->getId()."+".$area->getName()."+".$area->getInitials() ?>" <?php echo ($area->getId()."+".$area->getName()."+".$area->getInitials()) == ($document->getArea()[0]->getId()."+".$document->getArea()[0]->getName()."+".$document->getArea()[0]->getInitials()) ? 'selected' : '' ?> ><?php echo $area->getInitials() ?></option>
+															
+												<?php
+														}
+													} else {
+														echo "<option selected disabled>Selecione</option>";
+														foreach ($areas as $area) {																
+															echo "<option value='".$area->getId()."+".$area->getName()."+".$area->getInitials()."'>".$area->getInitials()."</option>";
+														} 
+													}
+													
+												?>													
 												</select>
 											</div>
 											<div class="col-sm-4">
@@ -178,13 +193,21 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="hidden" name="doc_id_process" id="doc_id_process">
 												<input type="hidden" name="doc_initials_process" id="doc_initials_process" value="<?php echo (isset($document)) ? $document->getProcess()[0]->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($document->getProcess()[0]->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($document->getProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT) : "" ?>">
 												<select class="form-control" id="doc_process" name="doc_process" onchange="processos()" required>
-													<option selected><?php echo (isset($document)) ? $document->getProcess()[0]->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($document->getProcess()[0]->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($document->getProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$document->getProcess()[0]->getName() : "Selecione" ?></option>
+												<?php
+													if (isset($document)) {
+														foreach ($processs as $process) {
+												?>
+														<option value="<?php echo $process->getId()."+".$process->getMacroProcess()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT) ?>" <?php echo ($doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()) == ($process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName()) ? 'selected' : '' ?> ><?php echo $process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName() ?></option>															
+												<?php
+														}
+													} else {
+														echo "<option selected disabled>Selecione</option>";
+														foreach ($processs as $process) {
+															echo "<option value='".$process->getId()."+".$process->getMacroProcess()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)."'>".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName()."</option>";
+														}
+													}
 													
-                                                    <?php
-                                                    foreach ($processs as $process) {
-                                                        echo "<option value='".$process->getId()."+".$process->getMacroProcess()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)."'>".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName()."</option>";
-                                                    }
-                                                    ?>													
+												?>											
 												</select>
 											</div>
 											<div class="col-sm-3">
@@ -217,7 +240,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-2">
 												<label for="doc_code">Código do documento *</label>
 												<input type="text" class="form-control" id="doc_code" name="doc_code" value="<?php echo (isset($document)) ? $document->getCode() : "" ?>" readonly="true" required>
-												<button type="button" class="btn btn-success col-sm-12" name="submitInternacao" onclick="gerarCodigo()">Gerar código</button>												
+												<button type="button" class="btn btn-success col-sm-12" id="btnGeraCodigo" name="btnGeraCodigo" onclick="gerarCodigo()">Gerar código</button>												
 											</div>
 											<div class="col-sm-2" id="situation_div" style="display: none">
 												<label for="doc_situation">Situação</label>
@@ -230,9 +253,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 														<option value="I" <?php echo $document->getSituation() == 'I' ? 'selected' : '' ?> >Inativo</option>
 													<?php 
 														} else {
-													?>
-														<option selected disabled>Selecione</option>
-														<option value="A">Ativo</option>
+													?>														
+														<option value="A" selected>Ativo</option>
 														<option value="I">Inativo</option>
 													<?php
 														}
@@ -296,9 +318,13 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 										</div>	
 
-										<div class="box-footer">				                
-											<button type="submit" class="btn btn-success pull-right col-sm-1">Submit</button>
-											<button type="reset" class="btn btn-default pull-right col-sm-1">Reset</button>
+										<div class="box-footer">
+											<?php if (isset($document)) { ?>
+												<button type="submit" class="btn btn-success pull-right col-sm-1" id="btnSubmit" name="btnSubmit" onclick="return submitUpdateDocument()">Submit</button>
+											<?php } else { ?>
+												<button type="submit" class="btn btn-success pull-right col-sm-1" id="btnSubmit" name="btnSubmit">Submit</button>
+											<?php } ?>
+											<button type="reset" class="btn btn-default pull-right col-sm-1" id="btnReset" name="btnReset">Reset</button>
 										</div>					                
 									</div>
 								  </form>						            
