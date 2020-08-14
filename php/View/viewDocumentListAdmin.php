@@ -109,7 +109,7 @@ include "includes/header.php";
 	  $(function () {  	
 	    $('#TabelaDocumentos').DataTable({		        
 			"lengthMenu": [[10], [10]],
-			"order": [[ 7, "asc"], [ 8, "desc" ]]
+			"order": [[ 8, "asc"]]
 		});
 	  });
 	</script>
