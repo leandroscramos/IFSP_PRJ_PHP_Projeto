@@ -49,6 +49,7 @@ include "includes/header.php";
 											<th width="4%">Versão</th>
 											<th width="7%">Status</th>											
 											<th width="7%">Submissão</th>											
+											<th width="1%"></th>											
 										</tr>
 									</thead>									
 									<tbody>	
@@ -77,7 +78,14 @@ include "includes/header.php";
 														break;
 												}
 												$date = new DateTime($document->getSubDate());
-												echo "<td><strong>".$date->format('d/m/Y')."</strong></td>";												
+												echo "<td><strong>".$date->format('d/m/Y')."</strong></td>";
+											?>
+												<td><form action="document" method="post">
+													<input type="hidden" name="action" id="action" value="edit">
+													<input type="hidden" name="idDocument" id="idDocument" value="<?php echo $document->getId(); ?>">
+													<button type="submit" class="btn btn-sm btn-info pull-left" style="width: 100%; white-space: normal"><i class="far fa-eye"></i></button>
+												</form></td>
+											<?php
 												echo "</tr>";												
 											}
 										}

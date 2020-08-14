@@ -31,14 +31,15 @@ class DocumentDAO
         }
     }
 
-    /*
-    public function readDocumentPublished($status){
+
+    public function readDocumentPublished(){
 
         try { $sql = ('SELECT * FROM public.tb_documents WHERE status = :status ORDER BY created_at DESC');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
 
+            $status = 3;
             $statement->bindParam(':status', $status); 
             $statement->execute();
 
@@ -58,7 +59,7 @@ class DocumentDAO
             echo "Erro ao ler registros na base de dados.".$e->getMessage();
         }
     }
-    */
+
 
     public function readDocumentByUser($user){
 
@@ -118,8 +119,8 @@ class DocumentDAO
 
         try { 
             
-            $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc, submit_user, situation, submit_type, process_sei, document_sei, dispatch_sei) 
-                        VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status, :code, :filename_doc, :submit_user, :situation, :submit_type, :process_sei, :document_sei, :dispatch_sei)
+            $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc_sub, submit_user, situation, submit_type, process_sei, document_sei, dispatch_sei) 
+                        VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status, :code, :filename_doc_sub, :submit_user, :situation, :submit_type, :process_sei, :document_sei, :dispatch_sei)
             ');
             
             $instance = DatabaseConnection::getInstance();
@@ -139,7 +140,7 @@ class DocumentDAO
             $statement->bindValue(":approver", $document->getApprover());            
             $statement->bindValue(":approval_date", $document->getApprovalDate());
             $statement->bindValue(":status", $document->getStatus());
-            $statement->bindValue(":filename_doc", $document->getFilenameDoc());
+            $statement->bindValue(":filename_doc_sub", $document->getFilenameDoc());
             $statement->bindValue(":submit_user", $document->getUserSubmit());            
             $statement->bindValue(":situation", $document->getSituation());
             $statement->bindValue(":submit_type", $document->getTypeSubmit());
@@ -160,33 +161,59 @@ class DocumentDAO
         
         try { 
             
-            $sql = ('UPDATE public.tb_documents SET status = :status WHERE id = :id');
+            $sql = ('UPDATE public.tb_documents SET title = :title, submit_type = :type_submit, approval_date = :doc_approval_date, doc_type = :doc_id_doctype,
+                                                    number = :number, version = :version, area = :area, maker = :maker, reviewer = :reviewer, validator = :validator,
+                                                    approver = :approver, process = :process, process_sei = :process_sei, document_sei = :document_sei,
+                                                    dispatch_sei = :dispatch_sei, situation = :situation, status = :status,
+                                                    filename_doc_final = :filename_doc_final, filename_pdf_final = :filename_pdf_final
+                    WHERE id = :id');
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
             $statement = $conn->prepare($sql);
             
             $statement->bindValue(":id", $document->getId());
-            /* $statement->bindValue(":title", $document->getTitle());            
-            $statement->bindValue(":code", $document->getCode());
-            $statement->bindValue(":doc_type", $document->getDocType());
+            $statement->bindValue(":title", $document->getTitle());
+            $statement->bindValue(":type_submit", $document->getTypeSubmit());
+            $statement->bindValue(":doc_approval_date", $document->getApprovalDate());
+            $statement->bindValue(":doc_id_doctype", $document->getDocType());
             $statement->bindValue(":number", $document->getNumber());
             $statement->bindValue(":version", $document->getVersion());
             $statement->bindValue(":area", $document->getArea());
-            $statement->bindValue(":process", $document->getProcess());
             $statement->bindValue(":maker", $document->getMaker());
             $statement->bindValue(":reviewer", $document->getReviewer());
             $statement->bindValue(":validator", $document->getValidator());
-            $statement->bindValue(":approver", $document->getApprover());            
-            $statement->bindValue(":approval_date", $document->getApprovalDate()); */
-            $statement->bindValue(":status", $document->getStatus());
-            /* $statement->bindValue(":filename_doc", $document->getFilenameDoc());
-            $statement->bindValue(":submit_user", $document->getUserSubmit());            
-            $statement->bindValue(":situation", $document->getSituation());
-            $statement->bindValue(":submit_type", $document->getTypeSubmit());
+            $statement->bindValue(":approver", $document->getApprover());
+            $statement->bindValue(":process", $document->getProcess());
             $statement->bindValue(":process_sei", $document->getProcessSei());
             $statement->bindValue(":document_sei", $document->getDocSei());
-            $statement->bindValue(":dispatch_sei", $document->getDispatchSei()); */                    
+            $statement->bindValue(":dispatch_sei", $document->getDispatchSei());
+            $statement->bindValue(":situation", $document->getSituation());
+            $statement->bindValue(":status", $document->getStatus());
+            $statement->bindValue(":filename_doc_final", $document->getFilenameDocFinal());
+            $statement->bindValue(":filename_pdf_final", $document->getFilenamePdfFinal());
+
+            /*
+            
+                       
+            
+
+            /*
+            $statement->bindValue(":code", $document->getCode());
+            $statement->bindValue(":doc_type", $document->getDocType());
+            
+            
+            
+                        
+            $statement->bindValue(":approval_date", $document->getApprovalDate());
+            */
+
+            
+            /* $statement->bindValue(":filename_doc", $document->getFilenameDoc());
+            $statement->bindValue(":submit_user", $document->getUserSubmit());            
+            
+            $statement->bindValue(":submit_type", $document->getTypeSubmit());
+            */                    
             
             return $statement->execute();            
 

@@ -7,7 +7,7 @@ include "includes/header.php";
 		<nav class="navbar navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
-					<a href="logado" class="navbar-brand"><b>HU</b> - UFSCar</a>
+					<a href="index" class="navbar-brand"><b>HU</b> - UFSCar</a>
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
 					<i class="fa fa-bars"></i>
 					</button>
@@ -15,10 +15,28 @@ include "includes/header.php";
 				<!-- Navbar Right Menu -->
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
-					<!-- User Account Menu -->
-					<li class="dropdown user user-menu">
-						<li><a href="login"><i class="fas fa-sign-in-alt"></i> Login</span></a></li>
-					</li>
+						<?php 
+							if (isset($_SESSION["logado"])) {
+						?>
+							<li class="dropdown user user-menu">								
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">                              
+									<span class="hidden-xs"><strong><?php echo $_SESSION["login"]["usuario"]; ?></strong></span>
+								</a>
+								<ul class="dropdown-menu">								
+									<li class="user-header"><p><small><i><strong>Tecnologia da Informação</strong></i></small><br></p></li>
+									<li class="user-footer"><div><a href="https://servicosti.ebserh.gov.br/" target="_blank" class="btn btn-block btn-default btn-flat">Perfil</a></div></li>
+								</ul>
+								<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
+							</li>
+						<?php
+							} else {
+						?>
+						<li class="dropdown user user-menu">
+							<li><a href="login"><i class="fas fa-sign-in-alt"></i> Login</span></a></li>
+						</li>
+						<?php 
+							}
+						?>
 					</ul>
 				</div>		
 			</div>		
@@ -32,7 +50,7 @@ include "includes/header.php";
 			<!-- Main content -->
 			<section class="content">
 				<div class="row">
-					<div class="col-md-12 form-horizontal">
+					<div class="col-md-10 col-md-offset-1 form-horizontal">
 						<div class="box box-warning">
 							<div class="box-header">
 								<h3 class="box-title">Documentos Institucionais - Gestão da Qualidade</h3>
@@ -59,22 +77,27 @@ include "includes/header.php";
 											//Util::debug($documents);										
 											foreach ($documents as $document) {
 												echo "<tr>";												
-												echo "<td><a href='".$_SESSION["upload_sub"]."".$document->getFilenameDoc()."'><strong>".$document->getCode()."</strong></a></td>";
+												echo "<td><a href='".$_SESSION["upload_pub"]."".$document->getFilenamePdfFinal()."' download><strong>".$document->getCode()."</strong></a></td>";
 												echo "<td>".$document->getDocType()[0]->getName()."</td>";
 												echo "<td><strong>".$document->getTitle()."</strong></td>";												
 												echo "<td>".$document->getProcess()[0]->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($document->getProcess()[0]->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($document->getProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$document->getProcess()[0]->getName()."</td>";
 												echo "<td>".str_pad($document->getVersion() , 2 , '0' , STR_PAD_LEFT)."</td>";												
-												$date = new DateTime($document->getSubDate());
-												echo "<td><strong>".$date->format('d/m/Y')."</strong></td>";												
+												$revision_date = new DateTime($document->getApprovalDate());
+												switch ($document->getDocType()[0]->getRev()) {
+													case 0:
+														echo "<td><strong>NA</strong></td>";
+														break;
+													default:
+														$revision_date->modify('+'.$document->getDocType()[0]->getRev().' year');
+														echo "<td><strong>".$revision_date->format('d/m/Y')."</strong></td>";
+														break;													
+												}																								
 												echo "</tr>";												
 											}
 										}
 										?>										
 									</tbody>
 								</table>
-										
-
-								
 							</div>
 						<!-- /.box-body -->
 					  	</div>

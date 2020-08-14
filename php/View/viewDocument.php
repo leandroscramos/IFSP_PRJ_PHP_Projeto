@@ -74,17 +74,22 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-3">
 												<label for="type_submit">Submissão *</label>
 												<select class="form-control" id="type_submit" name="type_submit" required>
-													<option selected disabled>Selecione</option>
+													
 													<?php 
-														if (isset($document)) {
-															if ($document->getTypeSubmit() == "N")
-																echo "<option selected value='".$document->getTypeSubmit()."'>Novo Documento</option>";																															
-															if ($document->getTypeSubmit() == "R")
-																echo "<option selected value='".$document->getTypeSubmit()."'>Revisão de Documento</option>";
-														} 															
+														if (isset($document)) {																														
 													?>
-													<option value="N">Novo Documento</option>
-													<option value="R">Revisão de Documento</option>													
+														<option value="N" <?php echo $document->getTypeSubmit() == 'N' ? 'selected' : '' ?> >Novo Documento</option>
+														<option value="R" <?php echo $document->getTypeSubmit() == 'R' ? 'selected' : '' ?> >Revisão de Documento</option>
+													<?php 
+														} else {
+													?>
+														<option selected disabled>Selecione</option>
+														<option value="N">Novo Documento</option>
+														<option value="R">Revisão de Documento</option>
+													<?php
+														}
+													?>
+																									
 												</select>
 											</div>											
 											<div class="col-sm-2">
@@ -96,31 +101,26 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-4">
 												<label for="doc_type">Tipo do Documento *</label>
 												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">							                    
-												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype" value="<?php echo (isset($document)) ? $document->getDocType()[0]->getInitials() : "" ?>">												
-												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()" required>
-                                                    <option selected><?php echo (isset($document)) ? $document->getDocType()[0]->getName() : "Selecione" ?></option>
-                                                    <option disabled><strong>--- Nível 1 ---</strong></option>
-                                                    <?php													
-                                                    foreach ($doctypes as $doctype) {
-                                                        if ($doctype->getLevel() == 1)
-                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
-                                                    }
-                                                    ?>
-                                                    <option disabled><strong>--- Nível 2 ---</strong></option>
-                                                    <?php
-                                                    foreach ($doctypes as $doctype) {
-                                                        if ($doctype->getLevel() == 2)
-                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
-                                                    }
-                                                    ?>
-                                                    <option disabled><strong>--- Nível 3 ---</strong></option>
-                                                    <?php
-                                                    foreach ($doctypes as $doctype) {
-                                                        if ($doctype->getLevel() == 3)
-                                                            echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
-													}
-													?>													
-
+												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype">																							
+												
+												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()" required>                                                    
+                                                    
+													<?php
+														if (isset($document)) {
+															foreach ($doctypes as $doctype) {																
+													?>
+															<option value="<?php echo $doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials() ?>" <?php echo ($doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()) == ($document->getDocType()[0]->getId()."+".$document->getDocType()[0]->getRev()."+".$document->getDocType()[0]->getInitials()) ? 'selected' : '' ?> ><?php echo $doctype->getName() ?></option>
+																
+													<?php
+															}
+														} else {
+															echo "<option selected disabled>Selecione</option>";
+															foreach ($doctypes as $doctype) {														
+																echo "<option value='".$doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()."'>".$doctype->getName()."</option>";
+															} 
+														}
+														
+													?>
 												</select>
 											</div>
 											<div class="col-sm-1">
@@ -222,37 +222,46 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="col-sm-2" id="situation_div" style="display: none">
 												<label for="doc_situation">Situação</label>
 												<select class="form-control" id="doc_situation" name="doc_situation" value="<?php echo (isset($document)) ? $document->getSituation() : "" ?>">													
+													
 													<?php 
-														if (isset($document)) {
-															if ($document->getSituation() == "A")
-																echo "<option selected value='".$document->getSituation()."'>Ativo</option>";																															
-															if ($document->getSituation() == "I")
-																echo "<option selected value='".$document->getSituation()."'>Inativo</option>";																				
+														if (isset($document)) {																														
+													?>
+														<option value="A" <?php echo $document->getSituation() == 'A' ? 'selected' : '' ?> >Ativo</option>
+														<option value="I" <?php echo $document->getSituation() == 'I' ? 'selected' : '' ?> >Inativo</option>
+													<?php 
+														} else {
+													?>
+														<option selected disabled>Selecione</option>
+														<option value="A">Ativo</option>
+														<option value="I">Inativo</option>
+													<?php
 														}
-													?>	
-													<option value="A">Ativo</option>
-													<option value="I">Inativo</option>																										
-												</select>
+													?>
+
+												</select>	
 											</div>
 											<div class="col-sm-2" id="status_div" style="display: none">
 												<label for="status">Status</label>
 												<select class="form-control" id="status" name="status">
+
 													<?php 
-														if (isset($document)) {
-															if ($document->getStatus() == "0")
-																echo "<option selected value='".$document->getStatus()."'>Submetido</option>";																															
-															if ($document->getStatus() == "1")
-																echo "<option selected value='".$document->getStatus()."'>Em validação</option>";			
-															if ($document->getStatus() == "2")
-																echo "<option selected value='".$document->getStatus()."'>Devolvido</option>";			
-															if ($document->getStatus() == "3")
-																echo "<option selected value='".$document->getStatus()."'>Publicado</option>";			
+														if (isset($document)) {																														
+													?>
+														<option value="0" <?php echo $document->getStatus() == '0' ? 'selected' : '' ?> >Submetido</option>
+														<option value="1" <?php echo $document->getStatus() == '1' ? 'selected' : '' ?> >Em validação</option>
+														<option value="2" <?php echo $document->getStatus() == '2' ? 'selected' : '' ?> >Devolvido</option>
+														<option value="3" <?php echo $document->getStatus() == '3' ? 'selected' : '' ?> >Publicado</option>
+													<?php 
+														} else {
+													?>
+														<option value="0">Submetido</option>
+														<option value="1">Em validação</option>
+														<option value="2">Devolvido</option>
+														<option value="3">Publicado</option>
+													<?php
 														}
-													?>													
-													<option value="0">Submetido</option>
-													<option value="1">Em validação</option>																										
-													<option value="2">Devolvido</option>																										
-													<option value="3">Publicado</option>																										
+													?>
+																																						
 												</select>
 											</div>									
 										</div>
@@ -268,27 +277,27 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>											
 											<?php }	?>
 										
-											<div class="col-sm-3">
-												<label for="doc_file">Arquivo</label>
-												<input type="file" id="doc_file" name="doc_file" onchange="extensionValidate(this)"> 
-												<div id="file_validate"></div>																						
+											<div class="col-sm-3" id="div_doc_sub">
+												<label for="doc_file_sub">Arquivo</label>
+												<input type="file" id="doc_file_sub" name="doc_file_sub" onchange="extensionValidate(this)"> 
+												<div id="file_validate_doc_sub"></div>																						
 											</div>
 											
 											<div class="col-sm-3" id="div_doc_final" style="display: none">
-												<label for="doc_file2">Arquivo DOC Final <i class="fas fa-file-word" style="color: blue"></i></label>
-												<input type="file" id="doc_file2" name="doc_file2" onchange="extensionValidate(this)" > 
+												<label for="doc_file_final">Arquivo DOC Final <i class="fas fa-file-word" style="color: blue"></i></label>
+												<input type="file" id="doc_file_final" name="doc_file_final" onchange="extensionValidate(this)" > 
 												<div id="file_validate"></div>																						
 											</div>
 
 											<div class="col-sm-3" id="div_pdf_final" style="display: none">
-												<label for="doc_file3">Arquivo PDF Final <i class="fas fa-file-pdf" style="color: red"></i></label>
-												<input type="file" id="doc_file3" name="doc_file3" onchange="extensionValidate(this)" > 
+												<label for="pdf_file_final">Arquivo PDF Final <i class="fas fa-file-pdf" style="color: red"></i></label>
+												<input type="file" id="pdf_file_final" name="pdf_file_final" onchange="extensionValidate(this)" > 
 												<div id="file_validate"></div>																						
 											</div>
 										</div>	
 
 										<div class="box-footer">				                
-											<button type="submit" class="btn btn-success pull-right col-sm-1" name="submitInternacao">Submit</button>
+											<button type="submit" class="btn btn-success pull-right col-sm-1">Submit</button>
 											<button type="reset" class="btn btn-default pull-right col-sm-1">Reset</button>
 										</div>					                
 									</div>

@@ -19,7 +19,7 @@ class ControllerLogin {
 
 			//$_SESSION["flash"]["qualquerCoisa"] são variáveis de login que vivem apenas uma requisição, elas são usadas na view e depois destruidas.
 			if ($usuario!=NULL && password_verify($passwd,$usuario->getSenha())) {
-				$_SESSION["logado"]=true;
+				$_SESSION["logado"] = true;
 				$_SESSION["login"]["usuario"]=$usuario->getUsuario();
 				$_SESSION["login"]["senha"]=$usuario->getSenha();
 				if ($usuario->getPermissao() == 1){
@@ -49,7 +49,7 @@ class ControllerLogin {
 			session_unset();
 			session_destroy();
 		}
-		header("Location:login"); 
+		header("Location:index"); 
 	}	
 	
 }
