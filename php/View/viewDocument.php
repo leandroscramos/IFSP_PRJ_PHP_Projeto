@@ -103,7 +103,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>																																											
 										</div>										
 										<div class="form-group">																						
-											<div class="col-sm-4">
+											<div class="col-sm-3">
 												<label for="doc_type">Tipo do Documento *</label>
 												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">							                    
 												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype">																							
@@ -140,7 +140,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<label for="doc_version">Versão *</label>
 												<input type="text" class="form-control" id="doc_version" name="doc_version" pattern="[0-9]{2}" maxlength="2" placeholder="" value="<?php echo (isset($document)) ? str_pad($document->getVersion() , 2 , '0' , STR_PAD_LEFT) : "" ?>" required>
 											</div>
-											<div class="col-sm-1">
+											<div class="col-sm-2">
 												<label for="doc_sigla_area">Área <i>(Sigla)</i> *</label>
 												<input type="hidden" name="doc_id_area" id="doc_id_area">
 												<input type="hidden" name="doc_initials_area" id="doc_initials_area" value="<?php echo (isset($document)) ? $document->getArea()[0]->getInitials() : "" ?>">
