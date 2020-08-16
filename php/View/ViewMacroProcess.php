@@ -51,9 +51,9 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<th width="3%"></th>																						
 										</tr>
 									</thead>									
-									<tbody>										
-										<?php
-											//Util::debug($macroProcs);
+									<tbody>	
+										<?php //Util::debug($macroProcs);	?>
+										<?php											
 											foreach ($macroProcs as $macroProc) {
 												echo "<tr>";
 												echo "<td><strong>".$macroProc->getMacroProcType()[0]->getInitials()."".str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT)."</strong></td>";
@@ -63,7 +63,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										?>
 												<td>													
 													<button type="button" class="btn btn-sm btn-warning pull-left" data-toggle="modal" data-target="#modalUpdate" 
-													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $macroProc->getId(); ?>','<?php echo $macroProc->getName(); ?>','<?php echo $macroProc->getMacroProcType()[0]->getName(); ?>','<?php echo $macroProc->getNumber(); ?>')">
+													style="width: 100%; white-space: normal" onclick="setIdModalUpdate('<?php echo $macroProc->getId() ?>','<?php echo $macroProc->getName() ?>','<?php echo str_pad($macroProc->getNumber() , 2 , '0' , STR_PAD_LEFT) ?>','<?php echo $macroProc->getIdProcType() ?>')">
 														<i class="far fa-edit"></i>
 													</button>	
 												</td>												
@@ -140,27 +140,29 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									</div>	
 									<form action="macroProc" method="POST">
 									<input type="hidden" name="action" id="action" value="update">
-									<input type="hidden" name="macroProcIdUpdate" id="macroProcIdUpdate">
+									<input type="hidden" name="macroProcIdModalUpdate" id="macroProcIdModalUpdate">
 										<div class="modal-body">																	            								            
 											<div class="row">
 												<div class="form-group">													
 													<div class="col-sm-8">
-														<label for="macroProcNameUpdate">Nome</label>
-														<input type="text" class="form-control" id="macroProcNameUpdate" name="macroProcNameUpdate" placeholder="">
+														<label for="macroProcNameModalUpdate">Nome</label>
+														<input type="text" class="form-control" id="macroProcNameModalUpdate" name="macroProcNameModalUpdate" placeholder="">
 													</div>
 													<div class="col-sm-4">
-														<label for="macroProcNumberUpdate"">Número</label>
-														<input type="text" class="form-control" id="macroProcNumberUpdate" name="macroProcNumberUpdate" placeholder="">												
+														<label for="macroProcNumberModalUpdate"">Número</label>
+														<input type="text" class="form-control" id="macroProcNumberModalUpdate" name="macroProcNumberModalUpdate" placeholder="">												
 													</div>
 													&nbsp;
 													<div class="col-sm-12">
-														<label for="idProcTypeUpdate">Tipo de Processo</label>					                    
-														<select class="form-control" id="idProcTypeUpdate" name="idProcTypeUpdate" >
-															<option selected disabled>Selecione</option>															
+														<label for="macroProcIdProcTypeModalUpdate">Tipo de Processo</label>					                    
+														<select class="form-control" id="macroProcIdProcTypeModalUpdate" name="macroProcIdProcTypeModalUpdate">
 															<?php
-															foreach ($procTypes as $procType) {																	
-																echo "<option value=".$procType->getId().">".$procType->getName()."</option>";
-															}
+																foreach ($procTypes as $procType) {
+															?>																		
+																<option value="<?php echo $procType->getId() ?>" <?php echo $procType->getId() == $macroProc->getMacroProcType()[0]->getId() ? 'selected' : ''  ?> > <?php echo $procType->getName() ?></option>
+																	
+															<?php
+																}
 															?>
 														</select>
 													</div>
@@ -219,12 +221,11 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 			document.getElementById('idModalDelete').value = id;
 		}
 
-		function setIdModalUpdate(id, name, idProcType, number) {			
-			document.getElementById('macroProcIdUpdate').value = id;
-			document.getElementById('macroProcNameUpdate').value = name;
-			document.getElementById('idProcTypeUpdate').options[document.getElementById("idProcTypeUpdate").selectedIndex].text = idProcType;
-			document.getElementById('macroProcNumberUpdate').value = number;			
-			
+		function setIdModalUpdate(id, name, number, idProcType) {			
+			document.getElementById('macroProcIdModalUpdate').value = id;
+			document.getElementById('macroProcNameModalUpdate').value = name;
+			document.getElementById('macroProcNumberModalUpdate').value = number;
+			document.getElementById('macroProcIdProcTypeModalUpdate').value = idProcType;	
 		}
 	</script>
 </body>

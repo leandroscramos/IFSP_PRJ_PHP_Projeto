@@ -194,8 +194,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<div class="row">
 												<div class="col-sm-12">
 													<label for="processIdMacroProcModalUpdate">Macroprocesso</label>					                    
-													<select class="form-control" id="processIdMacroProcModalUpdate" name="processIdMacroProcModalUpdate" >
-														<option selected disabled>Selecione</option>															
+													<select class="form-control" id="processIdMacroProcModalUpdate" name="processIdMacroProcModalUpdate" >														
 														<?php
 															foreach ($macroProcs as $macroProc) {
 														?>																		

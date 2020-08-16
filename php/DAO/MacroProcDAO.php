@@ -55,15 +55,17 @@ class MacroProcDAO
 
     public function updateMacroProc($macroProc) {
         
-        try { $sql = ('UPDATE public.tb_macroprocess SET initials = :initials, name = :name WHERE id = :id');
+        try { $sql = ('UPDATE public.tb_macroprocess SET name = :name, number = :number, id_proc_type = :id_proc_type WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
 
-            $statement->bindParam(':id', $macroProc->getId()); 
-            $statement->bindParam(':initials', $macroProc->getInitials()); 
-            $statement->bindParam(':name', $macroProc->getName()); 
+            $statement->bindValue(":id", $macroProc->getId());
+            $statement->bindValue(":name", $macroProc->getName());
+            $statement->bindValue(":number", $macroProc->getNumber());
+            $statement->bindValue(":id_proc_type", $macroProc->getIdProcType());
+            
             $statement->execute();
                
             return $statement->execute(); 

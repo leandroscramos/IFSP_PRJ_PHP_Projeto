@@ -29,8 +29,9 @@ class ModelMacroProc
 
     public function updateMacroProcFromPOST(){
         $this->setId($_POST["macroProcIdModalUpdate"])
-                ->setName($_POST["macroProcNameUpdate"])       
-                ->setnumber($_POST["macroProcNumberUpdate"]);
+                ->setName($_POST["macroProcNameModalUpdate"])       
+                ->setnumber($_POST["macroProcNumberModalUpdate"])
+                ->setIdProcType($_POST["macroProcIdProcTypeModalUpdate"]);
     }
 
     public function getId()
