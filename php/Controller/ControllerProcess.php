@@ -46,42 +46,42 @@ class ControllerProcess {
 		*/
     }
 
-	/*
-    public function updateMacroProc() {
-        $macroProcDAO = new MacroProcDAO();
-		$macroProc = new ModelMacroProc();
+	
+    public function updateProcess() {
+        $processDAO = new ProcessDAO();
+		$process = new ModelProcess();
 		
-		if (($macroProcDAO->readMacroProcByInitials($_POST['procTypeInitialsUpdate'])) != null) {
+		/* if (($macroProcDAO->readMacroProcByInitials($_POST['procTypeInitialsUpdate'])) != null) {
 			$_SESSION["flash"]["msg"] = "Sigla do Tipo de Macroprocesso já cadastrada!";
 			$_SESSION["flash"]["sucesso"] = false;
 		} else 
 		if (($macroProcDAO->readMacroProcByName($_POST['procTypeNameUpdate'])) != null) {
 			$_SESSION["flash"]["msg"]="Nome do Tipo de Macroprocesso já cadastrado!";
 			$_SESSION["flash"]["sucesso"] = false;
-		} else {
-			$macroProc->updateMacroProcFromPOST();		
-			$result = $macroProcDAO->updateMacroProc($macroProc);        
+		} else { */
+			$process->updateProcessFromPOST();		
+			$result = $processDAO->updateProcess($process);        
 			if ($result){
-				$_SESSION["flash"]["msg"]="Tipo de Macroprocesso atualizado com sucesso!";
+				$_SESSION["flash"]["msg"]="Processo atualizado com sucesso!";
 				$_SESSION["flash"]["sucesso"] = true;			
 			} else {
-				$_SESSION["flash"]["msg"]="Falha ao atualizar Tipo de Macroprocesso!";
+				$_SESSION["flash"]["msg"]="Falha ao atualizar Processo!";
 				$_SESSION["flash"]["sucesso"] = false;           	
 			}
-		}
+		//}
     }
     
-    public function deleteMacroProc() {
-        $macroProcDAO = new MacroProcDAO();
-        $result = $macroProcDAO->deleteMacroProc($_POST['idModalDelete']);
+    public function deleteProcess() {
+        $processDAO = new ProcessDAO();
+        $result = $processDAO->deleteProcess($_POST['idModalDelete']);
         
 		if ($result){
-			$_SESSION["flash"]["msg"]="Tipo de Macroprocesso excluído com sucesso";
+			$_SESSION["flash"]["msg"]="Processo excluído com sucesso";
 			$_SESSION["flash"]["sucesso"] = true;			
 		} else {
-			$_SESSION["flash"]["msg"]="Falha ao excluir Tipo de Macroprocesso";
+			$_SESSION["flash"]["msg"]="Falha ao excluir Processo";
 			$_SESSION["flash"]["sucesso"] = false;           	
 		}
 	}
-	*/
+	
 }   
