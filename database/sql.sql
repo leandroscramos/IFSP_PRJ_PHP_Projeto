@@ -151,6 +151,7 @@ CREATE TABLE public.tb_user
 (
     codigo serial NOT NULL,
     usuario character varying(50) NOT NULL,
+    nome character varying(100) NOT NULL,
     senha character varying(120) NOT NULL,
     permissao smallint NOT NULL,
     CONSTRAINT usuario_pkey PRIMARY KEY (codigo)

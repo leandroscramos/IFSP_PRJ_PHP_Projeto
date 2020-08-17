@@ -21,6 +21,7 @@ class ControllerLogin {
 			if ($usuario!=NULL && password_verify($passwd,$usuario->getSenha())) {
 				$_SESSION["logado"] = true;
 				$_SESSION["login"]["usuario"]=$usuario->getUsuario();
+				$_SESSION["login"]["nome"]=$usuario->getNome();
 				$_SESSION["login"]["senha"]=$usuario->getSenha();
 				if ($usuario->getPermissao() == 1){
 					$_SESSION["login"]["permissao"]="Administrador";

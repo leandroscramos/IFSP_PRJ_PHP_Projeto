@@ -4,12 +4,14 @@ class ModelUsuario {
 
     private $codigo;
     private $usuario;
+    private $nome;
     private $senha;
     private $permissao;
 
     public function setUsuarioFromDatabase($linha){
         $this->setCodigo($linha["codigo"])
                ->setUsuario($linha["usuario"])
+               ->setNome($linha["nome"])
                ->setSenhaFromDB($linha["senha"])
                ->setPermissao($linha['permissao']);
     }
@@ -31,6 +33,16 @@ class ModelUsuario {
     public function setUsuario($usuario)
     {
         $this->usuario = $usuario;
+        return $this;
+    }
+
+    public function getNome() {
+        return $this->nome;
+    }
+
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
         return $this;
     }
 
