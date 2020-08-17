@@ -1,6 +1,6 @@
--- Database: teste_db
+-- Database: projeto_db
 
---DROP DATABASE teste_db;
+--DROP DATABASE projeto_db;
 
 /* CREATE DATABASE projeto_db
     WITH 
