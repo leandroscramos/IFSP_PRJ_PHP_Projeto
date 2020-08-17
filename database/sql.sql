@@ -1,4 +1,15 @@
+-- Database: teste_db
 
+--DROP DATABASE teste_db;
+
+/* CREATE DATABASE projeto_db
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1; */
 
 -- Table: public.tb_doc_type
 
