@@ -163,9 +163,9 @@ ALTER TABLE public.tb_user
 --
 -- Data for Name: public.tb_user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
-INSERT INTO public.tb_user (usuario, senha, permissao) VALUES ('admin', '$2y$10$S/3BFMP112hSDUQKLExq2ej.zR2KJRfMFSGr66M2JJLYMlBec/faa', 1);
-INSERT INTO public.tb_user (usuario, senha, permissao) VALUES ('user', '$2y$10$UOKFYPK0Nht9IGVzObvPPeVoVDKesbJ7vlE6OzjZICQiE54iXBbZC', 2);
-INSERT INTO public.tb_user (usuario, senha, permissao) VALUES ('leandro', '$2y$10$UOKFYPK0Nht9IGVzObvPPeVoVDKesbJ7vlE6OzjZICQiE54iXBbZC', 2);
+INSERT INTO public.tb_user (usuario, nome, senha, permissao) VALUES ('admin','Administrador', '$2y$10$S/3BFMP112hSDUQKLExq2ej.zR2KJRfMFSGr66M2JJLYMlBec/faa', 1);
+INSERT INTO public.tb_user (usuario, nome, senha, permissao) VALUES ('user','Usuário', '$2y$10$UOKFYPK0Nht9IGVzObvPPeVoVDKesbJ7vlE6OzjZICQiE54iXBbZC', 2);
+INSERT INTO public.tb_user (usuario, nome, senha, permissao) VALUES ('leandro','Leandro C. Ramos', '$2y$10$UOKFYPK0Nht9IGVzObvPPeVoVDKesbJ7vlE6OzjZICQiE54iXBbZC', 2);
 
 
 -- Table: public.tb_macroprocess
