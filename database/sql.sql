@@ -1,6 +1,7 @@
 
 
--- Tabela de Tipos de Documentos
+-- Table: public.tb_doc_type
+
 CREATE TABLE public.tb_doc_type (
     id serial NOT NULL,
     name character varying(100) NOT NULL,
@@ -12,6 +13,9 @@ CREATE TABLE public.tb_doc_type (
 
 ALTER TABLE public.tb_doc_type OWNER to postgres;
 
+--
+-- Data for Name: public.tb_doc_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
 INSERT INTO public.tb_doc_type (name, level, initials, max_rev_period) VALUES ('Cadeia de Valor', 1, 'CDV', 2);
 INSERT INTO public.tb_doc_type (name, level, initials, max_rev_period) VALUES ('Diretriz', 1, 'DRT', 2);
 INSERT INTO public.tb_doc_type (name, level, initials, max_rev_period) VALUES ('Manual', 1, 'MAN', 2);
@@ -29,7 +33,8 @@ INSERT INTO public.tb_doc_type (name, level, initials, max_rev_period) VALUES ('
 INSERT INTO public.tb_doc_type (name, level, initials, max_rev_period) VALUES ('Procedimento Operacional Padrão / Rotina', 3, 'POP', 2);
 INSERT INTO public.tb_doc_type (name, level, initials, max_rev_period) VALUES ('Registro da Qualidade', 3, 'REQ', 0);
 
--- Tabela Área
+-- Table: public.tb_area
+
 CREATE TABLE public.tb_area
 (
     id serial NOT NULL,
@@ -40,6 +45,9 @@ CREATE TABLE public.tb_area
 
 ALTER TABLE public.tb_area OWNER to postgres;
 
+--
+-- Data for Name: public.tb_area; Type: TABLE DATA; Schema: public; Owner: postgres
+--
 INSERT INTO public.tb_area (initials, name) VALUES ('SUP', 'Superintendência');
 INSERT INTO public.tb_area (initials, name) VALUES ('AUDIT', 'Auditoria Interna HU-UFSCar');
 INSERT INTO public.tb_area (initials, name) VALUES ('OUVID', 'Ouvidoria HU UFSCar');
@@ -105,7 +113,8 @@ INSERT INTO public.tb_area (initials, name) VALUES ('USP', 'Unidade de Seguranç
 INSERT INTO public.tb_area (initials, name) VALUES ('USS', 'Unidade de Simulação em Saúde');
 INSERT INTO public.tb_area (initials, name) VALUES ('UVS', 'Unidade de Vigilância em Saúde');
 
--- Tabela de Tipos de Processos
+-- Table: public.tb_process_type
+
 CREATE TABLE public.tb_process_type
 (
     id serial NOT NULL,
@@ -118,9 +127,160 @@ ALTER TABLE public.tb_process_type
     OWNER to postgres;
 
 --
--- Data for Name: tb_process_type; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: public.tb_process_type; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO public.tb_process_type (name, initials) VALUES ('Processos Gerenciais', 'PG');
 INSERT INTO public.tb_process_type (name, initials) VALUES ('Processos Finalísticos', 'PF');
 INSERT INTO public.tb_process_type (name, initials) VALUES ('Processos de Apoio', 'PA');
+
+-- Table: public.tb_user
+
+CREATE TABLE public.tb_user
+(
+    codigo serial NOT NULL,
+    usuario character varying(50) NOT NULL,
+    senha character varying(120) NOT NULL,
+    permissao smallint NOT NULL,
+    CONSTRAINT usuario_pkey PRIMARY KEY (codigo)
+);
+
+ALTER TABLE public.tb_user
+    OWNER to postgres;
+
+--
+-- Data for Name: public.tb_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+INSERT INTO public.tb_user (usuario, senha, permissao) VALUES ('admin', '$2y$10$S/3BFMP112hSDUQKLExq2ej.zR2KJRfMFSGr66M2JJLYMlBec/faa', 1);
+INSERT INTO public.tb_user (usuario, senha, permissao) VALUES ('user', '$2y$10$UOKFYPK0Nht9IGVzObvPPeVoVDKesbJ7vlE6OzjZICQiE54iXBbZC', 2);
+INSERT INTO public.tb_user (usuario, senha, permissao) VALUES ('leandro', '$2y$10$UOKFYPK0Nht9IGVzObvPPeVoVDKesbJ7vlE6OzjZICQiE54iXBbZC', 2);
+
+
+-- Table: public.tb_macroprocess
+
+CREATE TABLE public.tb_macroprocess
+(
+    id serial NOT NULL,
+    name character varying(100) NOT NULL,
+    "number" bigint NOT NULL,
+    id_proc_type bigint,
+    CONSTRAINT tb_macroprocess_pkey PRIMARY KEY (id),
+    CONSTRAINT tb_macroprocess_id_proc_type_fkey FOREIGN KEY (id_proc_type)
+        REFERENCES public.tb_process_type (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE public.tb_macroprocess
+    OWNER to postgres;
+
+--
+-- Data for Name: public.tb_macroprocess; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Realizar Atividades de Ouvidoria', 1, 1);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir estratégia institucional', 2, 1);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir qualidade institucional', 3, 1);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Realizar atendimento de urgência e emergência', 1, 2);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Realizar internação', 2, 2);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Realizar exames', 3, 2);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir ensino, pesquisa e extensão', 4, 2);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Realizar atendimento ambulatorial', 5, 2);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir patrimônio', 1, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir hotelaria hospitalar', 5, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Processar produtos para saúde (CME)', 6, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir atividades de regulação', 7, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir infraestrutura física e tecnológica', 9, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir logística e suprimentos', 10, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir pessoas', 11, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir processos administrativo financeira', 12, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir tecnologia de informação e processos', 13, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir farmácia hospitalar', 14, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir nutrição', 15, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir segurança do trabalhador', 17, 3);
+INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES ('Gerir consultoria jurídica', 18, 3);
+
+
+-- Table: public.tb_process
+
+CREATE TABLE public.tb_process
+(
+    id serial NOT NULL,
+    name character varying(100) NOT NULL,
+    "number" bigint NOT NULL,
+    id_macroprocess bigint NOT NULL,
+    status character varying(2) NOT NULL,
+    CONSTRAINT tb_process_pkey PRIMARY KEY (id),
+    CONSTRAINT tb_process_id_macroprocess_fkey FOREIGN KEY (id_macroprocess)
+        REFERENCES public.tb_macroprocess (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE public.tb_process
+    OWNER to postgres;
+
+--
+-- Data for Name: public.tb_process; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+INSERT INTO public.tb_process (name, number, id_macroprocess, status) VALUES ('Gerir documentos institucionais', 1, 6, 'P');
+INSERT INTO public.tb_process (name, number, id_macroprocess, status) VALUES ('Gerir projetos e obras', 2, 14, 'P');
+INSERT INTO public.tb_process (name, number, id_macroprocess, status) VALUES ('Gerir contingências de infraestrutura física', 6, 14, 'P');
+INSERT INTO public.tb_process (name, number, id_macroprocess, status) VALUES ('Triar e investigar eventos adversos', 7, 6, 'P');
+INSERT INTO public.tb_process (name, number, id_macroprocess, status) VALUES ('Gerir manutenção predial', 3, 14, 'P');
+
+-- Table: public.tb_documents
+
+CREATE TABLE public.tb_documents
+(
+    id serial NOT NULL,
+    title character varying(150),
+    "number" integer,
+    version integer,
+    area integer,
+    process integer,
+    maker character varying(250),
+    reviewer character varying(250),
+    validator character varying(250),
+    approver character varying(250),
+    approval_date timestamp with time zone,
+    situation character varying(20),
+    status character varying(20),
+    doc_type integer,
+    created_at timestamp with time zone,
+    updated_at date,
+    code character varying,
+    filename_doc_sub character varying(100),
+    filename_pdf_final character varying(100),
+    submit_user character varying(50),
+    submit_type character varying(30),
+    process_sei character varying(30),
+    document_sei character varying(30),
+    dispatch_sei character varying(30),
+    filename_doc_final character varying(100),
+    observation character varying(1000),
+    CONSTRAINT tb_documents_pkey PRIMARY KEY (id),
+    CONSTRAINT tb_documents_id_area_fkey FOREIGN KEY (area)
+        REFERENCES public.tb_area (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT tb_documents_id_doc_type_fkey FOREIGN KEY (doc_type)
+        REFERENCES public.tb_doc_type (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT tb_documents_id_process_fkey FOREIGN KEY (process)
+        REFERENCES public.tb_process (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE public.tb_documents
+    OWNER to postgres;
+
+--
+-- Data for Name: public.tb_documents; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+INSERT INTO public.tb_documents (id, title, number, version, area, process, maker, reviewer, validator, approver, approval_date, situation, status, doc_type, created_at, updated_at, code, filename_doc_sub, filename_pdf_final, submit_user, submit_type, document_sei, dispatch_sei, process_sei, filename_doc_final, observation) VALUES (115, '1', 1, 1, 5, 3, 'a', 'a', 'a', 'a', '2020-08-03 00:00:00-03', 'A', '3', 8, '2020-08-07 20:37:09.292282-03', NULL, 'MAN.SUP.PG0301.001', 'MAN.SUP.PG0301.001.docx', 'MAN.SUP.PG0301.001.', 'user', 'N', '', '', '', 'MAN.SUP.PG0301.001.', NULL);
+INSERT INTO public.tb_documents (id, title, number, version, area, process, maker, reviewer, validator, approver, approval_date, situation, status, doc_type, created_at, updated_at, code, filename_doc_sub, filename_pdf_final, submit_user, submit_type, document_sei, dispatch_sei, process_sei, filename_doc_final, observation) VALUES (116, 'Doc 03', 1, 3, 6, 3, 'a', 'a', 'a', 'a', '2020-08-07 00:00:00-03', 'A', '2', 4, '2020-08-08 16:20:20.863208-03', NULL, 'NOR.GAS.PA0903.001', 'NOR.GAS.PA0903.001.', NULL, 'admin', 'N', 'a', 'a', 'a', NULL, NULL);
+INSERT INTO public.tb_documents (id, title, number, version, area, process, maker, reviewer, validator, approver, approval_date, situation, status, doc_type, created_at, updated_at, code, filename_doc_sub, filename_pdf_final, submit_user, submit_type, document_sei, dispatch_sei, process_sei, filename_doc_final, observation) VALUES (117, 'Doc 05', 1, 2, 8, 1, 'a', 'a', 'a', 'a', '2020-08-05 00:00:00-03', 'A', '1', 7, '2020-08-08 16:26:15.135215-03', NULL, 'REG.DAF.PA0902.001', 'REG.DAF.PA0902.001.', 'REG.DAF.PG0301.001.', 'admin', 'R', '', '', '', 'REG.DAF.PG0301.001.', NULL);
