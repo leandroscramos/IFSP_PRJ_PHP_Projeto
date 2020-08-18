@@ -5,7 +5,7 @@ include_once $_SESSION["root"].'php/Model/ModelDocument.php';
 
 class ControllerDocument {
 
-    public function readDocument() {
+    public static function readDocument() {
         $documentDAO = new DocumentDAO();
         $documents = $documentDAO->readDocument();        
         return $documents;
@@ -17,7 +17,7 @@ class ControllerDocument {
         return $documents;
 	}	
 	
-	public function readDocumentByUser($user) {
+	public static function readDocumentByUser($user) {
         $documentDAO = new DocumentDAO();
         $documents = $documentDAO->readDocumentByUser($user);        
         return $documents;

@@ -33,7 +33,7 @@ class AreaDAO
         }
     }
 
-    public function readAreaById($id){
+    public static function readAreaById($id){
 
         try { $sql = ('SELECT * FROM tb_area where id = :id');
             $instance = DatabaseConnection::getInstance();

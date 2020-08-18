@@ -91,7 +91,7 @@ class DocTypeDAO
         }        
     }
 
-    public function readDocTypeById($id){
+    public static function readDocTypeById($id){
 
         try { $sql = ('SELECT * FROM tb_doc_type WHERE id = :id');
             $instance = DatabaseConnection::getInstance();

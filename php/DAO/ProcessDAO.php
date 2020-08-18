@@ -76,7 +76,7 @@ class ProcessDAO
         }
     }
     
-    public function readProcessById($id){
+    public static function readProcessById($id){
 
         try { $sql = ('SELECT * FROM tb_process where id = :id');
             $instance = DatabaseConnection::getInstance();
