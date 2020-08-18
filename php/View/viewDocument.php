@@ -52,7 +52,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									}
 								?>
 							</div>
-							<?php Util::debug($document); ?>
+							<?php //Util::debug($document); ?>
 
 							<div class="box-body">															        
 						        <div class="box box-success">
