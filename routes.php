@@ -21,7 +21,7 @@ include_once $_SESSION["root"].'php/Controller/ControllerDocument.php';
 // Condicionais que verificam o roteamento das actions.
 if ($action == '' || $action == 'index' || $action == 'index.php') {
     $documents = ControllerDocument::readDocumentPublished();
-    require_once $_SESSION["root"].'php/View/viewHome.php';
+    require_once $_SESSION["root"].'php/View/ViewHome.php';
 }
 
 else if ( $action == 'login') {
@@ -44,8 +44,8 @@ else if ($action == 'logout') {
 	$cLogin->logout();
 }
 
-else if ($action == 'logado') {	
-	include_once $_SESSION["root"].'php/View/ViewLogged.php';	
+else if ($action == 'logado') {
+	include_once $_SESSION["root"].'php/View/ViewLogged.php';
 }
 /* Rotas para LOGIN e LOGOUT */
 
@@ -53,28 +53,28 @@ else if ($action == 'docList') {
     if ($_SESSION["logado"] == true) {
         if ((($_SESSION['login']['permissao']) == 'Usuário') ) {
             $documents = ControllerDocument::readDocumentByUser($_SESSION["login"]["usuario"]);
-            include_once $_SESSION["root"].'php/View/viewDocumentList.php';
+            include_once $_SESSION["root"].'php/View/ViewDocumentList.php';
         } else {
             header("Location:logado");
         }
     } else {
         header("Location: login");
-    }        
-    
+    }
+
 }
 
 else if ($action == 'docListAdmin') {
     if ($_SESSION["logado"] == true) {
-        unset($document);     
+        unset($document);
         if ((($_SESSION['login']['permissao']) == 'Administrador') ) {
             $documents = ControllerDocument::readDocument();
-            include_once $_SESSION["root"].'php/View/viewDocumentListAdmin.php';
+            include_once $_SESSION["root"].'php/View/ViewDocumentListAdmin.php';
         } else {
             header("Location:logado");
-        } 
+        }
     } else {
         header("Location: login");
-    }   
+    }
 }
 
 /* Rota para Documento */
@@ -90,30 +90,30 @@ else if ($action == 'document') {
                         } else {
                             header("Location:docList");
                         }
-                        break;        
+                        break;
                     case 'edit':
-                        $doctypes = ControllerDocType::readDocType();            
+                        $doctypes = ControllerDocType::readDocType();
                         $areas = ControllerArea::readArea();
-                        $processs = ControllerProcess::readProcess();                                     
-                        $document = ControllerDocument::readDocumentById($_POST['idDocument']);                    
-                        include_once $_SESSION["root"].'php/View/viewDocument.php';
-                        break;        
+                        $processs = ControllerProcess::readProcess();
+                        $document = ControllerDocument::readDocumentById($_POST['idDocument']);
+                        include_once $_SESSION["root"].'php/View/ViewDocument.php';
+                        break;
                     case 'update':
                         $_SESSION["update"]["id"] = $_POST['id_document'];
-                        $_SESSION["update"]["status"] = $_POST['status'];                    
-                        ControllerDocument::updateDocument();    
+                        $_SESSION["update"]["status"] = $_POST['status'];
+                        ControllerDocument::updateDocument();
                         header("Location:docListAdmin");
                         break;
                     case 'delete':
-                        ControllerDocument::deleteDocument();    
+                        ControllerDocument::deleteDocument();
                         header("Location:document");
                         break;
                 }
             } else {
-                $doctypes = ControllerDocType::readDocType();            
+                $doctypes = ControllerDocType::readDocType();
                 $areas = ControllerArea::readArea();
                 $processs = ControllerProcess::readProcess();
-                include_once $_SESSION["root"].'php/View/viewDocument.php';
+                include_once $_SESSION["root"].'php/View/ViewDocument.php';
             }
         } else {
             header("Location:logado");
@@ -130,21 +130,21 @@ else if ($action == 'docType') {
             if (isset($_POST['action'])) {
                 switch ($_POST['action']) {
                     case 'create':
-                        ControllerDocType::createDocType();                    
+                        ControllerDocType::createDocType();
                         header("Location:docType");
-                        break;        
+                        break;
                     case 'update':
-                        ControllerDocType::updateDocType();                        
+                        ControllerDocType::updateDocType();
                         header("Location:docType");
                         break;
                     case 'delete':
-                        ControllerDocType::deleteDocType();                    
+                        ControllerDocType::deleteDocType();
                         header("Location:docType");
                         break;
                 }
             } else {
-                $doctypes = ControllerDocType::readDocType();                
-                include_once $_SESSION["root"].'php/View/viewDocumentType.php';
+                $doctypes = ControllerDocType::readDocType();
+                include_once $_SESSION["root"].'php/View/ViewDocumentType.php';
             }
         } else {
             header("Location:logado");
@@ -161,20 +161,20 @@ else if ($action == 'area') {
             if (isset($_POST['action'])) {
                 switch ($_POST['action']) {
                     case 'create':
-                        ControllerArea::createArea();    
+                        ControllerArea::createArea();
                         header("Location:area");
-                        break;        
+                        break;
                     case 'update':
-                        ControllerArea::updateArea();    
+                        ControllerArea::updateArea();
                         header("Location:area");
                         break;
                     case 'delete':
-                        ControllerArea::deleteArea();    
+                        ControllerArea::deleteArea();
                         header("Location:area");
                         break;
                 }
             } else {
-                $areas = ControllerArea::readArea();            
+                $areas = ControllerArea::readArea();
                 include_once $_SESSION["root"].'php/View/ViewArea.php';
             }
         } else {
@@ -192,19 +192,19 @@ else if ($action == 'procType') {
             if (isset($_POST['action'])) {
                 switch ($_POST['action']) {
                     case 'create':
-                        ControllerProcType::createProcType();    
+                        ControllerProcType::createProcType();
                         header("Location:procType");
-                        break;        
+                        break;
                     case 'update':
-                        ControllerProcType::updateProcType();    
+                        ControllerProcType::updateProcType();
                         header("Location:procType");
                         break;
                     case 'delete':
-                        ControllerProcType::deleteProcType();    
+                        ControllerProcType::deleteProcType();
                         header("Location:procType");
                         break;
                 }
-            } else {            
+            } else {
                 $procTypes = ControllerProcType::readProcType();
                 include_once $_SESSION["root"].'php/View/ViewProcType.php';
             }
@@ -223,20 +223,20 @@ else if ($action == 'macroProc') {
             if (isset($_POST['action'])) {
                 switch ($_POST['action']) {
                     case 'create':
-                        ControllerMacroProc::createMacroProc();    
+                        ControllerMacroProc::createMacroProc();
                         header("Location:macroProc");
-                        break;        
+                        break;
                     case 'update':
-                        ControllerMacroProc::updateMacroProc();    
+                        ControllerMacroProc::updateMacroProc();
                         header("Location:macroProc");
                         break;
                     case 'delete':
-                        ControllerMacroProc::deleteMacroProc();    
+                        ControllerMacroProc::deleteMacroProc();
                         header("Location:macroProc");
                         break;
                 }
-            } else {            
-                $macroProcs = ControllerMacroProc::readMacroProc();            
+            } else {
+                $macroProcs = ControllerMacroProc::readMacroProc();
                 $procTypes = ControllerProcType::readProcType();
                 include_once $_SESSION["root"].'php/View/ViewMacroProcess.php';
             }
@@ -255,20 +255,20 @@ else if ($action == 'process') {
             if (isset($_POST['action'])) {
                 switch ($_POST['action']) {
                     case 'create':
-                        ControllerProcess::createProcess();    
+                        ControllerProcess::createProcess();
                         header("Location:process");
-                        break;        
+                        break;
                     case 'update':
-                        ControllerProcess::updateProcess();    
+                        ControllerProcess::updateProcess();
                         header("Location:process");
                         break;
                     case 'delete':
-                        ControllerProcess::deleteProcess();    
+                        ControllerProcess::deleteProcess();
                         header("Location:process");
                         break;
                 }
-            } else {            
-                $processs = ControllerProcess::readProcess();            
+            } else {
+                $processs = ControllerProcess::readProcess();
                 $macroProcs = ControllerMacroProc::readMacroProc();
                 include_once $_SESSION["root"].'php/View/ViewProcess.php';
             }
@@ -278,7 +278,7 @@ else if ($action == 'process') {
     } else {
         header("Location: login");
     }
-}  
+}
 
 else {
     include_once $_SESSION["root"].'php/View/View404.php';
