@@ -20,7 +20,7 @@ include_once $_SESSION["root"].'php/Controller/ControllerDocument.php';
 
 // Condicionais que verificam o roteamento das actions.
 if ($action == '' || $action == 'index' || $action == 'index.php') {
-    $documents = ControllerDocument->readDocumentPublished();
+    $documents = ControllerDocument::readDocumentPublished();
     require_once $_SESSION["root"].'php/View/ViewHome.php';
 }
 

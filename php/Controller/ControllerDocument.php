@@ -11,7 +11,7 @@ class ControllerDocument {
         return $documents;
 	}
 	
-    public function readDocumentPublished() {
+    public static function readDocumentPublished() {
         $documentDAO = new DocumentDAO();
         $documents = $documentDAO->readDocumentPublished();        
         return $documents;
