@@ -5,7 +5,7 @@ include_once $_SESSION["root"].'php/Model/ModelMacroProc.php';
 
 class ControllerMacroProc {
 
-    function readMacroProc() {
+    static function readMacroProc() {
         $macroProcDAO = new MacroProcDAO();
         $macroProcs = $macroProcDAO->readMacroProc();        
         return $macroProcs;

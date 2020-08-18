@@ -5,7 +5,7 @@ include_once $_SESSION["root"].'php/Model/ModelProcType.php';
 
 class ControllerProcType {
 
-    function readProcType() {
+    static function readProcType() {
         $procTypeDAO = new ProcTypeDAO();
         $procTypes = $procTypeDAO->readProcType();
         //Util::debug($doctypes);
