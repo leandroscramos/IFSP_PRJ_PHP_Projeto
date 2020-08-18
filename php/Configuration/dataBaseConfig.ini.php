@@ -4,11 +4,7 @@
 
 [pgsql]
 pgsql_host     	= "localhost"
-pgsql_port		= "5432"
-pgsql_dbname   	= "projeto_db" 
-pgsql_user 		= "postgres"
-pgsql_password 	= "123456"
-
-
-
-
+pgsql_port		= "3306"
+pgsql_dbname   	= "nippscom_sgq"
+pgsql_user 		= "nippscom_sgq"
+pgsql_password 	= "n%RUaPEJ*TuZ"
