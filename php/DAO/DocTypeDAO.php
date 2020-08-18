@@ -8,7 +8,7 @@ class DocTypeDAO
 {
     public function readDocType(){
 
-        try { $sql = ('SELECT * FROM public.tb_doc_type ORDER BY id');
+        try { $sql = ('SELECT * FROM tb_doc_type ORDER BY id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -35,7 +35,7 @@ class DocTypeDAO
 
     public function createDocType($doctype){			
         
-		try { $sql = ('INSERT INTO public.tb_doc_type (name, initials, level, max_rev_period) VALUES (:name, :initials, :level, :max_rev_period)');
+		try { $sql = ('INSERT INTO tb_doc_type (name, initials, level, max_rev_period) VALUES (:name, :initials, :level, :max_rev_period)');
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
@@ -55,7 +55,7 @@ class DocTypeDAO
 
     public function updateDocType($doctype) {
         
-        try { $sql = ('UPDATE public.tb_doc_type SET level = :level, max_rev_period = :max_rev_period WHERE id = :id');
+        try { $sql = ('UPDATE tb_doc_type SET level = :level, max_rev_period = :max_rev_period WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -76,7 +76,7 @@ class DocTypeDAO
     
     public function deleteDocType($id) {        
 
-        try { $sql = ('DELETE FROM public.tb_doc_type WHERE id = :id');
+        try { $sql = ('DELETE FROM tb_doc_type WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -93,7 +93,7 @@ class DocTypeDAO
 
     public function readDocTypeById($id){
 
-        try { $sql = ('SELECT * FROM public.tb_doc_type WHERE id = :id');
+        try { $sql = ('SELECT * FROM tb_doc_type WHERE id = :id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -122,7 +122,7 @@ class DocTypeDAO
 
     public function readDocTypeByName($name){
 
-        try { $sql = ('SELECT * FROM public.tb_doc_type WHERE name = :name');
+        try { $sql = ('SELECT * FROM tb_doc_type WHERE name = :name');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);

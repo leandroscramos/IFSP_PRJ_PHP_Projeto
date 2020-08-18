@@ -8,7 +8,7 @@ class ProcessDAO
 {
     public function readProcess(){
 
-        try { $sql = ('SELECT * FROM public.tb_process');
+        try { $sql = ('SELECT * FROM tb_process');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -36,7 +36,7 @@ class ProcessDAO
     
     public function createProcess($process){			
         
-		try { $sql = "INSERT INTO public.tb_process (name, number, id_macroprocess, status) VALUES (:name, :number, :id_macroprocess, :status)";
+		try { $sql = "INSERT INTO tb_process (name, number, id_macroprocess, status) VALUES (:name, :number, :id_macroprocess, :status)";
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
@@ -56,7 +56,7 @@ class ProcessDAO
 
     public function updateProcess($process) {
         
-        try { $sql = ('UPDATE public.tb_process SET name = :name, number = :number, status = :status, id_macroprocess = :id_macroprocess WHERE id = :id');
+        try { $sql = ('UPDATE tb_process SET name = :name, number = :number, status = :status, id_macroprocess = :id_macroprocess WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -78,7 +78,7 @@ class ProcessDAO
     
     public function readProcessById($id){
 
-        try { $sql = ('SELECT * FROM public.tb_process where id = :id');
+        try { $sql = ('SELECT * FROM tb_process where id = :id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -107,7 +107,7 @@ class ProcessDAO
     
     public function deleteProcess($id) {        
 
-        try { $sql = ('DELETE FROM public.tb_process WHERE id = :id');
+        try { $sql = ('DELETE FROM tb_process WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();

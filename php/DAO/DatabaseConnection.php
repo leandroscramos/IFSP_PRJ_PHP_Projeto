@@ -14,9 +14,9 @@ class DatabaseConnection {
 		$user = $this->config['pgsql_user'];
 		$password = $this->config['pgsql_password'];
 
-		$dsn = "pgsql:host=$host;port=$port;dbname=$dbname;user=$user;password=$password";		
-		try {			
-			$this->conn = new PDO($dsn);
+		// $dsn = "mysql:host=$host;port=$port;dbname=$dbname;user=$user;password=$password";
+		try {
+			$this->conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
 		} catch (Exception $e) {
 			die('Unable to connect: '.$e->getMessage());
 		}

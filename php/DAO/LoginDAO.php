@@ -11,7 +11,7 @@ class LoginDAO {
 		$conn = $instance->getConnection();
 
 		// Select usando prepared statement.
-        $statement = $conn->prepare("SELECT * FROM public.tb_user WHERE usuario = :usuario");
+        $statement = $conn->prepare("SELECT * FROM tb_user WHERE usuario = :usuario");
 		$statement->bindParam(':usuario', $usuario, PDO::PARAM_STR);
 		$statement->execute();
 

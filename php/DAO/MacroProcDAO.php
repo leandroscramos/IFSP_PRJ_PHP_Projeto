@@ -8,7 +8,7 @@ class MacroProcDAO
 {
     public function readMacroProc(){
 
-        try { $sql = ('SELECT * FROM public.tb_macroprocess ORDER BY id_proc_type ASC, number ASC');
+        try { $sql = ('SELECT * FROM tb_macroprocess ORDER BY id_proc_type ASC, number ASC');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -35,7 +35,7 @@ class MacroProcDAO
 
     public function createMacroProc($macroProc){			
         
-		try { $sql = "INSERT INTO public.tb_macroprocess (name, number, id_proc_type) VALUES (:name, :number, :id_proc_type)";
+		try { $sql = "INSERT INTO tb_macroprocess (name, number, id_proc_type) VALUES (:name, :number, :id_proc_type)";
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
@@ -55,7 +55,7 @@ class MacroProcDAO
 
     public function updateMacroProc($macroProc) {
         
-        try { $sql = ('UPDATE public.tb_macroprocess SET name = :name, number = :number, id_proc_type = :id_proc_type WHERE id = :id');
+        try { $sql = ('UPDATE tb_macroprocess SET name = :name, number = :number, id_proc_type = :id_proc_type WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -76,7 +76,7 @@ class MacroProcDAO
     
     public function deleteMacroProc($id) {        
 
-        try { $sql = ('DELETE FROM public.tb_macroprocess WHERE id = :id');
+        try { $sql = ('DELETE FROM tb_macroprocess WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -94,7 +94,7 @@ class MacroProcDAO
 
     public function readMacroProcByName($name){
 
-        try { $sql = ('SELECT * FROM public.tb_macroprocess WHERE name = :name');
+        try { $sql = ('SELECT * FROM tb_macroprocess WHERE name = :name');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -123,7 +123,7 @@ class MacroProcDAO
     
     public function readMacroProcByInitials($initials){
 
-        try { $sql = ('SELECT * FROM public.tb_macroprocess WHERE initials = :initials');
+        try { $sql = ('SELECT * FROM tb_macroprocess WHERE initials = :initials');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -152,7 +152,7 @@ class MacroProcDAO
 
     public function readMacroProcById($id){
 
-        try { $sql = ('SELECT * FROM public.tb_macroprocess WHERE id = :id');
+        try { $sql = ('SELECT * FROM tb_macroprocess WHERE id = :id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);

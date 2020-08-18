@@ -8,7 +8,7 @@ class DocumentDAO
 {
     public function readDocument(){
 
-        try { $sql = ('SELECT * FROM public.tb_documents ORDER BY created_at DESC');
+        try { $sql = ('SELECT * FROM tb_documents ORDER BY created_at DESC');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -34,7 +34,7 @@ class DocumentDAO
 
     public function readDocumentPublished(){
 
-        try { $sql = ('SELECT * FROM public.tb_documents WHERE status = :status AND situation = :situation ORDER BY created_at DESC');
+        try { $sql = ('SELECT * FROM tb_documents WHERE status = :status AND situation = :situation ORDER BY created_at DESC');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -65,7 +65,7 @@ class DocumentDAO
 
     public function readDocumentByUser($user){
 
-        try { $sql = ('SELECT * FROM public.tb_documents WHERE submit_user = :user ORDER BY created_at DESC');
+        try { $sql = ('SELECT * FROM tb_documents WHERE submit_user = :user ORDER BY created_at DESC');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -92,7 +92,7 @@ class DocumentDAO
 
     public function readDocumentById($id){
 
-        try { $sql = ('SELECT * FROM public.tb_documents WHERE id = :id');
+        try { $sql = ('SELECT * FROM tb_documents WHERE id = :id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -121,7 +121,7 @@ class DocumentDAO
 
         try { 
             
-            $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc_sub, submit_user, situation, submit_type, process_sei, document_sei, dispatch_sei) 
+            $sql = ('INSERT INTO tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc_sub, submit_user, situation, submit_type, process_sei, document_sei, dispatch_sei) 
                         VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status, :code, :filename_doc_sub, :submit_user, :situation, :submit_type, :process_sei, :document_sei, :dispatch_sei)
             ');
             
@@ -163,7 +163,7 @@ class DocumentDAO
         
         try { 
             
-            $sql = ('UPDATE public.tb_documents SET title = :title, submit_type = :type_submit, approval_date = :doc_approval_date, doc_type = :doc_id_doctype,
+            $sql = ('UPDATE tb_documents SET title = :title, submit_type = :type_submit, approval_date = :doc_approval_date, doc_type = :doc_id_doctype,
                                                     number = :number, version = :version, area = :area, maker = :maker, reviewer = :reviewer, validator = :validator,
                                                     approver = :approver, process = :process, process_sei = :process_sei, document_sei = :document_sei,
                                                     dispatch_sei = :dispatch_sei, situation = :situation, status = :status,
@@ -226,7 +226,7 @@ class DocumentDAO
     
     public function deleteDocument($id) {        
 
-        try { $sql = ('DELETE FROM public.tb_doc_ument WHERE id = :id');
+        try { $sql = ('DELETE FROM tb_doc_ument WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -243,7 +243,7 @@ class DocumentDAO
 
     public function readDocumentByName($name){
 
-        try { $sql = ('SELECT * FROM public.tb_doc_ument WHERE name = :name');
+        try { $sql = ('SELECT * FROM tb_doc_ument WHERE name = :name');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);

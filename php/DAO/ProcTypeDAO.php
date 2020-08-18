@@ -8,7 +8,7 @@ class ProcTypeDAO
 {
     public function readProcType(){
 
-        try { $sql = ('SELECT * FROM public.tb_process_type ORDER BY id');
+        try { $sql = ('SELECT * FROM tb_process_type ORDER BY id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -35,7 +35,7 @@ class ProcTypeDAO
 
     public function createProcType($procType){			
         
-		try { $sql = "INSERT INTO public.tb_process_type (initials, name) VALUES (:initials, :name)";
+		try { $sql = "INSERT INTO tb_process_type (initials, name) VALUES (:initials, :name)";
             
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();			
@@ -53,7 +53,7 @@ class ProcTypeDAO
 
     public function updateProcType($procType) {
         
-        try { $sql = ('UPDATE public.tb_process_type SET initials = :initials, name = :name WHERE id = :id');
+        try { $sql = ('UPDATE tb_process_type SET initials = :initials, name = :name WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -72,7 +72,7 @@ class ProcTypeDAO
     
     public function deleteProcType($id) {        
 
-        try { $sql = ('DELETE FROM public.tb_process_type WHERE id = :id');
+        try { $sql = ('DELETE FROM tb_process_type WHERE id = :id');
 
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
@@ -90,7 +90,7 @@ class ProcTypeDAO
 
     public function readProcTypeByName($name){
 
-        try { $sql = ('SELECT * FROM public.tb_process_type WHERE name = :name');
+        try { $sql = ('SELECT * FROM tb_process_type WHERE name = :name');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
@@ -119,7 +119,7 @@ class ProcTypeDAO
     
     public function readProcTypeById($id){
 
-        try { $sql = ('SELECT * FROM public.tb_process_type WHERE id = :id');
+        try { $sql = ('SELECT * FROM tb_process_type WHERE id = :id');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
