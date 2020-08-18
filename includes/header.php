@@ -40,8 +40,8 @@
 
 		<!-- DataTables -->		
 		<script src="includes/Datatables/jquery.dataTables.min.js"></script>
-		<script src="includes/Datatables/dataTables.bootstrap.min.js"></script>		
-
+		<script src="includes/Datatables/dataTables.bootstrap.min.js"></script>
+		
 		<?php //Util::debug($_SESSION); ?>				
 
 	</head>
