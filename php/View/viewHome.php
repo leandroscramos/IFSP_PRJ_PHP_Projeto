@@ -18,16 +18,10 @@ include "includes/header.php";
 						<?php 
 							if (isset($_SESSION["logado"])) {
 						?>
-							<li class="dropdown user user-menu">								
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">                              
-									<span class="hidden-xs"><strong><?php echo $_SESSION["login"]["usuario"]; ?></strong></span>
-								</a>
-								<ul class="dropdown-menu">								
-									<li class="user-header"><p><small><i><strong>Tecnologia da Informação</strong></i></small><br></p></li>
-									<li class="user-footer"><div><a href="https://servicosti.ebserh.gov.br/" target="_blank" class="btn btn-block btn-default btn-flat">Perfil</a></div></li>
-								</ul>
+							<li class="dropdown user user-menu">
+								<li><a href="logado"><strong><?php echo $_SESSION["login"]["nome"]; ?></strong></a></li>
 								<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
-							</li>
+							</li>							
 						<?php
 							} else {
 						?>

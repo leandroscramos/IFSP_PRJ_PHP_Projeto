@@ -15,7 +15,7 @@ include "includes/header.php";
 					<div class="col-md-10 col-md-offset-1 form-horizontal">
 						<div class="box box-success">
 							<div class="box-header">
-								<h3 class="box-title">Lista de Documentos submetidos para o Setor de Gestão da Qualidade</h3>
+								<h3 class="box-title">Lista de Documentos submetidos para o Setor de Gestão da Qualidade</h3>								
 							</div>
 							<div class="box-header">
 								<?php 

@@ -9,6 +9,7 @@ class ModelProcess
     private $number;
     private $id_macroprocess;
     private $macroProcess;
+    private $status;
 
     public function setProcessFromDatabase($process){        
         $macroProcDAO = new MacroProcDAO();
@@ -17,20 +18,24 @@ class ModelProcess
                 ->setName($process["name"])
                 ->setnumber($process["number"])
                 ->seIdMacroProc($process["id_macroprocess"])
-                ->setMacroProcess($macroProcess);                
+                ->setMacroProcess($macroProcess)
+                ->setStatus($process["status"]);                
     }
 
     public function setProcessFromPOST(){
         $this->setId(null)               
                 ->setName($_POST["processName"])
                 ->setnumber($_POST["processNumber"])
-                ->seIdMacroProc($_POST["id_macroprocess"]);
+                ->seIdMacroProc($_POST["id_macroprocess"])
+                ->setStatus($_POST["processStatus"]);
     }
 
-    public function updateMacroProcFromPOST(){
-        $this->setId($_POST["macroProcIdModalUpdate"])
-                ->setName($_POST["macroProcNameUpdate"])       
-                ->setnumber($_POST["macroProcNumberUpdate"]);
+    public function updateProcessFromPOST(){
+        $this->setId($_POST["processIdModalUpdate"])
+                ->setName($_POST["processNameModalUpdate"])       
+                ->setNumber($_POST["processNumberModalUpdate"])
+                ->seIdMacroProc($_POST["processIdMacroProcModalUpdate"])
+                ->setStatus($_POST["processStatusModalUpdate"]);    
     }
 
     public function getId()
@@ -85,6 +90,17 @@ class ModelProcess
     public function setMacroProcess($macroProcess)
     {
         $this->macroProcess = $macroProcess;
+        return $this;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
         return $this;
     }
 

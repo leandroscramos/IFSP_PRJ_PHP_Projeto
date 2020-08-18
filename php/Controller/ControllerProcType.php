@@ -16,14 +16,14 @@ class ControllerProcType {
 		$procTypeDAO = new ProcTypeDAO();
 		$procType = new ModelProcType();
 		
-		if (($procTypeDAO->readProcTypeByInitials($_POST['procTypeInitials'])) != null) {
-			$_SESSION["flash"]["msg"] = "Sigla do Tipo de Macroprocesso já cadastrada!";
-			$_SESSION["flash"]["sucesso"] = false;
-		} else 
-		if (($procTypeDAO->readProcTypeByName($_POST['procTypeName'])) != null) {
-			$_SESSION["flash"]["msg"]="Nome do Tipo de Macroprocesso já cadastrado!";
-			$_SESSION["flash"]["sucesso"] = false;
-		} else {
+		// if (($procTypeDAO->readProcTypeByInitials($_POST['procTypeInitials'])) != null) {
+		// 	$_SESSION["flash"]["msg"] = "Sigla do Tipo de Macroprocesso já cadastrada!";
+		// 	$_SESSION["flash"]["sucesso"] = false;
+		// } else 
+		// if (($procTypeDAO->readProcTypeByName($_POST['procTypeName'])) != null) {
+		// 	$_SESSION["flash"]["msg"]="Nome do Tipo de Macroprocesso já cadastrado!";
+		// 	$_SESSION["flash"]["sucesso"] = false;
+		// } else {
 			$procType->setProcTypeFromPOST();        
 			$result = $procTypeDAO->createProcType($procType);
 			
@@ -34,21 +34,21 @@ class ControllerProcType {
 				$_SESSION["flash"]["msg"]="Falha ao cadastrar Tipo de Macroprocesso!";
 				$_SESSION["flash"]["sucesso"] = false;           	
 			}
-		}
+		// }
     }
 
     public function updateProcType() {
         $procTypeDAO = new ProcTypeDAO();
 		$procType = new ModelProcType();
 		
-		if (($procTypeDAO->readProcTypeByInitials($_POST['procTypeInitialsUpdate'])) != null) {
-			$_SESSION["flash"]["msg"] = "Sigla do Tipo de Macroprocesso já cadastrada!";
-			$_SESSION["flash"]["sucesso"] = false;
-		} else 
-		if (($procTypeDAO->readProcTypeByName($_POST['procTypeNameUpdate'])) != null) {
-			$_SESSION["flash"]["msg"]="Nome do Tipo de Macroprocesso já cadastrado!";
-			$_SESSION["flash"]["sucesso"] = false;
-		} else {
+		// if (($procTypeDAO->readProcTypeByInitials($_POST['procTypeInitialsUpdate'])) != null) {
+		// 	$_SESSION["flash"]["msg"] = "Sigla do Tipo de Macroprocesso já cadastrada!";
+		// 	$_SESSION["flash"]["sucesso"] = false;
+		// } else 
+		// if (($procTypeDAO->readProcTypeByName($_POST['procTypeNameUpdate'])) != null) {
+		// 	$_SESSION["flash"]["msg"]="Nome do Tipo de Macroprocesso já cadastrado!";
+		// 	$_SESSION["flash"]["sucesso"] = false;
+		// } else {
 			$procType->updateProcTypeFromPOST();		
 			$result = $procTypeDAO->updateProcType($procType);        
 			if ($result){
@@ -58,7 +58,7 @@ class ControllerProcType {
 				$_SESSION["flash"]["msg"]="Falha ao atualizar Tipo de Macroprocesso!";
 				$_SESSION["flash"]["sucesso"] = false;           	
 			}
-		}
+		// }
     }
     
     public function deleteProcType() {

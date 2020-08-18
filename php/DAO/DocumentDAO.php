@@ -34,13 +34,15 @@ class DocumentDAO
 
     public function readDocumentPublished(){
 
-        try { $sql = ('SELECT * FROM public.tb_documents WHERE status = :status ORDER BY created_at DESC');
+        try { $sql = ('SELECT * FROM public.tb_documents WHERE status = :status AND situation = :situation ORDER BY created_at DESC');
             $instance = DatabaseConnection::getInstance();
             $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
 
             $status = 3;
             $statement->bindParam(':status', $status); 
+            $situation = "A";
+            $statement->bindParam(':situation', $situation); 
             $statement->execute();
 
             $records = $statement->fetchAll();            

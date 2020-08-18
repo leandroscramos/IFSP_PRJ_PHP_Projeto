@@ -24,7 +24,7 @@ if ($action == '' || $action == 'index' || $action == 'index.php') {
     require_once $_SESSION["root"].'php/View/viewHome.php';
 }
 
-if ( $action == 'login') {
+else if ( $action == 'login') {
 	require_once $_SESSION["root"].'php/View/ViewLogin.php';
 }
 
@@ -278,6 +278,10 @@ else if ($action == 'process') {
     } else {
         header("Location: login");
     }
+}  
+
+else {
+    include_once $_SESSION["root"].'php/View/View404.php';
 }
 
 ?>
