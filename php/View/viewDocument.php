@@ -52,7 +52,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									}
 								?>
 							</div>
-							<?php //Util::debug($document); ?>
+							<?php Util::debug($document); ?>
 
 							<div class="box-body">															        
 						        <div class="box box-success">
@@ -196,7 +196,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 													if (isset($document)) {
 														foreach ($processs as $process) {
 												?>
-														<option value="<?php echo $process->getId()."+".$process->getMacroProcess()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT) ?>" <?php echo ($doctype->getId()."+".$doctype->getRev()."+".$doctype->getInitials()) == ($process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName()) ? 'selected' : '' ?> ><?php echo $process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName() ?></option>															
+														<option value="<?php echo $process->getId()."+".$process->getMacroProcess()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getName()."+".$process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT) ?>" <?php echo ($document->getProcess()[0]->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($document->getProcess()[0]->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($document->getProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$document->getProcess()[0]->getName()) == ($process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName()) ? 'selected' : '' ?> ><?php echo $process->getMacroProcess()[0]->getMacroProcType()[0]->getInitials()."".str_pad($process->getMacroProcess()[0]->getNumber() , 2 , '0' , STR_PAD_LEFT)."".str_pad($process->getNumber() , 2 , '0' , STR_PAD_LEFT)." - ".$process->getName() ?></option>															
 												<?php
 														}
 													} else {
