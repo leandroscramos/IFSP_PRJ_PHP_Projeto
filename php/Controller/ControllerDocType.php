@@ -5,7 +5,7 @@ include_once $_SESSION["root"].'php/Model/ModelDocType.php';
 
 class ControllerDocType {
 
-    public function readDocType() {
+    public static function readDocType() {
         $doctypeDAO = new DocTypeDAO();
         $doctypes = $doctypeDAO->readDocType();
         //Util::debug($doctypes);

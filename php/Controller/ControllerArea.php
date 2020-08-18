@@ -5,7 +5,7 @@ include_once $_SESSION["root"].'php/Model/ModelArea.php';
 
 class ControllerArea {
 
-    function readArea() {
+    static function readArea() {
         $areaDAO = new AreaDAO();
         $areas = $areaDAO->readArea();
         //Util::debug($doctypes);

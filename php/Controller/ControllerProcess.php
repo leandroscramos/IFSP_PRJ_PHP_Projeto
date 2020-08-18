@@ -5,7 +5,7 @@ include_once $_SESSION["root"].'php/Model/ModelProcess.php';
 
 class ControllerProcess {
 
-    function readProcess() {
+    static function readProcess() {
         $processDAO = new ProcessDAO();
         $processs = $processDAO->readProcess();        
         return $processs;
