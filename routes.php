@@ -21,7 +21,7 @@ include_once $_SESSION["root"].'php/Controller/ControllerDocument.php';
 // Condicionais que verificam o roteamento das actions.
 if ($action == '' || $action == 'index' || $action == 'index.php') {
     $documents = ControllerDocument::readDocumentPublished();
-    require_once $_SESSION["root"].'php/View/viewHome.php';
+    require_once $_SESSION["root"].'php/View/ViewHome.php';
 }
 
 else if ( $action == 'login') {
@@ -53,7 +53,7 @@ else if ($action == 'docList') {
     if ($_SESSION["logado"] == true) {
         if ((($_SESSION['login']['permissao']) == 'Usuário') ) {
             $documents = ControllerDocument::readDocumentByUser($_SESSION["login"]["usuario"]);
-            include_once $_SESSION["root"].'php/View/viewDocumentList.php';
+            include_once $_SESSION["root"].'php/View/ViewDocumentList.php';
         } else {
             header("Location:logado");
         }
@@ -68,7 +68,7 @@ else if ($action == 'docListAdmin') {
         unset($document);     
         if ((($_SESSION['login']['permissao']) == 'Administrador') ) {
             $documents = ControllerDocument::readDocument();
-            include_once $_SESSION["root"].'php/View/viewDocumentListAdmin.php';
+            include_once $_SESSION["root"].'php/View/ViewDocumentListAdmin.php';
         } else {
             header("Location:logado");
         } 
@@ -96,7 +96,7 @@ else if ($action == 'document') {
                         $areas = ControllerArea::readArea();
                         $processs = ControllerProcess::readProcess();                                     
                         $document = ControllerDocument::readDocumentById($_POST['idDocument']);                    
-                        include_once $_SESSION["root"].'php/View/viewDocument.php';
+                        include_once $_SESSION["root"].'php/View/ViewDocument.php';
                         break;        
                     case 'update':
                         $_SESSION["update"]["id"] = $_POST['id_document'];
@@ -113,7 +113,7 @@ else if ($action == 'document') {
                 $doctypes = ControllerDocType::readDocType();            
                 $areas = ControllerArea::readArea();
                 $processs = ControllerProcess::readProcess();
-                include_once $_SESSION["root"].'php/View/viewDocument.php';
+                include_once $_SESSION["root"].'php/View/ViewDocument.php';
             }
         } else {
             header("Location:logado");
@@ -144,7 +144,7 @@ else if ($action == 'docType') {
                 }
             } else {
                 $doctypes = ControllerDocType::readDocType();                
-                include_once $_SESSION["root"].'php/View/viewDocumentType.php';
+                include_once $_SESSION["root"].'php/View/ViewDocumentType.php';
             }
         } else {
             header("Location:logado");
