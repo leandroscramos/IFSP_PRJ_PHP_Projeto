@@ -57,7 +57,19 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 							<div class="box-body">
 						        <div class="box box-success">
 					              <div class="box-header with-border">
-					                <h3 class="box-title" align="center">Novo Documento</h3>
+					                <h3 class="box-title" align="center">
+										<?php 
+											if (isset($document)) {
+												if ($_SESSION["login"]["permissao"] == "Usuário") {
+													echo "Documento submetido";
+												} else {
+													echo "Atualização de documento";
+												}
+											} else {
+												echo "Novo documento";
+											}
+										?>
+									</h3>
 					            	<div class="box-tools pull-right">
 						          </div>
 								  <form action="document" method="POST" enctype="multipart/form-data">
