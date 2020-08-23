@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 	<head>
-		<meta charset="utf-8">		
+		<meta charset="utf-8">
 		<title><?php echo $_SESSION["title"];?></title>
-			
+
 		<!-- CSS -->
 		<!-- Tell the browser to be responsive to screen width -->
 	  	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -21,7 +21,7 @@
 	       folder instead of downloading all of them to reduce the load. -->
 	  	<link rel="stylesheet" href="includes/AdminLTE-2.4.2/dist/css/skins/_all-skins.min.css">
 
-		<!-- DataTables  -->		
+		<!-- DataTables  -->
 		<link rel="stylesheet" href="includes/Datatables/dataTables.bootstrap.css">
 
 	  	<!-- JS -->
@@ -38,11 +38,15 @@
 		<!-- AdminLTE App -->
 		<script src="includes/AdminLTE-2.4.2/dist/js/adminlte.min.js"></script>
 
-		<!-- DataTables -->		
+		<!-- DataTables -->
 		<script src="includes/Datatables/jquery.dataTables.min.js"></script>
 		<script src="includes/Datatables/dataTables.bootstrap.min.js"></script>
-		
-		<?php //Util::debug($_SESSION); ?>				
+
+		<!-- Bootstrap-Select -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+		<?php //Util::debug($_SESSION); ?>
 
 	</head>
 <body class="hold-transition skin-green layout-top-nav">
