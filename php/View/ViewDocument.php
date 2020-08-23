@@ -297,6 +297,18 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<p><a href="<?php echo $_SESSION["upload_sub"]."".$document->getFilenameDoc() ?>"><?php echo $document->getFilenameDoc() ?></a></p>
 											</div>
 											<?php }	?>
+											<?php if ((isset($document)) AND (!is_null($document->getFilenameDocFinal()))) { ?>
+											<div class="col-sm-2">
+												<label for="submit_document">Arquivo DOC Final</label><br>
+												<p><a href="<?php echo $_SESSION["upload_pub"]."".$document->getFilenameDocFinal() ?>"><?php echo $document->getFilenameDocFinal() ?></a></p>
+											</div>
+											<?php }	?>
+											<?php if ((isset($document)) AND (!is_null($document->getFilenamePdfFinal()))) { ?>
+											<div class="col-sm-2">
+												<label for="submit_document">Arquivo PDF Final</label><br>
+												<p><a href="<?php echo $_SESSION["upload_pub"]."".$document->getFilenamePdfFinal() ?>"><?php echo $document->getFilenamePdfFinal() ?></a></p>
+											</div>
+											<?php }	?>
 
 											<div class="col-sm-3" id="div_doc_sub">
 												<label for="doc_file_sub">Arquivo</label>
