@@ -23,37 +23,37 @@ class ControllerDocument {
         return $documents;
 	}
 	
-	public function readDocumentById($id) {		
+	public function readDocumentById($id) {
         $documentDAO = new DocumentDAO();
-		$document = $documentDAO->readDocumentById($id);		        
+		$document = $documentDAO->readDocumentById($id);
         return $document;
     }
 
     public function createDocument() {
 		$documentDAO = new DocumentDAO();
 		$document = new ModelDocument();
-		
-		$document->setDocumentFromPOST();		
+
+		$document->setDocumentFromPOST();
 		$result = $documentDAO->createDocument($document);
 
-		if (isset($_FILES['doc_file_sub'])) {			
+		if (isset($_FILES['doc_file_sub'])) {
 			$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['doc_file_sub']['name'],'.'),1); //define o nome do arquivo
-			$diretorio = "upload/submissions/"; //define o diretorio para onde enviaremos o arquivo	
-			move_uploaded_file($_FILES['doc_file_sub']['tmp_name'], $diretorio.$novo_nome); //efetua o upload			
-		}
-		
-		if (isset($_FILES['doc_file_final'])) {			
-			$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['doc_file_final']['name'],'.'),1); //define o nome do arquivo
-			$diretorio = "upload/published/"; //define o diretorio para onde enviaremos o arquivo	
-			move_uploaded_file($_FILES['doc_file_final']['tmp_name'], $diretorio.$novo_nome); //efetua o upload			
+			$diretorio = "upload/submissions/"; //define o diretorio para onde enviaremos o arquivo
+			move_uploaded_file($_FILES['doc_file_sub']['tmp_name'], $diretorio.$novo_nome); //efetua o upload
 		}
 
-		if (isset($_FILES['pdf_file_final'])) {			
-			$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['pdf_file_final']['name'],'.'),1); //define o nome do arquivo
-			$diretorio = "upload/published/"; //define o diretorio para onde enviaremos o arquivo	
-			move_uploaded_file($_FILES['pdf_file_final']['tmp_name'], $diretorio.$novo_nome); //efetua o upload			
+		/* if (isset($_FILES['doc_file_final'])) {
+			$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['doc_file_final']['name'],'.'),1); //define o nome do arquivo
+			$diretorio = "upload/published/"; //define o diretorio para onde enviaremos o arquivo
+			move_uploaded_file($_FILES['doc_file_final']['tmp_name'], $diretorio.$novo_nome); //efetua o upload
 		}
-		
+
+		if (isset($_FILES['pdf_file_final'])) {
+			$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['pdf_file_final']['name'],'.'),1); //define o nome do arquivo
+			$diretorio = "upload/published/"; //define o diretorio para onde enviaremos o arquivo
+			move_uploaded_file($_FILES['pdf_file_final']['tmp_name'], $diretorio.$novo_nome); //efetua o upload
+		} */
+
 		if ($result){
 			$_SESSION["flash"]["msg"]="Documento submetido com sucesso!";
 			$_SESSION["flash"]["sucesso"]=true;
@@ -63,24 +63,30 @@ class ControllerDocument {
 		};
     }
 
-	
+
     public function updateDocument() {
         $documentDAO = new DocumentDAO();
 		$document = new ModelDocument();
 
-		$document->updateDocumentFromPOST();		
+		$document->updateDocumentFromPOST();
 		$result = $documentDAO->updateDocument($document);
 
-		if (isset($_FILES['doc_file_final'])) {			
-			$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['doc_file_final']['name'],'.'),1); //define o nome do arquivo
-			$diretorio = "upload/published/"; //define o diretorio para onde enviaremos o arquivo	
-			move_uploaded_file($_FILES['doc_file_final']['tmp_name'], $diretorio.$novo_nome); //efetua o upload			
+		if ((isset($_FILES['doc_file_final'])) AND (isset($_FILES['pdf_file_final']))) {
+
+			$files = new ModelDocument();
+			$files->uploadDocPdfFromPost();
+			$upload =  $documentDAO->uploadDocPdf($files);
+
+				$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['doc_file_final']['name'],'.'),1); //define o nome do arquivo
+				$diretorio = "upload/published/"; //define o diretorio para onde enviaremos o arquivo
+				move_uploaded_file($_FILES['doc_file_final']['tmp_name'], $diretorio.$novo_nome); //efetua o upload
+
+				$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['pdf_file_final']['name'],'.'),1); //define o nome do arquivo
+				$diretorio = "upload/published/"; //define o diretorio para onde enviaremos o arquivo
+				move_uploaded_file($_FILES['pdf_file_final']['tmp_name'], $diretorio.$novo_nome); //efetua o upload
+
 		}
-		if (isset($_FILES['pdf_file_final'])) {			
-			$novo_nome = $_POST['doc_code'].".".substr(strrchr($_FILES['pdf_file_final']['name'],'.'),1); //define o nome do arquivo
-			$diretorio = "upload/published/"; //define o diretorio para onde enviaremos o arquivo	
-			move_uploaded_file($_FILES['pdf_file_final']['tmp_name'], $diretorio.$novo_nome); //efetua o upload			
-		}
+
 
 		if ($result){
 			$_SESSION["flash"]["msg"]="Documento atualizado com sucesso!";
@@ -109,7 +115,8 @@ class ControllerDocument {
 		}
 		*/
 	}
-	
+
+
 	/*
     
     public function deleteDocument() {

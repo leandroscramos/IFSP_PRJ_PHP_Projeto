@@ -71,6 +71,12 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										?>
 									</h3>
 					            	<div class="box-tools pull-right">
+										<?php 
+											if (isset($document)) {
+												echo "Submetido por: <strong><i>".$document->getUserSubmit()."</i></strong>";
+											}
+										?>
+									</div>
 						          </div>
 								  <form action="document" method="POST" enctype="multipart/form-data">
 									<?php 
@@ -118,8 +124,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<label for="doc_type">Tipo do Documento *</label>
 												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">
 												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype">
-
-												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()" required>
+												<select class="form-control selectpicker" data-live-search="true" id="doc_type" name="doc_type" onchange="docType()" required>
 
 													<?php
 														if (isset($document)) {
@@ -145,17 +150,17 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_number">Número *</label>
-												<input type="text" class="form-control" id="doc_number" name="doc_number" pattern="[0-9]{3}" maxlength="3" placeholder="" value="<?php echo (isset($document)) ? str_pad($document->getNumber() , 3 , '0' , STR_PAD_LEFT) : "" ?>" required>
+												<input type="text" class="form-control" id="doc_number" name="doc_number" pattern="[0-9]{3}" maxlength="3" placeholder="Ex: 001" value="<?php echo (isset($document)) ? str_pad($document->getNumber() , 3 , '0' , STR_PAD_LEFT) : "" ?>" required>
 											</div>
 											<div class="col-sm-1">
 												<label for="doc_version">Versão *</label>
-												<input type="text" class="form-control" id="doc_version" name="doc_version" pattern="[0-9]{2}" maxlength="2" placeholder="" value="<?php echo (isset($document)) ? str_pad($document->getVersion() , 2 , '0' , STR_PAD_LEFT) : "" ?>" required>
+												<input type="text" class="form-control" id="doc_version" name="doc_version" pattern="[0-9]{2}" maxlength="2" placeholder="Ex: 01" value="<?php echo (isset($document)) ? str_pad($document->getVersion() , 2 , '0' , STR_PAD_LEFT) : "" ?>" required>
 											</div>
 											<div class="col-sm-2">
 												<label for="doc_sigla_area">Área <i>(Sigla)</i> *</label>
 												<input type="hidden" name="doc_id_area" id="doc_id_area">
 												<input type="hidden" name="doc_initials_area" id="doc_initials_area" value="<?php echo (isset($document)) ? $document->getArea()[0]->getInitials() : "" ?>">
-												<select class="form-control" id="doc_sigla_area" name="doc_sigla_area" onchange="areas();" required>
+												<select class="form-control selectpicker" data-live-search="true" name="doc_sigla_area" onchange="areas();" required>
 												<?php
 													if (isset($document)) {
 														foreach ($areas as $area) {
@@ -250,7 +255,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 										<div class="form-group">
 											<div class="col-sm-2">
 												<label for="doc_code">Código do documento *</label>
-												<input type="text" class="form-control" id="doc_code" name="doc_code" value="<?php echo (isset($document)) ? $document->getCode() : "" ?>" readonly="true" required>
+												<input type="text" class="form-control" id="doc_code" name="doc_code" value="<?php echo (isset($document)) ? $document->getCode() : "" ?>" onkeypress="return false;" required>
 												<button type="button" class="btn btn-success col-sm-12" id="btnGeraCodigo" name="btnGeraCodigo" onclick="gerarCodigo()">Gerar código</button>
 											</div>
 											<div class="col-sm-2" id="situation_div" style="display: none">
@@ -275,7 +280,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											</div>
 											<div class="col-sm-2" id="status_div" style="display: none">
 												<label for="status">Status</label>
-												<select class="form-control" id="status" name="status">
+												<select class="form-control" id="status" name="status" onchange="enableInputFileDocPdf()">
 
 													<?php 
 														if (isset($document)) {
@@ -318,28 +323,28 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 											<?php if ((isset($document)) AND (!is_null($document->getFilenamePdfFinal()))) { ?>
 											<div class="col-sm-2">
 												<label for="submit_document">Arquivo PDF Final</label><br>
-												<p><a href="<?php echo $_SESSION["upload_pub"]."".$document->getFilenamePdfFinal() ?>"><?php echo $document->getFilenamePdfFinal() ?></a></p>
+												<p><a href="<?php echo $_SESSION["upload_pub"]."".$document->getFilenamePdfFinal() ?>" download><?php echo $document->getFilenamePdfFinal() ?></a></p>
 											</div>
 											<?php }	?>
 
-											<div class="col-sm-3" id="div_doc_sub">
+											<div class="col-sm-3" id="div_doc_sub" <?php echo (isset($document)) ? "style='display: none'" : "" ?>>
 												<label for="doc_file_sub">Arquivo</label>
-												<input type="file" id="doc_file_sub" name="doc_file_sub" onchange="extensionValidateDocSub(this)"> 
+												<input type="file" id="doc_file_sub" name="doc_file_sub" onchange="extensionValidateDocSub(this)" <?php echo (!isset($document)) ? "required" : "" ?> > 
 												<div id="file_validate_doc_sub"></div>
 											</div>
 
 											<div class="col-sm-3" id="div_doc_final" style="display: none">
 												<label for="doc_file_final">Arquivo DOC Final <i class="fas fa-file-word" style="color: blue"></i></label>
-												<input type="file" id="doc_file_final" name="doc_file_final" onchange="extensionValidateDocPub(this)" > 
+												<input type="file" id="doc_file_final" name="doc_file_final" onchange="extensionValidateDocPub(this)" disabled> 
 												<div id="file_validate_doc_pub"></div>
 											</div>
 
 											<div class="col-sm-3" id="div_pdf_final" style="display: none">
 												<label for="pdf_file_final">Arquivo PDF Final <i class="fas fa-file-pdf" style="color: red"></i></label>
-												<input type="file" id="pdf_file_final" name="pdf_file_final" onchange="extensionValidatePDF(this)" > 
+												<input type="file" id="pdf_file_final" name="pdf_file_final" onchange="extensionValidatePDF(this)" disabled> 
 												<div id="file_validate_pdf_pub"></div>
 											</div>
-										</div>	
+										</div>
 
 										<div class="box-footer">
 											<?php if (isset($document)) { ?>
