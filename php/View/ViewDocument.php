@@ -52,7 +52,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 									}
 								?>
 							</div>
-							<?php //Util::debug($document); ?>
+							<?php Util::debug($document); ?>
 
 							<div class="box-body">
 						        <div class="box box-success">
@@ -124,7 +124,8 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<label for="doc_type">Tipo do Documento *</label>
 												<input type="hidden" name="doc_id_doctype" id="doc_id_doctype">
 												<input type="hidden" name="doc_initials_doctype" id="doc_initials_doctype">
-												<select class="form-control selectpicker" data-live-search="true" id="doc_type" name="doc_type" onchange="docType()" required>
+
+												<select class="form-control" id="doc_type" name="doc_type" onchange="docType()" required>
 
 													<?php
 														if (isset($document)) {
@@ -160,7 +161,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<label for="doc_sigla_area">Área <i>(Sigla)</i> *</label>
 												<input type="hidden" name="doc_id_area" id="doc_id_area">
 												<input type="hidden" name="doc_initials_area" id="doc_initials_area" value="<?php echo (isset($document)) ? $document->getArea()[0]->getInitials() : "" ?>">
-												<select class="form-control selectpicker" data-live-search="true" name="doc_sigla_area" onchange="areas();" required>
+												<select class="form-control" id="doc_sigla_area" name="doc_sigla_area" onchange="areas();" required>
 												<?php
 													if (isset($document)) {
 														foreach ($areas as $area) {
@@ -344,7 +345,7 @@ include_once $_SESSION["root"].'php/Util/Util.php';
 												<input type="file" id="pdf_file_final" name="pdf_file_final" onchange="extensionValidatePDF(this)" disabled> 
 												<div id="file_validate_pdf_pub"></div>
 											</div>
-										</div>
+										</div>	
 
 										<div class="box-footer">
 											<?php if (isset($document)) { ?>

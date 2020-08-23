@@ -87,8 +87,9 @@ class ModelDocument
     }
 
     public function updateDocumentFromPOST(){
-        $this->setId($_POST["id_document"])            
-            ->setTitle($_POST["doc_title"]) 
+        $this->setId($_POST["id_document"])
+            ->setTitle($_POST["doc_title"])
+            ->setCode($_POST["doc_code"])
             ->setTypeSubmit($_POST["type_submit"])
             ->setApprovalDate($_POST["doc_approval_date"])
             ->setDocType($_POST["doc_id_doctype"])
