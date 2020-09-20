@@ -87,8 +87,9 @@ class ModelDocument
     }
 
     public function updateDocumentFromPOST(){
-        $this->setId($_POST["id_document"])            
-            ->setTitle($_POST["doc_title"]) 
+        $this->setId($_POST["id_document"])
+            ->setTitle($_POST["doc_title"])
+            ->setCode($_POST["doc_code"])
             ->setTypeSubmit($_POST["type_submit"])
             ->setApprovalDate($_POST["doc_approval_date"])
             ->setDocType($_POST["doc_id_doctype"])
@@ -104,11 +105,13 @@ class ModelDocument
             ->setDocSei($_POST["document_sei"])
             ->setDispatchSei($_POST["dispatch_sei"])
             ->setSituation($_POST["doc_situation"])
-            ->setStatus($_POST["status"])
-            ->setFilenameDocFinal($_POST['doc_code'].".".substr(strrchr($_FILES['doc_file_final']['name'],'.'),1))
-            ->setFilenamePdfFinal($_POST['doc_code'].".".substr(strrchr($_FILES['pdf_file_final']['name'],'.'),1))
+            ->setStatus($_POST["status"]);
+    }
 
-            ;            
+    public function uploadDocPdfFromPost() {
+        $this->setId($_POST["id_document"])
+            ->setFilenameDocFinal($_POST['doc_code'].".".substr(strrchr($_FILES['doc_file_final']['name'],'.'),1))
+            ->setFilenamePdfFinal($_POST['doc_code'].".".substr(strrchr($_FILES['pdf_file_final']['name'],'.'),1));
     }
 
     public function getId()

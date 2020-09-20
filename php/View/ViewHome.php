@@ -21,7 +21,7 @@ include "includes/header.php";
 							<li class="dropdown user user-menu">
 								<li><a href="logado"><strong><?php echo $_SESSION["login"]["nome"]; ?></strong></a></li>
 								<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
-							</li>							
+							</li>
 						<?php
 							} else {
 						?>

@@ -48,6 +48,7 @@ include "includes/header.php";
 											<th width="7%">Status</th>											
 											<th width="4%">Situação</th>											
 											<th width="7%">Submissão</th>
+											<th width="7%">Usuário</th>
 											<th width="1%"></th>																						
 										</tr>
 									</thead>									
@@ -79,6 +80,8 @@ include "includes/header.php";
 												echo ($document->getSituation() == "A") ? "<td align='center'><small class='label pull-center bg-green' title='Ativo'>A</small></td>" : "<td align='center'><strong><small class='label pull-center bg-red' title='Inativo'>I</small></td>";
 												$date = new DateTime($document->getSubDate());
 												echo "<td><strong>".$date->format('d/m/Y')."</strong></td>";
+												echo "<td>".$document->getUserSubmit()."</td>";
+
 												echo "<td>";
 											?>
 												<form action="document" method="post">

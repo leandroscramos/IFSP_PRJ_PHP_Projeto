@@ -117,19 +117,19 @@ class DocumentDAO
         }
     }
 
-    public function createDocument($document){			
+    public function createDocument($document){
 
-        try { 
-            
+        try {
+
             $sql = ('INSERT INTO public.tb_documents (title, doc_type, number, version, area, process, maker, reviewer, validator, approver, approval_date, created_at, status, code, filename_doc_sub, submit_user, situation, submit_type, process_sei, document_sei, dispatch_sei) 
                         VALUES (:title, :doc_type, :number, :version, :area, :process, :maker, :reviewer, :validator, :approver, :approval_date, now(), :status, :code, :filename_doc_sub, :submit_user, :situation, :submit_type, :process_sei, :document_sei, :dispatch_sei)
             ');
-            
+
             $instance = DatabaseConnection::getInstance();
-            $conn = $instance->getConnection();			
+            $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
-            
-            $statement->bindValue(":title", $document->getTitle());            
+
+            $statement->bindValue(":title", $document->getTitle());
             $statement->bindValue(":code", $document->getCode());
             $statement->bindValue(":doc_type", $document->getDocType());
             $statement->bindValue(":number", $document->getNumber());
@@ -139,41 +139,40 @@ class DocumentDAO
             $statement->bindValue(":maker", $document->getMaker());
             $statement->bindValue(":reviewer", $document->getReviewer());
             $statement->bindValue(":validator", $document->getValidator());
-            $statement->bindValue(":approver", $document->getApprover());            
+            $statement->bindValue(":approver", $document->getApprover());
             $statement->bindValue(":approval_date", $document->getApprovalDate());
             $statement->bindValue(":status", $document->getStatus());
             $statement->bindValue(":filename_doc_sub", $document->getFilenameDoc());
-            $statement->bindValue(":submit_user", $document->getUserSubmit());            
+            $statement->bindValue(":submit_user", $document->getUserSubmit());
             $statement->bindValue(":situation", $document->getSituation());
             $statement->bindValue(":submit_type", $document->getTypeSubmit());
             $statement->bindValue(":process_sei", $document->getProcessSei());
             $statement->bindValue(":document_sei", $document->getDocSei());
             $statement->bindValue(":dispatch_sei", $document->getDispatchSei());
 
-                     
-            
-            return $statement->execute();            
+
+
+            return $statement->execute();
 
         } catch (PDOException $e) {
-            echo "Erro ao inserir na base de dados.".$e->getMessage();            
-        }		
+            echo "Erro ao inserir na base de dados.".$e->getMessage();
+        }
     }
 
-    public function updateDocument($document) {        
-        
-        try { 
-            
+    public function updateDocument($document) {
+
+        try {
+
             $sql = ('UPDATE public.tb_documents SET title = :title, submit_type = :type_submit, approval_date = :doc_approval_date, doc_type = :doc_id_doctype,
                                                     number = :number, version = :version, area = :area, maker = :maker, reviewer = :reviewer, validator = :validator,
                                                     approver = :approver, process = :process, process_sei = :process_sei, document_sei = :document_sei,
-                                                    dispatch_sei = :dispatch_sei, situation = :situation, status = :status,
-                                                    filename_doc_final = :filename_doc_final, filename_pdf_final = :filename_pdf_final
+                                                    dispatch_sei = :dispatch_sei, code = :code, situation = :situation, status = :status
                     WHERE id = :id');
-            
+
             $instance = DatabaseConnection::getInstance();
-            $conn = $instance->getConnection();			
+            $conn = $instance->getConnection();
             $statement = $conn->prepare($sql);
-            
+
             $statement->bindValue(":id", $document->getId());
             $statement->bindValue(":title", $document->getTitle());
             $statement->bindValue(":type_submit", $document->getTypeSubmit());
@@ -190,41 +189,40 @@ class DocumentDAO
             $statement->bindValue(":process_sei", $document->getProcessSei());
             $statement->bindValue(":document_sei", $document->getDocSei());
             $statement->bindValue(":dispatch_sei", $document->getDispatchSei());
+            $statement->bindValue(":code", $document->getCode());
             $statement->bindValue(":situation", $document->getSituation());
             $statement->bindValue(":status", $document->getStatus());
+
+            return $statement->execute();
+
+        } catch (PDOException $e) {
+            echo "Erro ao inserir na base de dados.".$e->getMessage();
+        }
+    }
+
+    public function uploadDocPdf($document) {
+
+        try {
+
+            $sql = ('UPDATE public.tb_documents SET filename_doc_final = :filename_doc_final, filename_pdf_final = :filename_pdf_final
+                    WHERE id = :id');
+
+            $instance = DatabaseConnection::getInstance();
+            $conn = $instance->getConnection();
+            $statement = $conn->prepare($sql);
+
+            $statement->bindValue(":id", $document->getId());
             $statement->bindValue(":filename_doc_final", $document->getFilenameDocFinal());
             $statement->bindValue(":filename_pdf_final", $document->getFilenamePdfFinal());
 
-            /*
-            
-                       
-            
-
-            /*
-            $statement->bindValue(":code", $document->getCode());
-            $statement->bindValue(":doc_type", $document->getDocType());
-            
-            
-            
-                        
-            $statement->bindValue(":approval_date", $document->getApprovalDate());
-            */
-
-            
-            /* $statement->bindValue(":filename_doc", $document->getFilenameDoc());
-            $statement->bindValue(":submit_user", $document->getUserSubmit());            
-            
-            $statement->bindValue(":submit_type", $document->getTypeSubmit());
-            */                    
-            
-            return $statement->execute();            
+            return $statement->execute();
 
         } catch (PDOException $e) {
-            echo "Erro ao inserir na base de dados.".$e->getMessage();            
+            echo "Erro ao inserir na base de dados.".$e->getMessage();
         }
     }
-    
-    public function deleteDocument($id) {        
+
+    public function deleteDocument($id) {
 
         try { $sql = ('DELETE FROM public.tb_doc_ument WHERE id = :id');
 
@@ -234,11 +232,11 @@ class DocumentDAO
 
             $statement->bindParam(':id', $id); 
             $statement->execute();
-               
+
             return $statement->execute(); 
         } catch(PDOException $e) {
             echo "Erro ao excluir registro da base de dados.".$e->getMessage();
-        }        
+        }
     }
 
     public function readDocumentByName($name){
